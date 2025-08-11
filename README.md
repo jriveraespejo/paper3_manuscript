@@ -1,4 +1,4 @@
-## A Quarto Manuscript Template
+## Quarto Manuscript
 
-This is a template repo for generating a manuscript from Quarto that accompanies the tutorial at: [Quarto Manuscripts: RStudio](https://quarto.org/docs/manuscripts/authoring/rstudio.html)
+This is the repository to generate the Quarto manuscript from the study: *Advanced modeling of comparative judgment data: Applications to speech quality*.
 

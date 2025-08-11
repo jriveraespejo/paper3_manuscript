@@ -1,0 +1,121 @@
+---
+title: "Advanced modeling of comparative judgment data: Applications to speech quality"
+author:
+  - name: 
+      given: Jose Manuel
+      family: Rivera Espejo
+    orcid: 0000-0002-3088-2783
+    url: https://www.uantwerpen.be/en/staff/jose-manuel-rivera-espejo_23166/
+    email: JoseManuel.RiveraEspejo@uantwerpen.be
+    corresponding: true
+    affiliation:
+      - name: University of Antwerp
+        department: Training and education sciences
+        group: Edubron
+  - name: 
+      given: Tine
+      family: Daal
+      non-dropping-particle: van
+    orcid: 0000-0001-9398-9775
+    url: https://www.uantwerpen.be/en/staff/tine-vandaal/
+    email: tine.vandaal@uantwerpen.be
+    corresponding: false
+    affiliation:
+      - name: University of Antwerp
+        department: Training and education sciences
+        group: Edubron
+  - name: 
+      given: Sven
+      family: Maeyer
+      non-dropping-particle: De
+    orcid: 0000-0003-2888-1631
+    url: https://www.uantwerpen.be/en/staff/sven-demaeyer/
+    email: sven.demaeyer@uantwerpen.be
+    corresponding: false
+    affiliation:
+      - name: University of Antwerp
+        department: Training and education sciences
+        group: Edubron
+  - name: 
+      given: Steven
+      family: Gillis
+    orcid: 
+    url: https://www.uantwerpen.be/nl/personeel/steven-gillis/
+    email: steven.gillis@uantwerpen.be
+    corresponding: false
+    affiliation:
+      - name: University of Antwerp
+        department: Linguistics
+        group: Centre for computational linguistics, psycholinguistics, and sociolinguistics (CLiPS)
+funding: 
+  statement: "The project was founded through the Research Fund of the University of Antwerp (BOF)."
+keywords:
+  - causal inference
+  - directed acyclic graphs
+  - structural causal models
+  - bayesian statistical methods
+  - thurstonian model
+  - comparative judgement
+  - probability
+  - statistical modeling
+abstract: |
+ TO DO
+date: last-modified
+bibliography: references.bib
+---
+
+<!-- commands for d-separation -->
+\newcommand{\dsep}{\:\bot\:}
+\newcommand{\ndsep}{\:\not\bot\:}
+
+
+# Introduction {#sec-introduction}
+
+# Data & Methods {#sec-data-methods}
+
+# Discussion {#sec-discussion}
+
+## Future research directions {#sec-discussion_RD}
+
+## Study limitations {#sec-discussion_limitations}
+
+
+# Conclusion {#sec-conclusion}
+
+
+
+{{< pagebreak >}}
+
+# Declarations {.unnumbered .appendix appendix-style=plain}
+
+**Funding:** The Research Fund (BOF) of the University of Antwerp funded this project.
+
+**Financial interests:** The authors declare no relevant financial interests.
+
+**Non-financial interests:** The authors declare no relevant non-financial interests.
+
+**Ethics approval:** The University of Antwerp Research Ethics Committee confirmed that this study does not require ethical approval.
+
+**Consent to participate:** Not applicable
+
+**Consent for publication:** All authors have read and approved the final version of the manuscript for publication.
+
+**Data availability:** This study did not use any data.
+
+**Materials and code availability:** The `CODE LINK` section at the top of the digital document located at: [https://jriveraespejo.github.io/paper3_manuscript/](https://jriveraespejo.github.io/paper3_manuscript/) provides access to all materials and code.
+
+**AI-assisted technologies in the writing process:** The authors used various AI-based language tools to refine phrasing, optimize wording, and enhance clarity and coherence throughout the manuscript. They take full responsibility for the final content of the publication.
+
+**CRediT authorship contribution statement:** *Conceptualization:* J.M.R.E, T.vD., S.DM., and S.G.; *Methodology:* J.M.R.E, T.vD., and S.DM.; *Software:* J.M.R.E.; *Validation:* J.M.R.E.; *Formal Analysis:* J.M.R.E.; *Investigation:* J.M.R.E; *Resources:* T.vD. and S.DM.; *Data curation:* J.M.R.E., S.G.; *Writing - original draft:* J.M.R.E.; *Writing - review and editing:* T.vD., S.DM., and S.G.; *Visualization:* J.M.R.E.; *Supervision:* S.G. and S.DM.; *Project administration:* S.G. and S.DM.; *Funding acquisition:* S.G. and S.DM.
+
+<!-- **Acknowledgements:** -->
+
+{{< pagebreak >}}
+
+{{< pagebreak >}}
+
+# References {.unnumbered .appendix appendix-style=plain} 
+
+:::{#refs}
+
+:::

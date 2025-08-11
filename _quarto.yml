@@ -1,17 +1,73 @@
 project:
   type: manuscript
 
+manuscript:
+  article: paper3.qmd 
+  meca-bundle: "manuscript-meca.zip"
+  code-links:
+    - text: 'Github repository'
+      href: https://github.com/jriveraespejo/paper3_manuscript.git
+    #- text: 'Slides, UK 2025'
+    #  href: https://jriveraespejo.github.io/UK_presentation_2025/presentation.html
+    #- text: Submission (pdf)
+    #  href: submission/paper2_v6.0.pdf
+    #- text: 'Figures'
+    #  icon: file-code-fill
+    #  href: code/CJfig.R
+    - text: 'Stan model'
+      icon: file-code-fill
+      href: code/CJmod_add.R
+    
+    
 execute:
   freeze: auto
+  cache: true
+  # eval: true
+  echo: false
+  # output: true
+  # include: true
+  warning: false
+  error: false
+  message: false
+
 
 format:
   html:
-    toc: true
+    notebook-links: global
+    lightbox: true
+    citation: true
+        #type: article-journal
+        #container-title: "Psychometrika"
+        #doi: ""
+        #url: https://example.com/summarizing-output
     comments:
       hypothesis: true
-  docx: default
-  jats: default
-  agu-pdf: default
-
-
-
+    google-scholar: true
+    licence: 'CC BY-SA'
+    toc: true
+    toc-depth: 4
+    toc-title: 'Table of Contents'
+    toc-location: left
+    fontsize: 12pt
+    number-sections: true
+    code-fold: true
+    code-summary: "code"
+    code-overflow: scroll
+    #code-annotations: hover
+    #code-line-numbers: false
+    tbl-cap-location: top
+    fig-cap-location: top
+    default image extension: png
+  #docx: default
+  #jats: default
+  elsevier-pdf:
+    #header-includes:
+    #  - \usepackage{float}
+    #  - \floatplacement{table}{H}
+    keep-tex: true
+    journal:
+      name: To be defined
+      formatting: review
+      model: 1p
+      cite-style: authoryear
+      
