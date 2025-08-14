@@ -37,7 +37,7 @@ format:
     lightbox: true
     citation: true
         #type: article-journal
-        #container-title: "Psychometrika"
+        #container-title: "Psychological methods"
         #doi: ""
         #url: https://example.com/summarizing-output
     comments:
@@ -66,7 +66,7 @@ format:
     #  - \floatplacement{table}{H}
     keep-tex: true
     journal:
-      name: To be defined
+      name: Psychological methods
       formatting: review
       model: 1p
       cite-style: authoryear

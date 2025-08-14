@@ -59,7 +59,11 @@ keywords:
   - probability
   - statistical modeling
 abstract: |
- TO DO
+  Comparative judgment (CJ) data is often analyzed using the Bradley–Terry–Luce (BTL) model, which provides a straightforward method for measuring traits and conducting statistical inference. Despite its usefulness, research has shown that the BTL model can struggle to capture the complexity of some traits or stimuli, compromising the reliability and accuracy of trait estimates. Moreover, its requirement to separate trait measurement from hypothesis testing can further weaken the accuracy of statistical inferences. These limitations are especially evident in modern CJ applications, where several core assumptions of the model are rarely satisfied and robust statistical inference is often needed.
+  
+  To address these shortcomings, @Rivera_et_al_2025 proposed an approach that extends Thurstone's general form using causal and Bayesian inference methods. For measurement, the approach combines Thurstone's core theoretical principles with key CJ assessment design features to build a model consistent with assumptions about the data-generating process. For inference, it integrates measurement and hypothesis-testing within a single analytical framework, allowing for precise and accurate inferences from CJ data.
+  
+  This tutorial illustrates the application of the proposed approach to a simulated dataset on speech quality. It offers detailed guidance on model specification, estimation, and interpretation using the software `R` and `Stan`. The tutorial assumes familiarity with causal and Bayesian inference methods, as well as latent variable models. But does not require prior experience with CJ data or the software. By following the procedures here described, researchers can reproduce the analysis and adapt the approach to other CJ studies.
 date: last-modified
 bibliography: references.bib
 ---
@@ -68,8 +72,8 @@ bibliography: references.bib
 \newcommand{\dsep}{\:\bot\:}
 \newcommand{\ndsep}{\:\not\bot\:}
 
-
 # Introduction {#sec-introduction}
+
 
 # Data & Methods {#sec-data-methods}
 
