@@ -1,5 +1,5 @@
 ---
-title: "Advanced modeling of comparative judgment data: Applications to speech quality"
+title: "Bayesian modeling of comparative judgment data with Stan in R: A tutorial for speech quality researchers"
 author:
   - name: 
       given: Jose Manuel
@@ -75,6 +75,7 @@ bibliography: references.bib
 # Introduction {#sec-introduction}
 
 
+
 # Data & Methods {#sec-data-methods}
 
 # Discussion {#sec-discussion}
@@ -106,11 +107,11 @@ bibliography: references.bib
 
 **Data availability:** This study did not use any data.
 
-**Materials and code availability:** The `CODE LINK` section at the top of the digital document located at: [https://jriveraespejo.github.io/paper3_manuscript/](https://jriveraespejo.github.io/paper3_manuscript/) provides access to all materials and code.
+**Materials and code availability:** A previous version of this manuscript, along with the associated materials and code (see the section titled `CODE LINK`), has been made publicly available at: [https://jriveraespejo.github.io/paper3_manuscript/](https://jriveraespejo.github.io/paper3_manuscript/). 
 
 **AI-assisted technologies in the writing process:** The authors used various AI-based language tools to refine phrasing, optimize wording, and enhance clarity and coherence throughout the manuscript. They take full responsibility for the final content of the publication.
 
-**CRediT authorship contribution statement:** *Conceptualization:* J.M.R.E, T.vD., S.DM., and S.G.; *Methodology:* J.M.R.E, T.vD., and S.DM.; *Software:* J.M.R.E.; *Validation:* J.M.R.E.; *Formal Analysis:* J.M.R.E.; *Investigation:* J.M.R.E; *Resources:* T.vD. and S.DM.; *Data curation:* J.M.R.E., S.G.; *Writing - original draft:* J.M.R.E.; *Writing - review and editing:* T.vD., S.DM., and S.G.; *Visualization:* J.M.R.E.; *Supervision:* S.G. and S.DM.; *Project administration:* S.G. and S.DM.; *Funding acquisition:* S.G. and S.DM.
+**CRediT authorship contribution statement:** *Conceptualization:* J.M.R.E, T.vD., S.DM., and S.G.; *Methodology:* J.M.R.E, T.vD., and S.DM.; *Software:* J.M.R.E.; *Validation:* J.M.R.E.; *Formal Analysis:* J.M.R.E.; *Investigation:* J.M.R.E; *Resources:* T.vD. and S.DM.; *Data curation:* J.M.R.E.; *Writing - original draft:* J.M.R.E.; *Writing - review and editing:* J.M.R.E., T.vD., S.DM., and S.G.; *Visualization:* J.M.R.E.; *Supervision:* S.G. and S.DM.; *Project administration:* S.G. and S.DM.; *Funding acquisition:* S.G. and S.DM.
 
 <!-- **Acknowledgements:** -->
 
