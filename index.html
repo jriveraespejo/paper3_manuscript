@@ -10,7 +10,7 @@
 <meta name="author" content="Tine van Daal">
 <meta name="author" content="Sven De Maeyer">
 <meta name="author" content="Steven Gillis">
-<meta name="dcterms.date" content="2025-08-11">
+<meta name="dcterms.date" content="2025-08-14">
 <meta name="keywords" content="causal inference, directed acyclic graphs, structural causal models, bayesian statistical methods, thurstonian model, comparative judgement, probability, statistical modeling">
 
 <title>Advanced modeling of comparative judgment data: Applications to speech quality</title>
@@ -30,6 +30,7 @@ ul.task-list li input[type="checkbox"] {
 div.csl-bib-body { }
 div.csl-entry {
   clear: both;
+  margin-bottom: 0em;
 }
 .hanging-indent div.csl-entry {
   margin-left:2em;
@@ -69,17 +70,21 @@ div.csl-indent {
 
 
 <meta name="citation_title" content="Advanced modeling of comparative judgment data: Applications to speech quality">
-<meta name="citation_abstract" content="TO DO
+<meta name="citation_abstract" content="Comparative judgment (CJ) data is often analyzed using the Bradley–Terry–Luce (BTL) model, which provides a straightforward method for measuring traits and conducting statistical inference. Despite its usefulness, research has shown that the BTL model can struggle to capture the complexity of some traits or stimuli, compromising the reliability and accuracy of trait estimates. Moreover, its requirement to separate trait measurement from hypothesis testing can further weaken the accuracy of statistical inferences. These limitations are especially evident in modern CJ applications, where several core assumptions of the model are rarely satisfied and robust statistical inference is often needed.
+
+To address these shortcomings, @Rivera_et_al_2025 proposed an approach that extends Thurstone&amp;amp;#039;s general form using causal and Bayesian inference methods. For measurement, the approach combines Thurstone's core theoretical principles with key CJ assessment design features to build a model consistent with assumptions about the data-generating process. For inference, it integrates measurement and hypothesis-testing within a single analytical framework, allowing for precise and accurate inferences from CJ data.
+
+This tutorial illustrates the application of the proposed approach to a simulated dataset on speech quality. It offers detailed guidance on model specification, estimation, and interpretation using the software `R` and `Stan`. The tutorial assumes familiarity with causal and Bayesian inference methods, as well as latent variable models. But does not require prior experience with CJ data or the software. By following the procedures here described, researchers can reproduce the analysis and adapt the approach to other CJ studies.
 ">
 <meta name="citation_keywords" content="causal inference,directed acyclic graphs,structural causal models,bayesian statistical methods,thurstonian model,comparative judgement,probability,statistical modeling">
 <meta name="citation_author" content="Jose Manuel Rivera Espejo">
 <meta name="citation_author" content="Tine van Daal">
 <meta name="citation_author" content="Sven De Maeyer">
 <meta name="citation_author" content="Steven Gillis">
-<meta name="citation_publication_date" content="2025-08-11">
-<meta name="citation_cover_date" content="2025-08-11">
+<meta name="citation_publication_date" content="2025-08-14">
+<meta name="citation_cover_date" content="2025-08-14">
 <meta name="citation_year" content="2025">
-<meta name="citation_online_date" content="2025-08-11">
+<meta name="citation_online_date" content="2025-08-14">
 <meta name="citation_language" content="en">
 <meta name="citation_reference" content="citation_title=Correlation and causation;,citation_author=S. Wright;,citation_publication_date=1927;,citation_cover_date=1927;,citation_year=1927;,citation_fulltext_html_url=https://books.google.co.ao/books/about/Journal_of_Agricultural_Research.html?hl=pt-PT&amp;amp;amp;id=lNNdIV_qpwIC;,citation_issue=7;,citation_volume=20;,citation_journal_title=Correlation and causation;">
 <meta name="citation_reference" content="citation_title=On the interpretation of χ2 from contingency tables, and the calculation of p;,citation_author=R. Fisher;,citation_publication_date=1922;,citation_cover_date=1922;,citation_year=1922;,citation_fulltext_html_url=http://www.jstor.org/stable/2340521;,citation_issue=1;,citation_doi=10.2307/2340521;,citation_volume=85;,citation_journal_title=Journal of the Royal Statistical Society;,citation_publisher=[Wiley, Royal Statistical Society];">
@@ -375,6 +380,7 @@ div.csl-indent {
 <meta name="citation_reference" content="citation_title=Knitr: A general-purpose package for dynamic report generation in r;,citation_author=Y. Xie;,citation_publication_date=2024;,citation_cover_date=2024;,citation_year=2024;,citation_fulltext_html_url=https://yihui.org/knitr/;">
 <meta name="citation_reference" content="citation_title=kableExtra: Construct complex table with ’kable’ and pipe syntax;,citation_author=H. Zhu;,citation_publication_date=2024;,citation_cover_date=2024;,citation_year=2024;,citation_fulltext_html_url=https://haozhu233.github.io/kableExtra/;">
 <meta name="citation_reference" content="citation_title=Measurement error in dependent variables in accounting: Illustrations using google ticker search and simulations;,citation_author=E. deHaan;,citation_author=A. Lawrence;,citation_author=R. Litjens;,citation_publication_date=2019;,citation_cover_date=2019;,citation_year=2019;,citation_fulltext_html_url=https://papers.ssrn.com/sol3/papers.cfm?abstract_id=3398287;,citation_technical_report_institution=SSRN;">
+<meta name="citation_reference" content="citation_title=Let’s Talk about Thurstone &amp;amp;amp; Co.: An Information-Theoretical Model for Comparative Judgments, and Its Statistical Translation;,citation_author=J. M. Rivera;,citation_author=T. Daal;,citation_author=S. De Maeyer;,citation_author=S Gillis;,citation_publication_date=2025-08-13;,citation_cover_date=2025-08-13;,citation_year=2025;,citation_fulltext_html_url=https://jriveraespejo.github.io/paper2_manuscript/;,citation_language=en;">
 </head>
 
 <body class="quarto-light">
@@ -432,7 +438,7 @@ div.csl-indent {
                 <div>
             <div class="quarto-title-meta-heading">Published</div>
             <div class="quarto-title-meta-contents">
-              <p class="date">August 11, 2025</p>
+              <p class="date">August 14, 2025</p>
             </div>
           </div>
           
@@ -446,7 +452,9 @@ div.csl-indent {
     <div>
       <div class="abstract">
         <div class="block-title">Abstract</div>
-        <p>TO DO</p>
+        <p>Comparative judgment (CJ) data is often analyzed using the Bradley–Terry–Luce (BTL) model, which provides a straightforward method for measuring traits and conducting statistical inference. Despite its usefulness, research has shown that the BTL model can struggle to capture the complexity of some traits or stimuli, compromising the reliability and accuracy of trait estimates. Moreover, its requirement to separate trait measurement from hypothesis testing can further weaken the accuracy of statistical inferences. These limitations are especially evident in modern CJ applications, where several core assumptions of the model are rarely satisfied and robust statistical inference is often needed.</p>
+        <p>To address these shortcomings, <span class="citation" data-cites="Rivera_et_al_2025">Rivera et al. (<a href="#ref-Rivera_et_al_2025" role="doc-biblioref">2025</a>)</span> proposed an approach that extends Thurstone’s general form using causal and Bayesian inference methods. For measurement, the approach combines Thurstone’s core theoretical principles with key CJ assessment design features to build a model consistent with assumptions about the data-generating process. For inference, it integrates measurement and hypothesis-testing within a single analytical framework, allowing for precise and accurate inferences from CJ data.</p>
+        <p>This tutorial illustrates the application of the proposed approach to a simulated dataset on speech quality. It offers detailed guidance on model specification, estimation, and interpretation using the software <code>R</code> and <code>Stan</code>. The tutorial assumes familiarity with causal and Bayesian inference methods, as well as latent variable models. But does not require prior experience with CJ data or the software. By following the procedures here described, researchers can reproduce the analysis and adapt the approach to other CJ studies.</p>
       </div>
     </div>
 
@@ -527,22 +535,51 @@ div.csl-indent {
 <div style="page-break-after: always;"></div>
 </div></section><section id="references" class="level1 unnumbered appendix" data-appendix-style="plain"><h2 class="anchored quarto-appendix-heading">References</h2><div class="quarto-appendix-contents">
 
-<div id="refs" role="list">
-
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
+<div id="ref-Rivera_et_al_2025" class="csl-entry" role="listitem">
+Rivera, J. M., T. van Daal, S. De Maeyer, and S Gillis. 2025. <span>“Let’s Talk about Thurstone &amp; <span>Co.:</span> An Information-Theoretical Model for Comparative Judgments, and Its Statistical Translation.”</span> August 13, 2025. <a href="https://jriveraespejo.github.io/paper2_manuscript/">https://jriveraespejo.github.io/paper2_manuscript/</a>.
+</div>
 </div>
 </div></section><section class="quarto-appendix-contents" id="quarto-citation"><h2 class="anchored quarto-appendix-heading">Citation</h2><div><div class="quarto-appendix-secondary-label">BibTeX citation:</div><pre class="sourceCode code-with-copy quarto-appendix-bibtex"><code class="sourceCode bibtex">@online{rivera_espejo2025,
   author = {Rivera Espejo, Jose Manuel and van Daal, Tine and De Maeyer,
     Sven and Gillis, Steven},
   title = {Advanced Modeling of Comparative Judgment Data:
     {Applications} to Speech Quality},
-  date = {2025-08-11},
+  date = {2025-08-14},
   langid = {en},
-  abstract = {TO DO}
+  abstract = {Comparative judgment (CJ) data is often analyzed using the
+    Bradley–Terry–Luce (BTL) model, which provides a straightforward
+    method for measuring traits and conducting statistical inference.
+    Despite its usefulness, research has shown that the BTL model can
+    struggle to capture the complexity of some traits or stimuli,
+    compromising the reliability and accuracy of trait estimates.
+    Moreover, its requirement to separate trait measurement from
+    hypothesis testing can further weaken the accuracy of statistical
+    inferences. These limitations are especially evident in modern CJ
+    applications, where several core assumptions of the model are rarely
+    satisfied and robust statistical inference is often needed. To
+    address these shortcomings, @Rivera\_et\_al\_2025 proposed an
+    approach that extends Thurstone’s general form using causal and
+    Bayesian inference methods. For measurement, the approach combines
+    Thurstone’s core theoretical principles with key CJ assessment
+    design features to build a model consistent with assumptions about
+    the data-generating process. For inference, it integrates
+    measurement and hypothesis-testing within a single analytical
+    framework, allowing for precise and accurate inferences from CJ
+    data. This tutorial illustrates the application of the proposed
+    approach to a simulated dataset on speech quality. It offers
+    detailed guidance on model specification, estimation, and
+    interpretation using the software `R` and `Stan`. The tutorial
+    assumes familiarity with causal and Bayesian inference methods, as
+    well as latent variable models. But does not require prior
+    experience with CJ data or the software. By following the procedures
+    here described, researchers can reproduce the analysis and adapt the
+    approach to other CJ studies.}
 }
 </code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre><div class="quarto-appendix-secondary-label">For attribution, please cite this work as:</div><div id="ref-rivera_espejo2025" class="csl-entry quarto-appendix-citeas" role="listitem">
 Rivera Espejo, Jose Manuel, Tine van Daal, Sven De Maeyer, and Steven
 Gillis. 2025. <span>“Advanced Modeling of Comparative Judgment Data:
-Applications to Speech Quality.”</span> August 11, 2025.
+Applications to Speech Quality.”</span> August 14, 2025.
 </div></div></section></div></main>
 <!-- /main column -->
 <script id="quarto-html-after-body" type="application/javascript">
