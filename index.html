@@ -13,7 +13,7 @@
 <meta name="dcterms.date" content="2025-08-14">
 <meta name="keywords" content="causal inference, directed acyclic graphs, structural causal models, bayesian statistical methods, thurstonian model, comparative judgement, probability, statistical modeling">
 
-<title>Advanced modeling of comparative judgment data: Applications to speech quality</title>
+<title>Bayesian modeling of comparative judgment data with Stan in R: A tutorial for speech quality researchers</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -69,7 +69,7 @@ div.csl-indent {
 </script>
 
 
-<meta name="citation_title" content="Advanced modeling of comparative judgment data: Applications to speech quality">
+<meta name="citation_title" content="Bayesian modeling of comparative judgment data with Stan in R: A tutorial for speech quality researchers">
 <meta name="citation_abstract" content="Comparative judgment (CJ) data is often analyzed using the Bradley-Terry-Luce (BTL) model, which offers a straightforward method for measuring traits and conducting statistical inference. However, despite its usefulness, research has indicated that several core assumptions of the BTL model are rarely satisfied in modern CJ applications. As a result, the model may struggle to capture the complexity of some traits or stimuli, compromising the reliability and accuracy of trait estimates. Additionally, its requirement to separate trait measurement from hypothesis testing can further undermine the accuracy of statistical inferences drawn from such data.
 
 To address these limitations, @Rivera_et_al_2025 proposed an approach that extends Thurstone&amp;amp;#039;s general form using causal and Bayesian inference methods. This approach allows for the construction of a model specifically tailored to the assumptions of the CJ data under study. Furthermore, it integrates measurement and hypothesis testing within a single analytical framework, facilitating precise and accurate inferences from the data.
@@ -388,7 +388,7 @@ This tutorial illustrates the application of the proposed approach to a simulate
 <header id="title-block-header" class="quarto-title-block default toc-left page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
-      <h1 class="title">Advanced modeling of comparative judgment data: Applications to speech quality</h1>
+      <h1 class="title">Bayesian modeling of comparative judgment data with Stan in R: A tutorial for speech quality researchers</h1>
           </div>
 
     
@@ -527,9 +527,9 @@ This tutorial illustrates the application of the proposed approach to a simulate
 <p><strong>Consent to participate:</strong> Not applicable</p>
 <p><strong>Consent for publication:</strong> All authors have read and approved the final version of the manuscript for publication.</p>
 <p><strong>Data availability:</strong> This study did not use any data.</p>
-<p><strong>Materials and code availability:</strong> The <code>CODE LINK</code> section at the top of the digital document located at: <a href="https://jriveraespejo.github.io/paper3_manuscript/">https://jriveraespejo.github.io/paper3_manuscript/</a> provides access to all materials and code.</p>
+<p><strong>Materials and code availability:</strong> A previous version of this manuscript, along with the associated materials and code (see the section titled <code>CODE LINK</code>), has been made publicly available at: <a href="https://jriveraespejo.github.io/paper3_manuscript/">https://jriveraespejo.github.io/paper3_manuscript/</a>.</p>
 <p><strong>AI-assisted technologies in the writing process:</strong> The authors used various AI-based language tools to refine phrasing, optimize wording, and enhance clarity and coherence throughout the manuscript. They take full responsibility for the final content of the publication.</p>
-<p><strong>CRediT authorship contribution statement:</strong> <em>Conceptualization:</em> J.M.R.E, T.vD., S.DM., and S.G.; <em>Methodology:</em> J.M.R.E, T.vD., and S.DM.; <em>Software:</em> J.M.R.E.; <em>Validation:</em> J.M.R.E.; <em>Formal Analysis:</em> J.M.R.E.; <em>Investigation:</em> J.M.R.E; <em>Resources:</em> T.vD. and S.DM.; <em>Data curation:</em> J.M.R.E., S.G.; <em>Writing - original draft:</em> J.M.R.E.; <em>Writing - review and editing:</em> T.vD., S.DM., and S.G.; <em>Visualization:</em> J.M.R.E.; <em>Supervision:</em> S.G. and S.DM.; <em>Project administration:</em> S.G. and S.DM.; <em>Funding acquisition:</em> S.G. and S.DM.</p>
+<p><strong>CRediT authorship contribution statement:</strong> <em>Conceptualization:</em> J.M.R.E, T.vD., S.DM., and S.G.; <em>Methodology:</em> J.M.R.E, T.vD., and S.DM.; <em>Software:</em> J.M.R.E.; <em>Validation:</em> J.M.R.E.; <em>Formal Analysis:</em> J.M.R.E.; <em>Investigation:</em> J.M.R.E; <em>Resources:</em> T.vD. and S.DM.; <em>Data curation:</em> J.M.R.E.; <em>Writing - original draft:</em> J.M.R.E.; <em>Writing - review and editing:</em> J.M.R.E., T.vD., S.DM., and S.G.; <em>Visualization:</em> J.M.R.E.; <em>Supervision:</em> S.G. and S.DM.; <em>Project administration:</em> S.G. and S.DM.; <em>Funding acquisition:</em> S.G. and S.DM.</p>
 <!-- **Acknowledgements:** -->
 <div style="page-break-after: always;"></div>
 <div style="page-break-after: always;"></div>
@@ -543,8 +543,8 @@ Rivera, J. M., T. van Daal, S. De Maeyer, and S Gillis. 2025. <span>“Let’s T
 </div></section><section class="quarto-appendix-contents" id="quarto-citation"><h2 class="anchored quarto-appendix-heading">Citation</h2><div><div class="quarto-appendix-secondary-label">BibTeX citation:</div><pre class="sourceCode code-with-copy quarto-appendix-bibtex"><code class="sourceCode bibtex">@online{rivera_espejo2025,
   author = {Rivera Espejo, Jose Manuel and van Daal, Tine and De Maeyer,
     Sven and Gillis, Steven},
-  title = {Advanced Modeling of Comparative Judgment Data:
-    {Applications} to Speech Quality},
+  title = {Bayesian Modeling of Comparative Judgment Data with {Stan} in
+    {R:} {A} Tutorial for Speech Quality Researchers},
   date = {2025-08-14},
   langid = {en},
   abstract = {Comparative judgment (CJ) data is often analyzed using the
@@ -576,8 +576,9 @@ Rivera, J. M., T. van Daal, S. De Maeyer, and S Gillis. 2025. <span>“Let’s T
 }
 </code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre><div class="quarto-appendix-secondary-label">For attribution, please cite this work as:</div><div id="ref-rivera_espejo2025" class="csl-entry quarto-appendix-citeas" role="listitem">
 Rivera Espejo, Jose Manuel, Tine van Daal, Sven De Maeyer, and Steven
-Gillis. 2025. <span>“Advanced Modeling of Comparative Judgment Data:
-Applications to Speech Quality.”</span> August 14, 2025.
+Gillis. 2025. <span>“Bayesian Modeling of Comparative Judgment Data with
+Stan in R: A Tutorial for Speech Quality Researchers.”</span> August 14,
+2025.
 </div></div></section></div></main>
 <!-- /main column -->
 <script id="quarto-html-after-body" type="application/javascript">
