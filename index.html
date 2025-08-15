@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.8.19">
+<meta name="generator" content="quarto-1.8.20">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -10,8 +10,8 @@
 <meta name="author" content="Tine van Daal">
 <meta name="author" content="Sven De Maeyer">
 <meta name="author" content="Steven Gillis">
-<meta name="dcterms.date" content="2025-08-14">
-<meta name="keywords" content="causal inference, directed acyclic graphs, structural causal models, bayesian statistical methods, thurstonian model, comparative judgement, probability, statistical modeling">
+<meta name="dcterms.date" content="2025-08-15">
+<meta name="keywords" content="tutorial, causal inference, bayesian inference, thurstonian model, comparative judgement, statistical modeling">
 
 <title>Bayesian modeling of comparative judgment data with Stan in R: A tutorial for speech quality researchers</title>
 <style>
@@ -57,7 +57,7 @@ div.csl-indent {
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-46eeb4c476de49ef7df495821a6125d9.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-bd0f20613ab34a035844aaae9062fb4e.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="site_libs/bootstrap/bootstrap-5afeb32227a1df9bcc8f6dc34a320636.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
@@ -70,21 +70,21 @@ div.csl-indent {
 
 
 <meta name="citation_title" content="Bayesian modeling of comparative judgment data with Stan in R: A tutorial for speech quality researchers">
-<meta name="citation_abstract" content="Comparative judgment (CJ) data is often analyzed using the Bradley-Terry-Luce (BTL) model, which offers a straightforward method for measuring traits and conducting statistical inference. However, despite its usefulness, research has indicated that several core assumptions of the BTL model are rarely satisfied in modern CJ applications. As a result, the model may struggle to capture the complexity of some traits or stimuli, compromising the reliability and accuracy of trait estimates. Additionally, its requirement to separate trait measurement from hypothesis testing can further undermine the accuracy of statistical inferences drawn from such data.
+<meta name="citation_abstract" content="The Bradley-Terry-Luce (BTL) model is commonly used to analyze comparative judgment (CJ) data because it provides a simple method for measuring traits and conducting statistical inference. Its simplicity stems from two key features: (1) a reliance on an extensive set of simplifying assumptions about the traits, judges, and stimuli involved in CJ assessments; and (2) the use of ad hoc procedures to handle inferences, including hypothesis testing. However, recent literature questions whether these assumptions hold in modern CJ applications and whether the ad hoc procedures effectively fulfill their intended analytical purpose.
 
-To address these limitations, @Rivera_et_al_2025 proposed an approach that extends Thurstone&amp;amp;#039;s general form using causal and Bayesian inference methods. This approach allows for the construction of a model specifically tailored to the assumptions of the CJ data under study. Furthermore, it integrates measurement and hypothesis testing within a single analytical framework, facilitating precise and accurate inferences from the data.
+To address these concerns, @Rivera_et_al_2025 proposed an approach that extends the general form of Thurstone&amp;amp;#039;s law of comparative judgment. The approach enables the development of a model tailored to the assumed data-generating process of the CJ system under study, eliminating the need to rely on simplifying assumptions. Moreover, by integrating measurement and inference within a single analytical framework, the approach also removes the dependence on ad hoc hypothesis-testing procedures.
 
-This tutorial illustrates the application of the proposed approach to a simulated dataset on speech quality. It provides detailed guidance on data simulation, model specification, estimation, and interpretation using the software `R` and `Stan`. The tutorial assumes that researchers are familiar with causal and Bayesian inference methods, as well as latent variable models, but may not have prior experience with CJ data or the software. By following the procedures outlined here, researchers can reproduce the analysis and adapt the approach to other CJ studies.
+This tutorial illustrates the application of the proposed approach to a simulated dataset assessing speech quality. It offers detailed guidance on data simulation, model specification, estimation, and interpretation using the software `Stan` and `R`. While the tutorial assumes familiarity with CJ assessments, latent variable models, and causal inference, it does not require prior experience with Bayesian inference methods or the associated software. Ultimately, by following the outlined procedures, researchers can replicate this analysis and adapt the approach for more complex CJ studies.
 ">
-<meta name="citation_keywords" content="causal inference,directed acyclic graphs,structural causal models,bayesian statistical methods,thurstonian model,comparative judgement,probability,statistical modeling">
+<meta name="citation_keywords" content="tutorial,causal inference,bayesian inference,thurstonian model,comparative judgement,statistical modeling">
 <meta name="citation_author" content="Jose Manuel Rivera Espejo">
 <meta name="citation_author" content="Tine van Daal">
 <meta name="citation_author" content="Sven De Maeyer">
 <meta name="citation_author" content="Steven Gillis">
-<meta name="citation_publication_date" content="2025-08-14">
-<meta name="citation_cover_date" content="2025-08-14">
+<meta name="citation_publication_date" content="2025-08-15">
+<meta name="citation_cover_date" content="2025-08-15">
 <meta name="citation_year" content="2025">
-<meta name="citation_online_date" content="2025-08-14">
+<meta name="citation_online_date" content="2025-08-15">
 <meta name="citation_language" content="en">
 <meta name="citation_reference" content="citation_title=Correlation and causation;,citation_author=S. Wright;,citation_publication_date=1927;,citation_cover_date=1927;,citation_year=1927;,citation_fulltext_html_url=https://books.google.co.ao/books/about/Journal_of_Agricultural_Research.html?hl=pt-PT&amp;amp;amp;id=lNNdIV_qpwIC;,citation_issue=7;,citation_volume=20;,citation_journal_title=Correlation and causation;">
 <meta name="citation_reference" content="citation_title=On the interpretation of χ2 from contingency tables, and the calculation of p;,citation_author=R. Fisher;,citation_publication_date=1922;,citation_cover_date=1922;,citation_year=1922;,citation_fulltext_html_url=http://www.jstor.org/stable/2340521;,citation_issue=1;,citation_doi=10.2307/2340521;,citation_volume=85;,citation_journal_title=Journal of the Royal Statistical Society;,citation_publisher=[Wiley, Royal Statistical Society];">
@@ -438,7 +438,7 @@ This tutorial illustrates the application of the proposed approach to a simulate
                 <div>
             <div class="quarto-title-meta-heading">Published</div>
             <div class="quarto-title-meta-contents">
-              <p class="date">August 14, 2025</p>
+              <p class="date">August 15, 2025</p>
             </div>
           </div>
           
@@ -452,16 +452,16 @@ This tutorial illustrates the application of the proposed approach to a simulate
     <div>
       <div class="abstract">
         <div class="block-title">Abstract</div>
-        <p>Comparative judgment (CJ) data is often analyzed using the Bradley-Terry-Luce (BTL) model, which offers a straightforward method for measuring traits and conducting statistical inference. However, despite its usefulness, research has indicated that several core assumptions of the BTL model are rarely satisfied in modern CJ applications. As a result, the model may struggle to capture the complexity of some traits or stimuli, compromising the reliability and accuracy of trait estimates. Additionally, its requirement to separate trait measurement from hypothesis testing can further undermine the accuracy of statistical inferences drawn from such data.</p>
-        <p>To address these limitations, <span class="citation" data-cites="Rivera_et_al_2025">Rivera et al. (<a href="#ref-Rivera_et_al_2025" role="doc-biblioref">2025</a>)</span> proposed an approach that extends Thurstone’s general form using causal and Bayesian inference methods. This approach allows for the construction of a model specifically tailored to the assumptions of the CJ data under study. Furthermore, it integrates measurement and hypothesis testing within a single analytical framework, facilitating precise and accurate inferences from the data.</p>
-        <p>This tutorial illustrates the application of the proposed approach to a simulated dataset on speech quality. It provides detailed guidance on data simulation, model specification, estimation, and interpretation using the software <code>R</code> and <code>Stan</code>. The tutorial assumes that researchers are familiar with causal and Bayesian inference methods, as well as latent variable models, but may not have prior experience with CJ data or the software. By following the procedures outlined here, researchers can reproduce the analysis and adapt the approach to other CJ studies.</p>
+        <p>The Bradley-Terry-Luce (BTL) model is commonly used to analyze comparative judgment (CJ) data because it provides a simple method for measuring traits and conducting statistical inference. Its simplicity stems from two key features: (1) a reliance on an extensive set of simplifying assumptions about the traits, judges, and stimuli involved in CJ assessments; and (2) the use of ad hoc procedures to handle inferences, including hypothesis testing. However, recent literature questions whether these assumptions hold in modern CJ applications and whether the ad hoc procedures effectively fulfill their intended analytical purpose.</p>
+        <p>To address these concerns, <span class="citation" data-cites="Rivera_et_al_2025">Rivera et al. (<a href="#ref-Rivera_et_al_2025" role="doc-biblioref">2025</a>)</span> proposed an approach that extends the general form of Thurstone’s law of comparative judgment. The approach enables the development of a model tailored to the assumed data-generating process of the CJ system under study, eliminating the need to rely on simplifying assumptions. Moreover, by integrating measurement and inference within a single analytical framework, the approach also removes the dependence on ad hoc hypothesis-testing procedures.</p>
+        <p>This tutorial illustrates the application of the proposed approach to a simulated dataset assessing speech quality. It offers detailed guidance on data simulation, model specification, estimation, and interpretation using the software <code>Stan</code> and <code>R</code>. While the tutorial assumes familiarity with CJ assessments, latent variable models, and causal inference, it does not require prior experience with Bayesian inference methods or the associated software. Ultimately, by following the outlined procedures, researchers can replicate this analysis and adapt the approach for more complex CJ studies.</p>
       </div>
     </div>
 
     <div>
       <div class="keywords">
         <div class="block-title">Keywords</div>
-        <p>causal inference, directed acyclic graphs, structural causal models, bayesian statistical methods, thurstonian model, comparative judgement, probability, statistical modeling</p>
+        <p>tutorial, causal inference, bayesian inference, thurstonian model, comparative judgement, statistical modeling</p>
       </div>
     </div>
 
@@ -474,13 +474,20 @@ This tutorial illustrates the application of the proposed approach to a simulate
    
   <ul>
   <li><a href="#sec-introduction" id="toc-sec-introduction" class="nav-link active" data-scroll-target="#sec-introduction"><span class="header-section-number">1</span> Introduction</a></li>
-  <li><a href="#sec-data-methods" id="toc-sec-data-methods" class="nav-link" data-scroll-target="#sec-data-methods"><span class="header-section-number">2</span> Data &amp; Methods</a></li>
-  <li><a href="#sec-discussion" id="toc-sec-discussion" class="nav-link" data-scroll-target="#sec-discussion"><span class="header-section-number">3</span> Discussion</a>
+  <li><a href="#sec-methods" id="toc-sec-methods" class="nav-link" data-scroll-target="#sec-methods"><span class="header-section-number">2</span> Methods</a>
   <ul>
-  <li><a href="#sec-discussion_RD" id="toc-sec-discussion_RD" class="nav-link" data-scroll-target="#sec-discussion_RD"><span class="header-section-number">3.1</span> Future research directions</a></li>
-  <li><a href="#sec-discussion_limitations" id="toc-sec-discussion_limitations" class="nav-link" data-scroll-target="#sec-discussion_limitations"><span class="header-section-number">3.2</span> Study limitations</a></li>
+  <li><a href="#sec-model" id="toc-sec-model" class="nav-link" data-scroll-target="#sec-model"><span class="header-section-number">2.1</span> Model specification</a></li>
+  <li><a href="#sec-simulation" id="toc-sec-simulation" class="nav-link" data-scroll-target="#sec-simulation"><span class="header-section-number">2.2</span> Dataset simulation</a></li>
+  <li><a href="#sec-inference" id="toc-sec-inference" class="nav-link" data-scroll-target="#sec-inference"><span class="header-section-number">2.3</span> Inference procedure</a></li>
+  <li><a href="#sec-evaluation" id="toc-sec-evaluation" class="nav-link" data-scroll-target="#sec-evaluation"><span class="header-section-number">2.4</span> Evaluation metrics</a></li>
   </ul></li>
-  <li><a href="#sec-conclusion" id="toc-sec-conclusion" class="nav-link" data-scroll-target="#sec-conclusion"><span class="header-section-number">4</span> Conclusion</a></li>
+  <li><a href="#sec-results" id="toc-sec-results" class="nav-link" data-scroll-target="#sec-results"><span class="header-section-number">3</span> Results</a></li>
+  <li><a href="#sec-discussion" id="toc-sec-discussion" class="nav-link" data-scroll-target="#sec-discussion"><span class="header-section-number">4</span> Discussion</a>
+  <ul>
+  <li><a href="#sec-discussion_RD" id="toc-sec-discussion_RD" class="nav-link" data-scroll-target="#sec-discussion_RD"><span class="header-section-number">4.1</span> Future research directions</a></li>
+  <li><a href="#sec-discussion_limitations" id="toc-sec-discussion_limitations" class="nav-link" data-scroll-target="#sec-discussion_limitations"><span class="header-section-number">4.2</span> Study limitations</a></li>
+  </ul></li>
+  <li><a href="#sec-conclusion" id="toc-sec-conclusion" class="nav-link" data-scroll-target="#sec-conclusion"><span class="header-section-number">5</span> Conclusion</a></li>
   
   
   </ul>
@@ -496,23 +503,56 @@ This tutorial illustrates the application of the proposed approach to a simulate
 
 
 <!-- commands for d-separation -->
+<!-- ######################################### -->
 <section id="sec-introduction" class="level1" data-number="1">
 <h1 data-number="1"><span class="header-section-number">1</span> Introduction</h1>
+<!-- 1. What is the CJ? -->
+<p>Comparative judgment (CJ) is an assessment method in which judges evaluate a trait or attribute across different stimuli using pairwise comparisons <span class="citation" data-cites="Thurstone_1927a Thurstone_1927b">(<a href="#ref-Thurstone_1927a" role="doc-biblioref">Thurstone 1927b</a>, <a href="#ref-Thurstone_1927b" role="doc-biblioref">1927a</a>)</span>. Each comparison generates a dichotomous outcome that indicates which stimulus is perceived to exhibit a higher attribute level. For instance, judges might compare pairs of short speech samples (the stimuli) to evaluate the relative speech quality (the trait) of hearing-impaired children (HI) versus children with normal hearing (NH) <span class="citation" data-cites="Boonen_et_al_2020">(<a href="#ref-Boonen_et_al_2020" role="doc-biblioref">Boonen, Kloots, and Gillis 2020</a>)</span>.</p>
+<!-- 2. How does CJ data is analyzed? -->
+<p>The Bradley-Terry-Luce (BTL) model <span class="citation" data-cites="Bradley_et_al_1952 Luce_1959">(<a href="#ref-Bradley_et_al_1952" role="doc-biblioref">Bradley and Terry 1952</a>; <a href="#ref-Luce_1959" role="doc-biblioref">Luce 1959</a>)</span> is commonly used to analyze CJ data because it provides a simple method for measuring traits and conducting statistical inference <span class="citation" data-cites="Andrich_1978 Pollitt_2012b">(<a href="#ref-Andrich_1978" role="doc-biblioref">Andrich 1978</a>; <a href="#ref-Pollitt_2012b" role="doc-biblioref">Pollitt 2012</a>)</span>. The method’s simplicity stems from two key features. First, it relies on strong assumptions about the traits, judges, and stimuli involved in CJ assessments <span class="citation" data-cites="Thurstone_1927b Bramley_2008">(<a href="#ref-Thurstone_1927b" role="doc-biblioref">Thurstone 1927a</a>; <a href="#ref-Bramley_2008" role="doc-biblioref">Bramley 2008</a>)</span>. Second, it employs ad hoc procedures to handle inferences, including hypothesis testing <span class="citation" data-cites="Pollitt_2012b">(<a href="#ref-Pollitt_2012b" role="doc-biblioref">Pollitt 2012</a>)</span>.</p>
+<!-- 3. But what is the problem with using the BTL model? -->
+<p>However, recent studies question whether these assumptions hold in modern CJ applications <span class="citation" data-cites="Bramley_2008 Kelly_et_al_2022 Rivera_et_al_2025">(<a href="#ref-Bramley_2008" role="doc-biblioref">Bramley 2008</a>; <a href="#ref-Kelly_et_al_2022" role="doc-biblioref">Kelly, Richardson, and Isaacs 2022</a>; <a href="#ref-Rivera_et_al_2025" role="doc-biblioref">Rivera et al. 2025</a>)</span> and whether the ad hoc procedures achieve their intended analytical purpose <span class="citation" data-cites="Kelly_et_al_2022 Rivera_et_al_2025">(<a href="#ref-Kelly_et_al_2022" role="doc-biblioref">Kelly, Richardson, and Isaacs 2022</a>; <a href="#ref-Rivera_et_al_2025" role="doc-biblioref">Rivera et al. 2025</a>)</span>. For instance, <span class="citation" data-cites="Rivera_et_al_2025">Rivera et al. (<a href="#ref-Rivera_et_al_2025" role="doc-biblioref">2025, 2</a>)</span> argues that while assuming equal dispersions and zero correlation between stimuli simplifies the trait measurement model, these assumptions may fail to capture the complexity of some traits or account for heterogeneous stimuli <span class="citation" data-cites="Thurstone_1927a Andrich_1978 vanDaal_et_al_2016 Lesterhuis_et_al_2018 Chambers_et_al_2022">(<a href="#ref-Thurstone_1927a" role="doc-biblioref">Thurstone 1927b</a>; <a href="#ref-Andrich_1978" role="doc-biblioref">Andrich 1978</a>; <a href="#ref-vanDaal_et_al_2016" role="doc-biblioref">van Daal et al. 2016</a>; <a href="#ref-Lesterhuis_et_al_2018" role="doc-biblioref">Lesterhuis et al. 2018</a>; <a href="#ref-Chambers_et_al_2022" role="doc-biblioref">Chambers and Cunningham 2022</a>)</span>. As a result, they can compromise the reliability and accuracy of trait estimates <span class="citation" data-cites="Ackerman_1989 Zimmerman_1994 McElreath_2020 Wu_et_al_2022 Miller_2023 Hoyle_et_al_2023">(<a href="#ref-Ackerman_1989" role="doc-biblioref">Ackerman 1989</a>; <a href="#ref-Zimmerman_1994" role="doc-biblioref">Zimmerman 1994</a>; <a href="#ref-McElreath_2020" role="doc-biblioref">McElreath 2020</a>; <a href="#ref-Wu_et_al_2022" role="doc-biblioref">Wu, Niezink, and Junker 2022</a>; <a href="#ref-Miller_2023" role="doc-biblioref">Miller 2023</a>; <a href="#ref-Hoyle_et_al_2023" role="doc-biblioref">Hoyle 2023</a>)</span>. Moreover, the same authors note that although ad hoc procedures simplify CJ data analysis, relying on untested methods can also undermine the validity of statistical inferences drawn from the data <span class="citation" data-cites="McElreath_2020 Kline_et_al_2023 Hoyle_et_al_2023">(<a href="#ref-McElreath_2020" role="doc-biblioref">McElreath 2020</a>; <a href="#ref-Kline_et_al_2023" role="doc-biblioref">Kline 2023</a>; <a href="#ref-Hoyle_et_al_2023" role="doc-biblioref">Hoyle 2023</a>)</span>.</p>
+<!-- 4. How it has been solved? -->
+<p>To address these concerns, <span class="citation" data-cites="Rivera_et_al_2025">Rivera et al. (<a href="#ref-Rivera_et_al_2025" role="doc-biblioref">2025</a>)</span> proposed an approach that extends the general form of Thurstone’s law of comparative judgment <span class="citation" data-cites="Thurstone_1927a Thurstone_1927b">(<a href="#ref-Thurstone_1927a" role="doc-biblioref">Thurstone 1927b</a>, <a href="#ref-Thurstone_1927b" role="doc-biblioref">1927a</a>)</span> using causal and Bayesian inference methods. The approach combines Thurstone’s core theoretical principles with key CJ assessment design features, enabling the development of a model tailored to the assumed data-generating process of the CJ system under study. This tailoring effectively eliminates the need for simplifying assumptions. Furthermore, by integrating measurement and inference within a single analytical framework, the approach also removes the dependence on ad hoc procedures. Ultimately, the approach has the potential to yield reliable trait estimates and accurate statistical inferences, although this promise still needs to be empirically tested.</p>
+<!-- 5. So, what are we going to do? -->
+<p>Thus, this tutorial applies the proposed approach to a simulated dataset on speech quality to evaluate whether the approach’s promise holds in practice. <span style="color:blue;">Specifically, we are interested in</span>. At the same time, it provides detailed guidance on data simulation, model specification, estimation, and interpretation using the software <code>Stan</code> and <code>R</code>. Notably, while the tutorial assumes familiarity with CJ assessments, latent variable models, and causal inference, it does not require prior experience with Bayesian inference methods or the associated software. Ultimately, by following the procedures here outlined, researchers can replicate the analysis and adapt the approach to more complex CJ studies.</p>
+<!-- 6. what is the organization of the manuscript? -->
+<p>The remainder of this manuscript is organized into four sections. <a href="#sec-methods" class="quarto-xref">Section&nbsp;2</a> provides a description of the model specification, the dataset simulation, inference procedure and evaluation metrics for the research question. <a href="#sec-results" class="quarto-xref">Section&nbsp;3</a> summarizes the analysis, including parameter estimates, credible intervals, and comparisons with standard BTL model. <a href="#sec-discussion" class="quarto-xref">Section&nbsp;4</a> reviews the findings, outline directions for future research, and discusses the study’s limitations. Finally, <a href="#sec-conclusion" class="quarto-xref">Section&nbsp;5</a> provides the concluding remarks.</p>
+<!-- ######################################### -->
 </section>
-<section id="sec-data-methods" class="level1" data-number="2">
-<h1 data-number="2"><span class="header-section-number">2</span> Data &amp; Methods</h1>
+<section id="sec-methods" class="level1" data-number="2">
+<h1 data-number="2"><span class="header-section-number">2</span> Methods</h1>
+<section id="sec-model" class="level2" data-number="2.1">
+<h2 data-number="2.1" class="anchored" data-anchor-id="sec-model"><span class="header-section-number">2.1</span> Model specification</h2>
 </section>
-<section id="sec-discussion" class="level1" data-number="3">
-<h1 data-number="3"><span class="header-section-number">3</span> Discussion</h1>
-<section id="sec-discussion_RD" class="level2" data-number="3.1">
-<h2 data-number="3.1" class="anchored" data-anchor-id="sec-discussion_RD"><span class="header-section-number">3.1</span> Future research directions</h2>
+<section id="sec-simulation" class="level2" data-number="2.2">
+<h2 data-number="2.2" class="anchored" data-anchor-id="sec-simulation"><span class="header-section-number">2.2</span> Dataset simulation</h2>
 </section>
-<section id="sec-discussion_limitations" class="level2" data-number="3.2">
-<h2 data-number="3.2" class="anchored" data-anchor-id="sec-discussion_limitations"><span class="header-section-number">3.2</span> Study limitations</h2>
+<section id="sec-inference" class="level2" data-number="2.3">
+<h2 data-number="2.3" class="anchored" data-anchor-id="sec-inference"><span class="header-section-number">2.3</span> Inference procedure</h2>
+</section>
+<section id="sec-evaluation" class="level2" data-number="2.4">
+<h2 data-number="2.4" class="anchored" data-anchor-id="sec-evaluation"><span class="header-section-number">2.4</span> Evaluation metrics</h2>
+<!-- ######################################### -->
 </section>
 </section>
-<section id="sec-conclusion" class="level1" data-number="4">
-<h1 data-number="4"><span class="header-section-number">4</span> Conclusion</h1>
+<section id="sec-results" class="level1" data-number="3">
+<h1 data-number="3"><span class="header-section-number">3</span> Results</h1>
+<!-- ######################################### -->
+</section>
+<section id="sec-discussion" class="level1" data-number="4">
+<h1 data-number="4"><span class="header-section-number">4</span> Discussion</h1>
+<section id="sec-discussion_RD" class="level2" data-number="4.1">
+<h2 data-number="4.1" class="anchored" data-anchor-id="sec-discussion_RD"><span class="header-section-number">4.1</span> Future research directions</h2>
+</section>
+<section id="sec-discussion_limitations" class="level2" data-number="4.2">
+<h2 data-number="4.2" class="anchored" data-anchor-id="sec-discussion_limitations"><span class="header-section-number">4.2</span> Study limitations</h2>
+<!-- ######################################### -->
+</section>
+</section>
+<section id="sec-conclusion" class="level1" data-number="5">
+<h1 data-number="5"><span class="header-section-number">5</span> Conclusion</h1>
+<!-- ######################################### -->
 <div style="page-break-after: always;"></div>
 </section>
 
@@ -536,8 +576,65 @@ This tutorial illustrates the application of the proposed approach to a simulate
 </div></section><section id="references" class="level1 unnumbered appendix" data-appendix-style="plain"><h2 class="anchored quarto-appendix-heading">References</h2><div class="quarto-appendix-contents">
 
 <div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
+<div id="ref-Ackerman_1989" class="csl-entry" role="listitem">
+Ackerman, T. 1989. <span>“Unidimensional IRT Calibration of Compensatory and Noncompensatory Multidimensional Items.”</span> <em>Applied Psychological Measurement</em> 13 (2): 113–27. <a href="https://doi.org/10.1177/014662168901300201">https://doi.org/10.1177/014662168901300201</a>.
+</div>
+<div id="ref-Andrich_1978" class="csl-entry" role="listitem">
+Andrich, D. 1978. <span>“Relationships Between the Thurstone and Rasch Approaches to Item Scaling.”</span> <em>Applied Psychological Measurement</em> 2 (3): 451–62. <a href="https://doi.org/10.1177/014662167800200319">https://doi.org/10.1177/014662167800200319</a>.
+</div>
+<div id="ref-Boonen_et_al_2020" class="csl-entry" role="listitem">
+Boonen, N., H. Kloots, and S. Gillis. 2020. <span>“Rating the Overall Speech Quality of Hearing-Impaired Children by Means of Comparative Judgements.”</span> <em>Journal of Communication Disorders</em> 83: 1675–87. <a href="https://doi.org/10.1016/j.jcomdis.2019.105969">https://doi.org/10.1016/j.jcomdis.2019.105969</a>.
+</div>
+<div id="ref-Bradley_et_al_1952" class="csl-entry" role="listitem">
+Bradley, R., and M. Terry. 1952. <span>“Rank Analysis of Incomplete Block Designs: I. The Method of Paired Comparisons.”</span> <em>Biometrika</em> 39 (3-4): 324–45. <a href="https://doi.org/10.2307/2334029">https://doi.org/10.2307/2334029</a>.
+</div>
+<div id="ref-Bramley_2008" class="csl-entry" role="listitem">
+Bramley, T. 2008. <span>“Paired Comparison Methods.”</span> In <em>Techniques for Monitoring the Comparability of Examination Standards</em>, edited by P. Newton, J. Baird, H. Goldsteing, H. Patrick, and P. Tymms, 246--300. GOV.UK. <a href="https://assets.publishing.service.gov.uk/media/5a80d75940f0b62305b8d734/2007-comparability-exam-standards-i-chapter7.pdf">https://assets.publishing.service.gov.uk/media/5a80d75940f0b62305b8d734/2007-comparability-exam-standards-i-chapter7.pdf</a>.
+</div>
+<div id="ref-Chambers_et_al_2022" class="csl-entry" role="listitem">
+Chambers, L., and E. Cunningham. 2022. <span>“Exploring the Validity of Comparative Judgement: Do Judges Attend to Construct-Irrelevant Features?”</span> <em>Frontiers in Education</em>. <a href="https://doi.org/10.3389/feduc.2022.802392">https://doi.org/10.3389/feduc.2022.802392</a>.
+</div>
+<div id="ref-Hoyle_et_al_2023" class="csl-entry" role="listitem">
+Hoyle, R. (eds.). 2023. <em><a href="">Handbook of Structural Equation Modeling</a></em>. Guilford Press.
+</div>
+<div id="ref-Kelly_et_al_2022" class="csl-entry" role="listitem">
+Kelly, K., M. Richardson, and T. Isaacs. 2022. <span>“Critiquing the Rationales for Using Comparative Judgement: A Call for Clarity.”</span> <em>Assessment in Education: Principles, Policy &amp; Practice</em> 29 (6): 674–88. <a href="https://doi.org/10.1080/0969594X.2022.2147901">https://doi.org/10.1080/0969594X.2022.2147901</a>.
+</div>
+<div id="ref-Kline_et_al_2023" class="csl-entry" role="listitem">
+Kline, R. 2023. <em><a href="">Principles and Practice of Structural Equation Modeling</a></em>. Methodology in the Social Sciences. Guilford Press.
+</div>
+<div id="ref-Lesterhuis_et_al_2018" class="csl-entry" role="listitem">
+Lesterhuis, M., T. van Daal, R. Van Gasse, L. Coertjens, V. Donche, and S. De Maeyer. 2018. <span>“When Teachers Compare Argumentative Texts: Decisions Informed by Multiple Complex Aspects of Text Quality.”</span> <em>L1-Educational Studies in Language and Literature</em> 18 (1): 1–22. <a href="https://doi.org/10.17239/L1ESLL-2018.18.01.02">https://doi.org/10.17239/L1ESLL-2018.18.01.02</a>.
+</div>
+<div id="ref-Luce_1959" class="csl-entry" role="listitem">
+Luce, R. 1959. <span>“On the Possible Psychophysical Laws.”</span> <em>The Psychologcal Review</em> 66 (2): 482–99. <a href="https://doi.org/10.1037/h0043178">https://doi.org/10.1037/h0043178</a>.
+</div>
+<div id="ref-McElreath_2020" class="csl-entry" role="listitem">
+McElreath, R. 2020. <em>Statistical Rethinking: A Bayesian Course with Examples in r and STAN</em>. Chapman; Hall/CRC. https://doi.org/<a href="https://doi.org/10.1201/9780429029608">https://doi.org/10.1201/9780429029608</a>.
+</div>
+<div id="ref-Miller_2023" class="csl-entry" role="listitem">
+Miller, J. 2023. <span>“Outlier Exclusion Procedures for Reaction Time Analysis: The Cures Are Generally Worse Than the Disease.”</span> <em>Journal of Experimental Psychology: General</em> 152 (11): 3189–3217. <a href="https://doi.org/10.1037/xge0001450">https://doi.org/10.1037/xge0001450</a>.
+</div>
+<div id="ref-Pollitt_2012b" class="csl-entry" role="listitem">
+Pollitt, A. 2012. <span>“The Method of Adaptive Comparative Judgement.”</span> <em>Assessment in Education: Principles, Policy and Practice</em> 19 (3): 281--300. <a href="https://doi.org/10.1080/0969594X.2012.665354">https://doi.org/10.1080/0969594X.2012.665354</a>.
+</div>
 <div id="ref-Rivera_et_al_2025" class="csl-entry" role="listitem">
 Rivera, J. M., T. van Daal, S. De Maeyer, and S Gillis. 2025. <span>“Let’s Talk about Thurstone &amp; <span>Co.:</span> An Information-Theoretical Model for Comparative Judgments, and Its Statistical Translation.”</span> August 13, 2025. <a href="https://jriveraespejo.github.io/paper2_manuscript/">https://jriveraespejo.github.io/paper2_manuscript/</a>.
+</div>
+<div id="ref-Thurstone_1927b" class="csl-entry" role="listitem">
+Thurstone, L. 1927a. <span>“A Law of Comparative Judgment.”</span> <em>Psychological Review</em> 34 (4): 482–99. <a href="https://doi.org/10.1037/h0070288">https://doi.org/10.1037/h0070288</a>.
+</div>
+<div id="ref-Thurstone_1927a" class="csl-entry" role="listitem">
+———. 1927b. <span>“Psychophysical Analysis.”</span> <em>American Journal of Psychology</em>, no. 38: 368–89. <a href="https://brocku.ca/MeadProject/Thurstone/Thurstone_1927g.html">https://brocku.ca/MeadProject/Thurstone/Thurstone_1927g.html</a>.
+</div>
+<div id="ref-vanDaal_et_al_2016" class="csl-entry" role="listitem">
+van Daal, T., M. Lesterhuis, L. Coertjens, V. Donche, and S. De Maeyer. 2016. <span>“Validity of Comparative Judgement to Assess Academic Writing: Examining Implications of Its Holistic Character and Building on a Shared Consensus.”</span> <em>Assessment in Education: Principles, Policy &amp; Practice</em> 26 (1): 59–74. <a href="https://doi.org/10.1080/0969594X.2016.1253542">https://doi.org/10.1080/0969594X.2016.1253542</a>.
+</div>
+<div id="ref-Wu_et_al_2022" class="csl-entry" role="listitem">
+Wu, W., N. Niezink, and B. Junker. 2022. <span>“A Diagnostic Framework for the Bradley–Terry Model.”</span> <em>Journal of the Royal Statistical Society Series A: Statistics in Society</em> 185 (Supplement_2): S461–84. <a href="https://doi.org/10.1111/rssa.12959">https://doi.org/10.1111/rssa.12959</a>.
+</div>
+<div id="ref-Zimmerman_1994" class="csl-entry" role="listitem">
+Zimmerman, D. 1994. <span>“A Note on the Influence of Outliers on Parametric and Nonparametric Tests.”</span> <em>The Journal of General Psychology</em> 121 (4): 391–401. <a href="https://doi.org/10.1080/00221309.1994.9921213">https://doi.org/10.1080/00221309.1994.9921213</a>.
 </div>
 </div>
 </div></section><section class="quarto-appendix-contents" id="quarto-citation"><h2 class="anchored quarto-appendix-heading">Citation</h2><div><div class="quarto-appendix-secondary-label">BibTeX citation:</div><pre class="sourceCode code-with-copy quarto-appendix-bibtex"><code class="sourceCode bibtex">@online{rivera_espejo2025,
@@ -545,39 +642,40 @@ Rivera, J. M., T. van Daal, S. De Maeyer, and S Gillis. 2025. <span>“Let’s T
     Sven and Gillis, Steven},
   title = {Bayesian Modeling of Comparative Judgment Data with {Stan} in
     {R:} {A} Tutorial for Speech Quality Researchers},
-  date = {2025-08-14},
+  date = {2025-08-15},
   langid = {en},
-  abstract = {Comparative judgment (CJ) data is often analyzed using the
-    Bradley-Terry-Luce (BTL) model, which offers a straightforward
+  abstract = {The Bradley-Terry-Luce (BTL) model is commonly used to
+    analyze comparative judgment (CJ) data because it provides a simple
     method for measuring traits and conducting statistical inference.
-    However, despite its usefulness, research has indicated that several
-    core assumptions of the BTL model are rarely satisfied in modern CJ
-    applications. As a result, the model may struggle to capture the
-    complexity of some traits or stimuli, compromising the reliability
-    and accuracy of trait estimates. Additionally, its requirement to
-    separate trait measurement from hypothesis testing can further
-    undermine the accuracy of statistical inferences drawn from such
-    data. To address these limitations, @Rivera\_et\_al\_2025 proposed
-    an approach that extends Thurstone’s general form using causal and
-    Bayesian inference methods. This approach allows for the
-    construction of a model specifically tailored to the assumptions of
-    the CJ data under study. Furthermore, it integrates measurement and
-    hypothesis testing within a single analytical framework,
-    facilitating precise and accurate inferences from the data. This
-    tutorial illustrates the application of the proposed approach to a
-    simulated dataset on speech quality. It provides detailed guidance
-    on data simulation, model specification, estimation, and
-    interpretation using the software `R` and `Stan`. The tutorial
-    assumes that researchers are familiar with causal and Bayesian
-    inference methods, as well as latent variable models, but may not
-    have prior experience with CJ data or the software. By following the
-    procedures outlined here, researchers can reproduce the analysis and
-    adapt the approach to other CJ studies.}
+    Its simplicity stems from two key features: (1) a reliance on an
+    extensive set of simplifying assumptions about the traits, judges,
+    and stimuli involved in CJ assessments; and (2) the use of ad hoc
+    procedures to handle inferences, including hypothesis testing.
+    However, recent literature questions whether these assumptions hold
+    in modern CJ applications and whether the ad hoc procedures
+    effectively fulfill their intended analytical purpose. To address
+    these concerns, @Rivera\_et\_al\_2025 proposed an approach that
+    extends the general form of Thurstone’s law of comparative judgment.
+    The approach enables the development of a model tailored to the
+    assumed data-generating process of the CJ system under study,
+    eliminating the need to rely on simplifying assumptions. Moreover,
+    by integrating measurement and inference within a single analytical
+    framework, the approach also removes the dependence on ad hoc
+    hypothesis-testing procedures. This tutorial illustrates the
+    application of the proposed approach to a simulated dataset
+    assessing speech quality. It offers detailed guidance on data
+    simulation, model specification, estimation, and interpretation
+    using the software `Stan` and `R`. While the tutorial assumes
+    familiarity with CJ assessments, latent variable models, and causal
+    inference, it does not require prior experience with Bayesian
+    inference methods or the associated software. Ultimately, by
+    following the outlined procedures, researchers can replicate this
+    analysis and adapt the approach for more complex CJ studies.}
 }
 </code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre><div class="quarto-appendix-secondary-label">For attribution, please cite this work as:</div><div id="ref-rivera_espejo2025" class="csl-entry quarto-appendix-citeas" role="listitem">
 Rivera Espejo, Jose Manuel, Tine van Daal, Sven De Maeyer, and Steven
 Gillis. 2025. <span>“Bayesian Modeling of Comparative Judgment Data with
-Stan in R: A Tutorial for Speech Quality Researchers.”</span> August 14,
+Stan in R: A Tutorial for Speech Quality Researchers.”</span> August 15,
 2025.
 </div></div></section></div></main>
 <!-- /main column -->

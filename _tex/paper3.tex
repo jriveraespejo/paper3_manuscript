@@ -156,9 +156,9 @@
 \hypersetup{
   pdftitle={Bayesian modeling of comparative judgment data with Stan in R: A tutorial for speech quality researchers},
   pdfauthor={Jose Manuel Rivera Espejo; Tine van Daal; Sven De Maeyer; Steven Gillis},
-  pdfkeywords={causal inference, directed acyclic graphs, structural
-causal models, bayesian statistical methods, thurstonian
-model, comparative judgement, probability, statistical modeling},
+  pdfkeywords={tutorial, causal inference, bayesian
+inference, thurstonian model, comparative judgement, statistical
+modeling},
   colorlinks=true,
   linkcolor={blue},
   filecolor={Maroon},
@@ -202,34 +202,35 @@ Antwerp, Linguistics},,postcodesep={}}
 
         
 \begin{abstract}
-Comparative judgment (CJ) data is often analyzed using the
-Bradley-Terry-Luce (BTL) model, which offers a straightforward method
-for measuring traits and conducting statistical inference. However,
-despite its usefulness, research has indicated that several core
-assumptions of the BTL model are rarely satisfied in modern CJ
-applications. As a result, the model may struggle to capture the
-complexity of some traits or stimuli, compromising the reliability and
-accuracy of trait estimates. Additionally, its requirement to separate
-trait measurement from hypothesis testing can further undermine the
-accuracy of statistical inferences drawn from such data.
+The Bradley-Terry-Luce (BTL) model is commonly used to analyze
+comparative judgment (CJ) data because it provides a simple method for
+measuring traits and conducting statistical inference. Its simplicity
+stems from two key features: (1) a reliance on an extensive set of
+simplifying assumptions about the traits, judges, and stimuli involved
+in CJ assessments; and (2) the use of ad hoc procedures to handle
+inferences, including hypothesis testing. However, recent literature
+questions whether these assumptions hold in modern CJ applications and
+whether the ad hoc procedures effectively fulfill their intended
+analytical purpose.
 
-To address these limitations, \citet{Rivera_et_al_2025} proposed an
-approach that extends Thurstone's general form using causal and Bayesian
-inference methods. This approach allows for the construction of a model
-specifically tailored to the assumptions of the CJ data under study.
-Furthermore, it integrates measurement and hypothesis testing within a
-single analytical framework, facilitating precise and accurate
-inferences from the data.
+To address these concerns, \citet{Rivera_et_al_2025} proposed an
+approach that extends the general form of Thurstone's law of comparative
+judgment. The approach enables the development of a model tailored to
+the assumed data-generating process of the CJ system under study,
+eliminating the need to rely on simplifying assumptions. Moreover, by
+integrating measurement and inference within a single analytical
+framework, the approach also removes the dependence on ad hoc
+hypothesis-testing procedures.
 
 This tutorial illustrates the application of the proposed approach to a
-simulated dataset on speech quality. It provides detailed guidance on
-data simulation, model specification, estimation, and interpretation
-using the software \texttt{R} and \texttt{Stan}. The tutorial assumes
-that researchers are familiar with causal and Bayesian inference
-methods, as well as latent variable models, but may not have prior
-experience with CJ data or the software. By following the procedures
-outlined here, researchers can reproduce the analysis and adapt the
-approach to other CJ studies.
+simulated dataset assessing speech quality. It offers detailed guidance
+on data simulation, model specification, estimation, and interpretation
+using the software \texttt{Stan} and \texttt{R}. While the tutorial
+assumes familiarity with CJ assessments, latent variable models, and
+causal inference, it does not require prior experience with Bayesian
+inference methods or the associated software. Ultimately, by following
+the outlined procedures, researchers can replicate this analysis and
+adapt the approach for more complex CJ studies.
 \end{abstract}
 
 
@@ -237,9 +238,8 @@ approach to other CJ studies.
 
 
 \begin{keyword}
-    causal inference \sep directed acyclic graphs \sep structural causal
-models \sep bayesian statistical methods \sep thurstonian
-model \sep comparative judgement \sep probability \sep 
+    tutorial \sep causal inference \sep bayesian
+inference \sep thurstonian model \sep comparative judgement \sep 
     statistical modeling
 \end{keyword}
 \end{frontmatter}
@@ -250,7 +250,90 @@ model \sep comparative judgement \sep probability \sep
 
 \section{Introduction}\label{sec-introduction}
 
-\section{Data \& Methods}\label{sec-data-methods}
+Comparative judgment (CJ) is an assessment method in which judges
+evaluate a trait or attribute across different stimuli using pairwise
+comparisons \citep{Thurstone_1927a, Thurstone_1927b}. Each comparison
+generates a dichotomous outcome that indicates which stimulus is
+perceived to exhibit a higher attribute level. For instance, judges
+might compare pairs of short speech samples (the stimuli) to evaluate
+the relative speech quality (the trait) of hearing-impaired children
+(HI) versus children with normal hearing (NH) \citep{Boonen_et_al_2020}.
+
+The Bradley-Terry-Luce (BTL) model \citep{Bradley_et_al_1952, Luce_1959}
+is commonly used to analyze CJ data because it provides a simple method
+for measuring traits and conducting statistical inference
+\citep{Andrich_1978, Pollitt_2012b}. The method's simplicity stems from
+two key features. First, it relies on strong assumptions about the
+traits, judges, and stimuli involved in CJ assessments
+\citep{Thurstone_1927b, Bramley_2008}. Second, it employs ad hoc
+procedures to handle inferences, including hypothesis testing
+\citep{Pollitt_2012b}.
+
+However, recent studies question whether these assumptions hold in
+modern CJ applications
+\citep{Bramley_2008, Kelly_et_al_2022, Rivera_et_al_2025} and whether
+the ad hoc procedures achieve their intended analytical purpose
+\citep{Kelly_et_al_2022, Rivera_et_al_2025}. For instance,
+\citet[pp.~2]{Rivera_et_al_2025} argues that while assuming equal
+dispersions and zero correlation between stimuli simplifies the trait
+measurement model, these assumptions may fail to capture the complexity
+of some traits or account for heterogeneous stimuli
+\citep{Thurstone_1927a, Andrich_1978, vanDaal_et_al_2016, Lesterhuis_et_al_2018, Chambers_et_al_2022}.
+As a result, they can compromise the reliability and accuracy of trait
+estimates
+\citep{Ackerman_1989, Zimmerman_1994, McElreath_2020, Wu_et_al_2022, Miller_2023, Hoyle_et_al_2023}.
+Moreover, the same authors note that although ad hoc procedures simplify
+CJ data analysis, relying on untested methods can also undermine the
+validity of statistical inferences drawn from the data
+\citep{McElreath_2020, Kline_et_al_2023, Hoyle_et_al_2023}.
+
+To address these concerns, \citet{Rivera_et_al_2025} proposed an
+approach that extends the general form of Thurstone's law of comparative
+judgment \citep{Thurstone_1927a, Thurstone_1927b} using causal and
+Bayesian inference methods. The approach combines Thurstone's core
+theoretical principles with key CJ assessment design features, enabling
+the development of a model tailored to the assumed data-generating
+process of the CJ system under study. This tailoring effectively
+eliminates the need for simplifying assumptions. Furthermore, by
+integrating measurement and inference within a single analytical
+framework, the approach also removes the dependence on ad hoc
+procedures. Ultimately, the approach has the potential to yield reliable
+trait estimates and accurate statistical inferences, although this
+promise still needs to be empirically tested.
+
+Thus, this tutorial applies the proposed approach to a simulated dataset
+on speech quality to evaluate whether the approach's promise holds in
+practice. {Specifically, we are interested in}. At the same time, it
+provides detailed guidance on data simulation, model specification,
+estimation, and interpretation using the software \texttt{Stan} and
+\texttt{R}. Notably, while the tutorial assumes familiarity with CJ
+assessments, latent variable models, and causal inference, it does not
+require prior experience with Bayesian inference methods or the
+associated software. Ultimately, by following the procedures here
+outlined, researchers can replicate the analysis and adapt the approach
+to more complex CJ studies.
+
+The remainder of this manuscript is organized into four sections.
+Section~\ref{sec-methods} provides a description of the model
+specification, the dataset simulation, inference procedure and
+evaluation metrics for the research question. Section~\ref{sec-results}
+summarizes the analysis, including parameter estimates, credible
+intervals, and comparisons with standard BTL model.
+Section~\ref{sec-discussion} reviews the findings, outline directions
+for future research, and discusses the study's limitations. Finally,
+Section~\ref{sec-conclusion} provides the concluding remarks.
+
+\section{Methods}\label{sec-methods}
+
+\subsection{Model specification}\label{sec-model}
+
+\subsection{Dataset simulation}\label{sec-simulation}
+
+\subsection{Inference procedure}\label{sec-inference}
+
+\subsection{Evaluation metrics}\label{sec-evaluation}
+
+\section{Results}\label{sec-results}
 
 \section{Discussion}\label{sec-discussion}
 
