@@ -208,8 +208,8 @@ measuring traits and conducting statistical inference. Its simplicity
 stems from two key features: (1) a reliance on an extensive set of
 simplifying assumptions about the traits, judges, and stimuli involved
 in CJ assessments; and (2) the use of ad hoc procedures to handle
-inferences, including hypothesis testing. However, recent literature
-questions whether these assumptions hold in modern CJ applications and
+inferences, including hypothesis testing. However, recent studies
+question whether these assumptions hold in modern CJ applications and
 whether the ad hoc procedures effectively fulfill their intended
 analytical purpose.
 
@@ -222,12 +222,12 @@ integrating measurement and inference within a single analytical
 framework, the approach also removes the dependence on ad hoc
 hypothesis-testing procedures.
 
-This tutorial illustrates the application of the proposed approach to a
-simulated dataset on speech quality. It offers detailed guidance on data
-simulation, model specification, estimation, and interpretation using
-the software \texttt{R} and \texttt{Stan}. While the tutorial assumes
-familiarity with CJ theory and practice, latent variable models, and
-causal inference, it does not require prior experience with Bayesian
+This tutorial illustrates the application of the aforementioned approach
+to a simulated dataset on speech quality. It offers detailed guidance on
+data simulation, model specification, estimation, and interpretation
+using the software \texttt{R} and \texttt{Stan}. While the tutorial
+assumes familiarity with CJ theory and practice, latent variable models,
+and causal inference, it does not require prior experience with Bayesian
 inference methods or the associated software. Ultimately, by following
 the outlined procedures, researchers can replicate this analysis and
 adapt the approach for more complex CJ studies.
@@ -254,9 +254,9 @@ Comparative judgment (CJ) is an assessment method in which judges
 evaluate a trait across different stimuli using pairwise comparisons
 \citep{Thurstone_1927a, Thurstone_1927b}. Each comparison generates a
 dichotomous outcome that indicates which stimulus is perceived to
-exhibit a higher attribute level. For instance, judges might compare
-pairs of short speech samples (the stimuli) to evaluate the relative
-speech quality of children (the trait) \citep{Boonen_et_al_2020}.
+exhibit a higher trait level. For instance, judges might compare pairs
+of short speech samples (the stimuli) to evaluate the relative speech
+quality of children (the trait) \citep{Boonen_et_al_2020}.
 
 The Bradley-Terry-Luce (BTL) model \citep{Bradley_et_al_1952, Luce_1959}
 is then employed to analyze the CJ data, as it provides a simple method
@@ -275,11 +275,11 @@ the ad hoc procedures achieve their intended analytical purpose
 \citep{Kelly_et_al_2022, Rivera_et_al_2025}. For instance,
 \citet[pp.~2]{Rivera_et_al_2025} argues that while assuming equal
 dispersions and zero correlation between stimuli simplifies the trait
-measurement model, these assumptions may fail to capture the complexity
+measurement model, such assumptions may fail to capture the complexity
 of some traits or account for heterogeneous stimuli
 \citep{Thurstone_1927a, Andrich_1978, vanDaal_et_al_2016, Lesterhuis_et_al_2018, Chambers_et_al_2022}.
-As a result, these assumptions can compromise the reliability and
-accuracy of trait estimates
+As a result, they can compromise the reliability and accuracy of trait
+estimates
 \citep{Ackerman_1989, Zimmerman_1994, McElreath_2020, Wu_et_al_2022, Miller_2023, Hoyle_et_al_2023}.
 Moreover, the same authors note that although ad hoc procedures simplify
 CJ data analysis, relying on untested methods can also undermine the
@@ -300,17 +300,19 @@ ad hoc procedures. Ultimately, the approach has the potential to yield
 reliable trait estimates and accurate statistical inferences. However,
 this promise still needs to be empirically tested.
 
-Thus, this tutorial applies the proposed approach to a simulated dataset
-on speech quality to evaluate whether the approach's promise holds in
-practice. {Specifically, we are interested in the following research
-questions:}. At the same time, it provides detailed guidance on data
-simulation, model specification, estimation, and interpretation using
-the software \texttt{R} and \texttt{Stan}. Notably, while the tutorial
-assumes familiarity with CJ theory and practice, latent variable models,
-and causal inference, it does not require prior experience with Bayesian
-inference methods or the associated software. Ultimately, by following
-the procedures here outlined, researchers can replicate the analysis and
-adapt the approach to more complex CJ studies.
+Thus, this tutorial applies the aforementioned approach to a simulated
+dataset on speech quality, with the general aim of evaluating whether
+the approach's promise holds in practice. Specifically, it addresses the
+following research questions: {{[}insert research questions here{]}}. At
+the same time, it provides detailed guidance on data simulation, model
+specification, estimation, and interpretation using the software
+\texttt{R} and \texttt{Stan}. Notably, while the tutorial assumes
+familiarity with the theory and practice of CJ assessments, latent
+variable models, and causal inference, it does not require prior
+experience with Bayesian inference methods or the associated software.
+Ultimately, by following the procedures here outlined, researchers can
+replicate the analysis and adapt the approach to more complex CJ
+studies.
 
 The remainder of this manuscript is organized into four sections.
 Section~\ref{sec-methods} describes the model specification, the dataset
