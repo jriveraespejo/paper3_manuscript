@@ -154,7 +154,7 @@
 \IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
 \urlstyle{same}
 \hypersetup{
-  pdftitle={Bayesian modeling of comparative judgment data with Stan in R: A tutorial for speech quality researchers},
+  pdftitle={Bayesian modeling of comparative judgment data with R and Stan: A tutorial for speech quality researchers},
   pdfauthor={Jose Manuel Rivera Espejo; Tine van Daal; Sven De Maeyer; Steven Gillis},
   pdfkeywords={tutorial, causal inference, bayesian
 inference, thurstonian model, comparative judgement, statistical
@@ -171,8 +171,8 @@ modeling},
 \begin{document}
 
 \begin{frontmatter}
-\title{Bayesian modeling of comparative judgment data with Stan in R: A
-tutorial for speech quality researchers}
+\title{Bayesian modeling of comparative judgment data with \texttt{R}
+and \texttt{Stan}: A tutorial for speech quality researchers}
 \author[1]{Jose Manuel Rivera Espejo%
 \corref{cor1}%
 }
@@ -223,10 +223,10 @@ framework, the approach also removes the dependence on ad hoc
 hypothesis-testing procedures.
 
 This tutorial illustrates the application of the proposed approach to a
-simulated dataset assessing speech quality. It offers detailed guidance
-on data simulation, model specification, estimation, and interpretation
-using the software \texttt{Stan} and \texttt{R}. While the tutorial
-assumes familiarity with CJ assessments, latent variable models, and
+simulated dataset on speech quality. It offers detailed guidance on data
+simulation, model specification, estimation, and interpretation using
+the software \texttt{R} and \texttt{Stan}. While the tutorial assumes
+familiarity with CJ theory and practice, latent variable models, and
 causal inference, it does not require prior experience with Bayesian
 inference methods or the associated software. Ultimately, by following
 the outlined procedures, researchers can replicate this analysis and
@@ -251,22 +251,21 @@ inference \sep thurstonian model \sep comparative judgement \sep
 \section{Introduction}\label{sec-introduction}
 
 Comparative judgment (CJ) is an assessment method in which judges
-evaluate a trait or attribute across different stimuli using pairwise
-comparisons \citep{Thurstone_1927a, Thurstone_1927b}. Each comparison
-generates a dichotomous outcome that indicates which stimulus is
-perceived to exhibit a higher attribute level. For instance, judges
-might compare pairs of short speech samples (the stimuli) to evaluate
-the relative speech quality (the trait) of hearing-impaired children
-(HI) versus children with normal hearing (NH) \citep{Boonen_et_al_2020}.
+evaluate a trait across different stimuli using pairwise comparisons
+\citep{Thurstone_1927a, Thurstone_1927b}. Each comparison generates a
+dichotomous outcome that indicates which stimulus is perceived to
+exhibit a higher attribute level. For instance, judges might compare
+pairs of short speech samples (the stimuli) to evaluate the relative
+speech quality of children (the trait) \citep{Boonen_et_al_2020}.
 
 The Bradley-Terry-Luce (BTL) model \citep{Bradley_et_al_1952, Luce_1959}
-is commonly used to analyze CJ data because it provides a simple method
+is then employed to analyze the CJ data, as it provides a simple method
 for measuring traits and conducting statistical inference
 \citep{Andrich_1978, Pollitt_2012b}. The method's simplicity stems from
-two key features. First, it relies on strong assumptions about the
-traits, judges, and stimuli involved in CJ assessments
-\citep{Thurstone_1927b, Bramley_2008}. Second, it employs ad hoc
-procedures to handle inferences, including hypothesis testing
+two key features. First, it relies on an extensive set of simplifying
+assumptions about the traits, judges, and stimuli involved in CJ
+assessments \citep{Thurstone_1927b, Bramley_2008}. Second, it employs ad
+hoc procedures to handle inferences, including hypothesis testing
 \citep{Pollitt_2012b}.
 
 However, recent studies question whether these assumptions hold in
@@ -279,8 +278,8 @@ dispersions and zero correlation between stimuli simplifies the trait
 measurement model, these assumptions may fail to capture the complexity
 of some traits or account for heterogeneous stimuli
 \citep{Thurstone_1927a, Andrich_1978, vanDaal_et_al_2016, Lesterhuis_et_al_2018, Chambers_et_al_2022}.
-As a result, they can compromise the reliability and accuracy of trait
-estimates
+As a result, these assumptions can compromise the reliability and
+accuracy of trait estimates
 \citep{Ackerman_1989, Zimmerman_1994, McElreath_2020, Wu_et_al_2022, Miller_2023, Hoyle_et_al_2023}.
 Moreover, the same authors note that although ad hoc procedures simplify
 CJ data analysis, relying on untested methods can also undermine the
@@ -294,34 +293,34 @@ Bayesian inference methods. The approach combines Thurstone's core
 theoretical principles with key CJ assessment design features, enabling
 the development of a model tailored to the assumed data-generating
 process of the CJ system under study. This tailoring effectively
-eliminates the need for simplifying assumptions. Furthermore, by
-integrating measurement and inference within a single analytical
-framework, the approach also removes the dependence on ad hoc
-procedures. Ultimately, the approach has the potential to yield reliable
-trait estimates and accurate statistical inferences, although this
-promise still needs to be empirically tested.
+eliminates the need to rely on the simplifying assumptions of the BTL
+model. Moreover, by integrating measurement and inference within a
+single analytical framework, the approach also removes the dependence on
+ad hoc procedures. Ultimately, the approach has the potential to yield
+reliable trait estimates and accurate statistical inferences. However,
+this promise still needs to be empirically tested.
 
 Thus, this tutorial applies the proposed approach to a simulated dataset
 on speech quality to evaluate whether the approach's promise holds in
-practice. {Specifically, we are interested in}. At the same time, it
-provides detailed guidance on data simulation, model specification,
-estimation, and interpretation using the software \texttt{Stan} and
-\texttt{R}. Notably, while the tutorial assumes familiarity with CJ
-assessments, latent variable models, and causal inference, it does not
-require prior experience with Bayesian inference methods or the
-associated software. Ultimately, by following the procedures here
-outlined, researchers can replicate the analysis and adapt the approach
-to more complex CJ studies.
+practice. {Specifically, we are interested in the following research
+questions:}. At the same time, it provides detailed guidance on data
+simulation, model specification, estimation, and interpretation using
+the software \texttt{R} and \texttt{Stan}. Notably, while the tutorial
+assumes familiarity with CJ theory and practice, latent variable models,
+and causal inference, it does not require prior experience with Bayesian
+inference methods or the associated software. Ultimately, by following
+the procedures here outlined, researchers can replicate the analysis and
+adapt the approach to more complex CJ studies.
 
 The remainder of this manuscript is organized into four sections.
-Section~\ref{sec-methods} provides a description of the model
-specification, the dataset simulation, inference procedure and
-evaluation metrics for the research question. Section~\ref{sec-results}
-summarizes the analysis, including parameter estimates, credible
-intervals, and comparisons with standard BTL model.
-Section~\ref{sec-discussion} reviews the findings, outline directions
-for future research, and discusses the study's limitations. Finally,
-Section~\ref{sec-conclusion} provides the concluding remarks.
+Section~\ref{sec-methods} describes the model specification, the dataset
+simulation, inference procedure, and evaluation metrics relevant to the
+research questions. Section~\ref{sec-results} summarizes the analysis,
+including parameter estimates, credible intervals, and comparisons with
+the standard BTL model. Next, Section~\ref{sec-discussion} reviews the
+findings, outlines future research directions, and discusses the
+limitation of the study. Finally, Section~\ref{sec-conclusion} provides
+the concluding remarks.
 
 \section{Methods}\label{sec-methods}
 
