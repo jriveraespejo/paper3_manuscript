@@ -67,6 +67,7 @@
 
 
 \usepackage{longtable,booktabs,array}
+\newcounter{none} % for unnumbered tables
 \usepackage{calc} % for calculating minipage widths
 % Correct order of tables after \paragraph or \subparagraph
 \usepackage{etoolbox}
@@ -154,7 +155,7 @@
 \IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
 \urlstyle{same}
 \hypersetup{
-  pdftitle={Bayesian modeling of comparative judgment data with R and Stan: A tutorial for speech quality researchers},
+  pdftitle={Finding Thurstone: modeling comparative judgment data with R (and Stan)},
   pdfauthor={Jose Manuel Rivera Espejo; Tine van Daal; Sven De Maeyer; Steven Gillis},
   pdfkeywords={tutorial, causal inference, bayesian
 inference, thurstonian model, comparative judgement, statistical
@@ -171,8 +172,8 @@ modeling},
 \begin{document}
 
 \begin{frontmatter}
-\title{Bayesian modeling of comparative judgment data with \texttt{R}
-and \texttt{Stan}: A tutorial for speech quality researchers}
+\title{Finding Thurstone: modeling comparative judgment data with
+\texttt{R} (and \texttt{Stan})}
 \author[1]{Jose Manuel Rivera Espejo%
 \corref{cor1}%
 }
@@ -202,16 +203,16 @@ Antwerp, Linguistics},,postcodesep={}}
 
         
 \begin{abstract}
-The Bradley-Terry-Luce (BTL) model is commonly used to analyze
-comparative judgment (CJ) data because it provides a simple method for
-measuring traits and conducting statistical inference. Its simplicity
-stems from two key features: (1) a reliance on an extensive set of
-simplifying assumptions about the traits, judges, and stimuli involved
-in CJ assessments; and (2) the use of ad hoc procedures to handle
-inferences, including hypothesis testing. However, recent studies
-question whether these assumptions hold in modern CJ applications and
-whether the ad hoc procedures effectively fulfill their intended
-analytical purpose.
+A particular data analysis workflow has become the standard approach for
+analyzing comparative judgment (CJ) data, because it provides a simple
+method for measuring traits and conducting statistical inferences. The
+workflow's simplicity stems from two key features: (1) the use of the
+Bradley-Terry-Luce (BTL) model, which imposes an extensive set of
+simplifying assumptions about traits, judges, and stimuli in CJ
+assessments; and (2) the use of ad hoc procedures to handle inferences,
+including hypothesis testing. However, recent studies question whether
+the BTL assumptions hold in contemporary CJ applications and whether the
+ad hoc procedures effectively fulfill their intended analytical goals.
 
 To address these concerns, \citet{Rivera_et_al_2025} proposed an
 approach that extends the general form of Thurstone's law of comparative
@@ -221,16 +222,6 @@ eliminating the need to rely on simplifying assumptions. Moreover, by
 integrating measurement and inference within a single analytical
 framework, the approach also removes the dependence on ad hoc
 hypothesis-testing procedures.
-
-This tutorial illustrates the application of the aforementioned approach
-to a simulated dataset on speech quality. It offers detailed guidance on
-data simulation, model specification, estimation, and interpretation
-using the software \texttt{R} and \texttt{Stan}. While the tutorial
-assumes familiarity with CJ theory and practice, latent variable models,
-and causal inference, it does not require prior experience with Bayesian
-inference methods or the associated software. Ultimately, by following
-the outlined procedures, researchers can replicate this analysis and
-adapt the approach for more complex CJ studies.
 \end{abstract}
 
 
@@ -250,91 +241,122 @@ inference \sep thurstonian model \sep comparative judgement \sep
 
 \section{Introduction}\label{sec-introduction}
 
-Comparative judgment (CJ) is an assessment method in which judges
-evaluate a trait across different stimuli using pairwise comparisons
-\citep{Thurstone_1927a, Thurstone_1927b}. Each comparison generates a
-dichotomous outcome that indicates which stimulus is perceived to
-exhibit a higher trait level. For instance, judges might compare pairs
-of short speech samples (the stimuli) to evaluate the relative speech
-quality of children (the trait) \citep{Boonen_et_al_2020}.
+\emph{Comparative judgment} (CJ) has emerged as a valuable methodology
+for measuring latent traits across diverse fields, including education
+\citep{Kimbell_2012, Jones_et_al_2015, vanDaal_et_al_2016, Bartholomew_et_al_2018},
+political sciences \citep{Zucco_et_al_2019}, linguistics
+\citep{Boonen_et_al_2020}, and criminology \citep{Seymour_et_al_2025}.
+In CJ studies, judges actively compare pairs of stimuli to determine
+which stimulus exhibits more of the latent trait of interest
+\citep{Thurstone_1927a, Thurstone_1927b}.
 
-The Bradley-Terry-Luce (BTL) model \citep{Bradley_et_al_1952, Luce_1959}
-is then employed to analyze the CJ data, as it provides a simple method
-for measuring traits and conducting statistical inference
-\citep{Andrich_1978, Pollitt_2012b}. The method's simplicity stems from
-two key features. First, it relies on an extensive set of simplifying
-assumptions about the traits, judges, and stimuli involved in CJ
-assessments \citep{Thurstone_1927b, Bramley_2008}. Second, it employs ad
-hoc procedures to handle inferences, including hypothesis testing
-\citep{Pollitt_2012b}.
+A particular data analysis workflow has become the standard approach for
+analyzing CJ data \citep[see e.g.,][]{Thwaites_et_al_2024}. Researchers
+favor this approach because it provides a simple method for measuring
+traits and conducting statistical inferences
+\citep{Andrich_1978, Pollitt_2012b}. This simplicity, in turn, arises
+from two key features. First, the workflow relies on the
+Bradley-Terry-Luce (BTL) model \citep{Bradley_et_al_1952, Luce_1959},
+which imposes an extensive set of simplifying assumptions about traits,
+judges, and stimuli in CJ assessments
+\citep{Thurstone_1927b, Bramley_2008}. Second, the workflow uses ad hoc
+procedures to handle inferences, including data summaries and hypothesis
+testing \citep{Pollitt_2012b}.
 
-However, recent studies question whether these assumptions hold in
-modern CJ applications
-\citep{Bramley_2008, Kelly_et_al_2022, Rivera_et_al_2025} and whether
-the ad hoc procedures achieve their intended analytical purpose
-\citep{Kelly_et_al_2022, Rivera_et_al_2025}. For instance,
-\citet[pp.~2]{Rivera_et_al_2025} argues that while assuming equal
-dispersions and zero correlation between stimuli simplifies the trait
-measurement model, such assumptions may fail to capture the complexity
-of some traits or account for heterogeneous stimuli
+Recent studies, however, question whether the assumptions of the BTL
+model hold in contemporary CJ applications and whether the ad hoc
+procedures achieve their intended analytical goals
+\citep{Bramley_2008, Kelly_et_al_2022, Rivera_et_al_2025}. For instance,
+\citet{Rivera_et_al_2025} argue that while the assumptions of equal
+dispersions and zero correlations between stimuli simplify trait
+measurement, they may fail to represent complex traits or heterogeneous
+stimuli adequately
 \citep{Thurstone_1927a, Andrich_1978, vanDaal_et_al_2016, Lesterhuis_et_al_2018, Chambers_et_al_2022}.
-As a result, they can compromise the reliability and accuracy of trait
-estimates
+As a result, such assumptions can compromise the reliability and
+accuracy of trait estimates
 \citep{Ackerman_1989, Zimmerman_1994, McElreath_2020, Wu_et_al_2022, Miller_2023, Hoyle_et_al_2023}.
-Moreover, the same authors note that although ad hoc procedures simplify
-CJ data analysis, relying on untested methods can also undermine the
-validity of statistical inferences drawn from the data
+Furthermore, the same authors note that although ad hoc procedures
+simplify data analyses, the use of untested methods can also undermine
+the validity of statistical inferences derived from CJ data
 \citep{McElreath_2020, Kline_et_al_2023, Hoyle_et_al_2023}.
 
 To address these concerns, \citet{Rivera_et_al_2025} proposed an
 approach that extends the general form of Thurstone's law of comparative
-judgment \citep{Thurstone_1927a, Thurstone_1927b} using causal and
-Bayesian inference methods. The approach combines Thurstone's core
-theoretical principles with key CJ assessment design features, enabling
-the development of a model tailored to the assumed data-generating
-process of the CJ system under study. This tailoring effectively
-eliminates the need to rely on the simplifying assumptions of the BTL
-model. Moreover, by integrating measurement and inference within a
-single analytical framework, the approach also removes the dependence on
-ad hoc procedures. Ultimately, the approach has the potential to yield
-reliable trait estimates and accurate statistical inferences. However,
-this promise still needs to be empirically tested.
+judgment \citep{Thurstone_1927a, Thurstone_1927b}. This approach
+leverages causal and Bayesian inference methods to combine Thurstone's
+core theoretical principles with key design features of CJ assessment.
+By doing so, it enables the development of a model tailored to the
+assumed data-generating process of the CJ system under study. This
+tailoring effectively removes the need to rely on the simplifying
+assumptions of the BTL model. Moreover, by integrating measurement and
+inference within a single analytical framework, the approach also
+eliminates the dependence on ad hoc hypothesis-testing procedures.
+Ultimately, this approach has the potential to produce reliable trait
+estimates and accurate statistical inferences. However, its
+effectiveness still requires empirical validation.
 
-Thus, this tutorial applies the aforementioned approach to a simulated
-dataset on speech quality, with the general aim of evaluating whether
-the approach's promise holds in practice. Specifically, it addresses the
-following research questions: {{[}insert research questions here{]}}. At
-the same time, it provides detailed guidance on data simulation, model
-specification, estimation, and interpretation using the software
-\texttt{R} and \texttt{Stan}. Notably, while the tutorial assumes
-familiarity with the theory and practice of CJ assessments, latent
-variable models, and causal inference, it does not require prior
-experience with Bayesian inference methods or the associated software.
-Ultimately, by following the procedures here outlined, researchers can
-replicate the analysis and adapt the approach to more complex CJ
-studies.
+\subsection{Research goals}\label{sec-introduction_goals}
 
-The remainder of this manuscript is organized into four sections.
-Section~\ref{sec-methods} describes the model specification, the dataset
-simulation, inference procedure, and evaluation metrics relevant to the
-research questions. Section~\ref{sec-results} summarizes the analysis,
-including parameter estimates, credible intervals, and comparisons with
-the standard BTL model. Next, Section~\ref{sec-discussion} reviews the
-findings, outlines future research directions, and discusses the
-limitation of the study. Finally, Section~\ref{sec-conclusion} provides
-the concluding remarks.
+\section{A tale of two analytical approaches}\label{sec-theory}
+
+\subsection{The classical BTL analysis}\label{sec-theory_CBTL}
+
+\subsection{The information-theoretical model for
+CJ}\label{sec-theory_ITCJ}
 
 \section{Methods}\label{sec-methods}
 
-\subsection{Model specification}\label{sec-model}
+\subsection{Step 1, from Theory to Design: Data-generating
+assumptions}\label{sec-methods_step1}
 
-\subsection{Dataset simulation}\label{sec-simulation}
+\subsection{Step 2, from Design to Data: Data
+simulation}\label{sec-methods_step2}
 
-\subsection{Inference procedure}\label{sec-inference}
+\subsection{Step 5, from Estimator and Sample to Estimate(s): The
+analysis aproaches}\label{sec-methods_step5}
 
-\subsection{Evaluation metrics}\label{sec-evaluation}
+\subsubsection{The CBTL analysis}\label{sec-methods_step5_1}
+
+\subsubsection{The ITCJ analysis}\label{sec-methods_step5_2}
+
+\paragraph{Model 1}\label{sec-sec-methods_step5_2_itcj_1}
+
+\paragraph{Model 2}\label{sec-sec-methods_step5_2_itcj_2}
+
+\paragraph{Model 3}\label{sec-sec-methods_step5_2_itcj_3}
+
+\paragraph{Model 4}\label{sec-sec-methods_step5_2_itcj_4}
+
+\paragraph{Model 5}\label{sec-sec-methods_step5_2_itcj_5}
+
+\paragraph{Model 6}\label{sec-sec-methods_step5_2_itcj_6}
+
+\subsection{Step 6, from Estimate(s) to Diagnostics and Posterior
+predictives: The evaluation criteria}\label{sec-methods_step6}
 
 \section{Results}\label{sec-results}
+
+\subsection{Data description}\label{sec-results_data}
+
+\subsection{Data modeling}\label{sec-results_modeling}
+
+\subsubsection{The CBTL analysis}\label{sec-results_modeling_1}
+
+\subsubsection{The ITCJ analysis}\label{sec-results_modeling_2}
+
+\paragraph{Model 1}\label{sec-results_modeling_2_1}
+
+\paragraph{Model 2}\label{sec-results_modeling_2_2}
+
+\paragraph{Model 3}\label{sec-results_modeling_2_3}
+
+\paragraph{Model 4}\label{sec-results_modeling_2_4}
+
+\paragraph{Model 5}\label{sec-results_modeling_2_5}
+
+\paragraph{Model 6}\label{sec-results_modeling_2_6}
+
+\paragraph{Model comparison}\label{sec-results_modeling_2_7}
 
 \section{Discussion}\label{sec-discussion}
 
@@ -366,12 +388,17 @@ Committee confirmed that this study does not require ethical approval.
 \textbf{Consent for publication:} All authors have read and approved the
 final version of the manuscript for publication.
 
-\textbf{Data availability:} This study did not use any data.
+\textbf{Data, materials and code availability:} A previous version of
+this manuscript, along with the associated data, materials and code (see
+the section titled \texttt{CODE\ LINK}), has been made publicly
+available at: \url{https://jriveraespejo.github.io/paper3_manuscript/}.
 
-\textbf{Materials and code availability:} A previous version of this
-manuscript, along with the associated materials and code (see the
-section titled \texttt{CODE\ LINK}), has been made publicly available
-at: \url{https://jriveraespejo.github.io/paper3_manuscript/}.
+\textbf{Licence:} All the code that is original to this study and not
+attributed to any other authors is copyrighted by
+\href{https://orcid.org/0000-0002-3088-2783}{Jose Manuel Rivera Espejo}
+and released under the new
+\href{https://opensource.org/license/BSD-3-Clause}{BSD-3-Clause}
+license.
 
 \textbf{AI-assisted technologies in the writing process:} The authors
 used various AI-based language tools to refine phrasing, optimize
@@ -390,6 +417,15 @@ S.DM.; \emph{Project administration:} S.G. and S.DM.; \emph{Funding
 acquisition:} S.G. and S.DM.
 
 \newpage{}
+
+\section{Appendix}\label{sec-appendix}
+
+\subsection{Appendix A: Stationarity, converge and
+mixing}\label{sec-appendixA}
+
+\subsection{Appendix B: Misfit observations}\label{sec-appendixB}
+
+\subsection{Appendix C: Sample size calculations}\label{sec-appendixC}
 
 \newpage{}
 
