@@ -203,25 +203,35 @@ Antwerp, Linguistics},,postcodesep={}}
 
         
 \begin{abstract}
-A particular data analysis workflow has become the standard approach for
-analyzing comparative judgment (CJ) data, because it provides a simple
-method for measuring traits and conducting statistical inferences. The
-workflow's simplicity stems from two key features: (1) the use of the
-Bradley-Terry-Luce (BTL) model, which imposes an extensive set of
-simplifying assumptions about traits, judges, and stimuli in CJ
-assessments; and (2) the use of ad hoc procedures to handle inferences,
-including hypothesis testing. However, recent studies question whether
-the BTL assumptions hold in contemporary CJ applications and whether the
-ad hoc procedures effectively fulfill their intended analytical goals.
+The classical BTL analysis has become the standard approach for
+analyzing comparative judgment (CJ) data because it provides a simple
+method for measuring traits and conducting related analysis. This
+simplicity arises from two key features. First, the approach relies on
+the Bradley-Terry-Luce (BTL) model to estimate latent traits. Second, it
+uses of ad hoc procedures to conduct related analysis. However, recent
+studies question whether the BTL model assumptions hold in contemporary
+CJ applications and whether the ad hoc procedures effectively fulfill
+their intended analytical goals.
 
 To address these concerns, \citet{Rivera_et_al_2025} proposed an
 approach that extends the general form of Thurstone's law of comparative
 judgment. The approach enables the development of a model tailored to
 the assumed data-generating process of the CJ system under study,
-eliminating the need to rely on simplifying assumptions. Moreover, by
+eliminating the need for simplifying assumptions. Moreover, by
 integrating measurement and inference within a single analytical
-framework, the approach also removes the dependence on ad hoc
-hypothesis-testing procedures.
+framework, it also removes the dependence on ad hoc analytical
+procedures. Despite these advantages, the approach still requires
+empirical validation.
+
+Thus, this study empirically validates the proposed
+Information-Theoretical model for CJ, benchmarked against the classical
+BTL analysis, and demonstrates its practical implementation. The
+document includes a structured tutorial based on a simulated
+speech-quality dataset, providing guidance on data simulation, prior
+specification, model estimation, and interpretation using \texttt{Stan},
+\texttt{R}, and the interface packages \texttt{cmdstan} and
+\texttt{brms}. Ultimately, the study equips researchers with practical
+tools to apply the model to more complex CJ studies.
 \end{abstract}
 
 
@@ -250,34 +260,36 @@ In CJ studies, judges actively compare pairs of stimuli to determine
 which stimulus exhibits more of the latent trait of interest
 \citep{Thurstone_1927a, Thurstone_1927b}.
 
-A particular data analysis workflow has become the standard approach for
-analyzing CJ data \citep[see e.g.,][]{Thwaites_et_al_2024}. Researchers
-favor this approach because it provides a simple method for measuring
-traits and conducting statistical inferences
+A specific data analysis workflow has become the standard approach for
+analyzing CJ data \citep[see, e.g.,][]{Thwaites_et_al_2024}. In this
+study, we refer to this workflow as the \emph{classical BTL analysis}.
+Researchers favor this approach because it provides a simple method for
+measuring traits and conducting related analyses
 \citep{Andrich_1978, Pollitt_2012b}. This simplicity, in turn, arises
-from two key features. First, the workflow relies on the
-Bradley-Terry-Luce (BTL) model \citep{Bradley_et_al_1952, Luce_1959},
-which imposes an extensive set of simplifying assumptions about traits,
-judges, and stimuli in CJ assessments
-\citep{Thurstone_1927b, Bramley_2008}. Second, the workflow uses ad hoc
-procedures to handle inferences, including data summaries and hypothesis
-testing \citep{Pollitt_2012b}.
+from two key features. First, the approach relies on the
+Bradley-Terry-Luce (BTL) model \citep{Bradley_et_al_1952, Luce_1959} to
+estimate latent traits. The model facilitates trait estimation by
+imposing several simplifying assumptions about traits, judges, and
+stimuli in CJ assessments \citep{Thurstone_1927b, Bramley_2008}. Second,
+the approach uses ad hoc procedures to conduct related analysis,
+including data summarization and statistical inference
+\citep{Pollitt_2012b}.
 
 Recent studies, however, question whether the assumptions of the BTL
 model hold in contemporary CJ applications and whether the ad hoc
 procedures achieve their intended analytical goals
 \citep{Bramley_2008, Kelly_et_al_2022, Rivera_et_al_2025}. For instance,
-\citet{Rivera_et_al_2025} argue that while the assumptions of equal
-dispersions and zero correlations between stimuli simplify trait
-measurement, they may fail to represent complex traits or heterogeneous
-stimuli adequately
+Rivera and colleagues \citeyearpar{Rivera_et_al_2025} argue that while
+the assumptions of equal dispersions and zero correlations between
+stimuli simplify trait measurement, they may fail to represent complex
+traits or heterogeneous stimuli adequately
 \citep{Thurstone_1927a, Andrich_1978, vanDaal_et_al_2016, Lesterhuis_et_al_2018, Chambers_et_al_2022}.
 As a result, such assumptions can compromise the reliability and
 accuracy of trait estimates
 \citep{Ackerman_1989, Zimmerman_1994, McElreath_2020, Wu_et_al_2022, Miller_2023, Hoyle_et_al_2023}.
-Furthermore, the same authors note that although ad hoc procedures
-simplify data analyses, the use of untested methods can also undermine
-the validity of statistical inferences derived from CJ data
+Moreover, the same authors note that although ad hoc procedures simplify
+data analyses, the use of untested methods can also undermine the
+validity of statistical inferences derived from CJ data
 \citep{McElreath_2020, Kline_et_al_2023, Hoyle_et_al_2023}.
 
 To address these concerns, \citet{Rivera_et_al_2025} proposed an
@@ -290,18 +302,48 @@ assumed data-generating process of the CJ system under study. This
 tailoring effectively removes the need to rely on the simplifying
 assumptions of the BTL model. Moreover, by integrating measurement and
 inference within a single analytical framework, the approach also
-eliminates the dependence on ad hoc hypothesis-testing procedures.
-Ultimately, this approach has the potential to produce reliable trait
-estimates and accurate statistical inferences. However, its
-effectiveness still requires empirical validation.
+eliminates the dependence on ad hoc analytical procedures. Ultimately,
+this approach has the potential to produce reliable trait estimates and
+accurate statistical inferences. However, its effectiveness still
+required empirical validation.
 
 \subsection{Research goals}\label{sec-introduction_goals}
+
+Building on the introduction, this study pursues two closely related
+research goals. The first goal is to \emph{empirically validate} the
+proposed Information-Theoretical model for CJ (hereafter, ITCJ analysis)
+by evaluating the accuracy and reliability of its trait estimates and
+inference parameters, benchmarked against the classical BTL analysis
+(hereafter, CBTL analysis). The second goal emerges as a practical
+byproduct of this validation: to demonstrate how to implement the model
+in practice. To this end, the document provides a structured tutorial
+based on a simulated speech-quality dataset, offering guidance on data
+simulation, prior specification, model estimation, and interpretation
+using \texttt{Stan}\citep{Stan_2026a, Stan_2026b}, \texttt{R}
+\citep{R_2015}, and the interface packages \texttt{cmdstan}
+\citep{Gabry_et_al_2025} and \texttt{brms}
+\citep{Burkner_2017, Burkner_2018}. By combining model validation and
+practical instruction, the study can evaluate the methodological
+performance of the ITCJ analysis and provide researchers with practical
+tools to apply it to more complex CJ studies.
+
+The remainder of this manuscript is organized into five sections.
+Section~\ref{sec-theory} reviews the two analytical approaches commonly
+applied to CJ data: the CBTL and ITCJ analyses.
+Section~\ref{sec-methods} details the assumed data-generating process
+for the simulated dataset, the simulation procedure, the practical
+implementation of each analytical approach, and the evaluation criteria
+aligned with the research goals. Section~\ref{sec-results} presents the
+data description and modeling results. Section~\ref{sec-discussion}
+interprets the findings, outlines future research directions, and
+considers the study limitations. Finally, Section~\ref{sec-conclusion}
+offers the concluding remarks.
 
 \section{A tale of two analytical approaches}\label{sec-theory}
 
 \subsection{The classical BTL analysis}\label{sec-theory_CBTL}
 
-\subsection{The information-theoretical model for
+\subsection{The Information-Theoretical model for
 CJ}\label{sec-theory_ITCJ}
 
 \section{Methods}\label{sec-methods}
