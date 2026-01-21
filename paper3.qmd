@@ -66,13 +66,6 @@ date: last-modified
 bibliography: references.bib
 ---
 
-  <!-- This tutorial illustrates the application of the aforementioned approach to a simulated dataset on speech quality. It offers detailed guidance on data simulation, model specification, estimation, and interpretation using the software `R` and `Stan`. While the tutorial assumes familiarity with CJ theory and practice, latent variable models, and causal inference, it does not require prior experience with Bayesian inference methods or the associated software. Ultimately, by following the outlined procedures, researchers can replicate this analysis and adapt the approach for more complex CJ studies. -->
-
-
-<!-- commands for d-separation -->
-\newcommand{\dsep}{\:\bot\:}
-\newcommand{\ndsep}{\:\not\bot\:}
-
 <!-- ######################################### -->
 
 # Introduction {#sec-introduction}
@@ -128,6 +121,10 @@ The remainder of this manuscript is organized into five sections. @sec-theory re
 
 ## The Information-Theoretical model for CJ {#sec-theory_ITCJ}
 <!-- Sven and Tine 2025.09.04, time: 00:07:00 - 00:09:40 -->
+
+<!-- commands for d-separation -->
+\newcommand{\dsep}{\:\bot\:}
+\newcommand{\ndsep}{\:\not\bot\:}
 
 
 <!-- ######################################### -->
