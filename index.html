@@ -10,7 +10,7 @@
 <meta name="author" content="Tine van Daal">
 <meta name="author" content="Sven De Maeyer">
 <meta name="author" content="Steven Gillis">
-<meta name="dcterms.date" content="2026-01-21">
+<meta name="dcterms.date" content="2026-01-23">
 <meta name="keywords" content="tutorial, causal inference, bayesian inference, thurstonian model, comparative judgement, statistical modeling">
 
 <title>Finding Thurstone: modeling comparative judgment data with R (and Stan)</title>
@@ -63,6 +63,9 @@ div.csl-indent {
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="site_libs/bootstrap/bootstrap-9fda34e093bf7366c0eb777361069291.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script src="site_libs/quarto-contrib/glightbox/glightbox.min.js"></script>
+<link href="site_libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
+<link href="site_libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet">
 <script async="" src="https://hypothes.is/embed.js"></script>
 <script>
   window.document.addEventListener("DOMContentLoaded", function (_event) {
@@ -70,11 +73,40 @@ div.csl-indent {
   });
 </script>
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <meta name="citation_title" content="Finding Thurstone: modeling comparative judgment data with `R` (and `Stan`)">
 <meta name="citation_abstract" content="The classical BTL analysis has become the standard approach for analyzing comparative judgment (CJ) data because it provides a simple method for measuring traits and conducting related analysis. This simplicity arises from two key features. First, the approach relies on the Bradley-Terry-Luce (BTL) model to estimate latent traits. Second, it uses of ad hoc procedures to conduct related analysis. However, recent studies question whether the BTL model assumptions hold in contemporary CJ applications and whether the ad hoc procedures effectively fulfill their intended analytical goals.
 
-To address these concerns, @Rivera_et_al_2025 proposed an approach that extends the general form of Thurstone&amp;amp;#039;s law of comparative judgment. The approach enables the development of a model tailored to the assumed data-generating process of the CJ system under study, eliminating the need for simplifying assumptions. Moreover, by integrating measurement and inference within a single analytical framework, it also removes the dependence on ad hoc analytical procedures. Despite these advantages, the approach still requires empirical validation.
+To address these concerns, Rivera and colleagues [-@Rivera_et_al_2025] proposed an approach that extends the general form of Thurstone&amp;amp;#039;s law of comparative judgment. The approach enables the development of a model tailored to the assumed data-generating process of the CJ system under study, eliminating the need for simplifying assumptions. Moreover, by integrating measurement and inference within a single analytical framework, it also removes the dependence on ad hoc analytical procedures. Despite these advantages, the approach still requires empirical validation.
 
 Thus, this study empirically validates the proposed Information-Theoretical model for CJ, benchmarked against the classical BTL analysis, and demonstrates its practical implementation. The document includes a structured tutorial based on a simulated speech-quality dataset, providing guidance on data simulation, prior specification, model estimation, and interpretation using `Stan`, `R`, and the interface packages `cmdstan` and `brms`. Ultimately, the study equips researchers with practical tools to apply the model to more complex CJ studies.
 ">
@@ -83,10 +115,10 @@ Thus, this study empirically validates the proposed Information-Theoretical mode
 <meta name="citation_author" content="Tine van Daal">
 <meta name="citation_author" content="Sven De Maeyer">
 <meta name="citation_author" content="Steven Gillis">
-<meta name="citation_publication_date" content="2026-01-21">
-<meta name="citation_cover_date" content="2026-01-21">
+<meta name="citation_publication_date" content="2026-01-23">
+<meta name="citation_cover_date" content="2026-01-23">
 <meta name="citation_year" content="2026">
-<meta name="citation_online_date" content="2026-01-21">
+<meta name="citation_online_date" content="2026-01-23">
 <meta name="citation_language" content="en">
 <meta name="citation_reference" content="citation_title=Correlation and causation;,citation_author=S. Wright;,citation_publication_date=1927;,citation_cover_date=1927;,citation_year=1927;,citation_fulltext_html_url=https://books.google.co.ao/books/about/Journal_of_Agricultural_Research.html?hl=pt-PT&amp;amp;amp;id=lNNdIV_qpwIC;,citation_issue=7;,citation_volume=20;,citation_journal_title=Correlation and causation;">
 <meta name="citation_reference" content="citation_title=On the interpretation of χ2 from contingency tables, and the calculation of p;,citation_author=R. Fisher;,citation_publication_date=1922;,citation_cover_date=1922;,citation_year=1922;,citation_fulltext_html_url=http://www.jstor.org/stable/2340521;,citation_issue=1;,citation_doi=10.2307/2340521;,citation_volume=85;,citation_journal_title=Journal of the Royal Statistical Society;,citation_publisher=[Wiley, Royal Statistical Society];">
@@ -282,8 +314,10 @@ Thus, this study empirically validates the proposed Information-Theoretical mode
 <meta name="citation_reference" content="citation_title=Comparative judgement for advancing research in applied linguistics;,citation_author=Peter Thwaites;,citation_author=Magali Paquot;,citation_publication_date=2024;,citation_cover_date=2024;,citation_year=2024;,citation_fulltext_html_url=https://www.sciencedirect.com/science/article/pii/S277276612400048X;,citation_issue=3;,citation_doi=https://doi.org/10.1016/j.rmal.2024.100142;,citation_issn=2772-7661;,citation_volume=3;,citation_journal_title=Research Methods in Applied Linguistics;">
 <meta name="citation_reference" content="citation_title=Bayesian beta regressions with brms in r: A tutorial for phoneticians;,citation_author=S. Coretta;,citation_author=P. C. Bürkner;,citation_publication_date=2025-02-12;,citation_cover_date=2025-02-12;,citation_year=2025;,citation_fulltext_html_url=https://osf.io/preprints/osf/f9rqg_v1;,citation_doi=10.31219/osf.io/f9rqg_v1;,citation_journal_title=OSF;">
 <meta name="citation_reference" content="citation_title=Scalable bayesian inference for bradley–terry models with ties: An application to honour based abuse;,citation_author=Rowland G. Seymour;,citation_author=Fabian Hernandez;,citation_publication_date=2025;,citation_cover_date=2025;,citation_year=2025;,citation_issue=9;,citation_doi=10.1080/02664763.2024.2436608;,citation_volume=52;,citation_journal_title=Journal of Applied Statistics;,citation_publisher=Taylor &amp;amp;amp; Francis;">
+<meta name="citation_reference" content="citation_title=Comparative judgment: Building a shared consensus over rater variation in assessing second language writing performance;,citation_author=Qian Wu;,citation_publication_date=2025;,citation_cover_date=2025;,citation_year=2025;,citation_issue=2;,citation_doi=10.1177/21582440251346346;,citation_volume=15;,citation_journal_title=Sage Open;">
 <meta name="citation_reference" content="citation_title=Psychometric methods;,citation_author=J. Guilford;,citation_publication_date=1954;,citation_cover_date=1954;,citation_year=1954;,citation_isbn=9780070251298;">
 <meta name="citation_reference" content="citation_title=Frog, where are you?;,citation_author=M. Mayer;,citation_publication_date=1969;,citation_cover_date=1969;,citation_year=1969;,citation_fulltext_html_url=https://books.google.be/books?id=Asi5KQAACAAJ;,citation_isbn=9780803728813;,citation_series_title=Boy, a dog, and a frog;">
+<meta name="citation_reference" content="citation_title=Rating scale analysis;,citation_author=B. Wright;,citation_author=G. Masters;,citation_publication_date=1982;,citation_cover_date=1982;,citation_year=1982;,citation_fulltext_html_url=https://research.acer.edu.au/measurement/2;,citation_isbn=9780941938013;">
 <meta name="citation_reference" content="citation_title=Generalized linear models;,citation_author=P. McCullagh;,citation_author=J. Nelder;,citation_publication_date=1983;,citation_cover_date=1983;,citation_year=1983;,citation_doi=10.1201/9780203753736;,citation_isbn=9780203753736;,citation_series_title=Monographs on statistics and applied probability;">
 <meta name="citation_reference" content="citation_title=An introduction to latent variable models;,citation_author=B. Everitt;,citation_publication_date=1984;,citation_cover_date=1984;,citation_year=1984;,citation_doi=10.1007/978-94-009-5564-6;,citation_isbn=9789400955646;,citation_series_title=Monographs on statistics and applied probability;">
 <meta name="citation_reference" content="citation_title=Measurement error models;,citation_author=W. Fuller;,citation_publication_date=1987;,citation_cover_date=1987;,citation_year=1987;,citation_doi=10.1002/9780470316665;,citation_isbn=9780470316665;,citation_series_title=Wiley series in probability and statistics;">
@@ -458,7 +492,7 @@ Thus, this study empirically validates the proposed Information-Theoretical mode
                 <div>
             <div class="quarto-title-meta-heading">Published</div>
             <div class="quarto-title-meta-contents">
-              <p class="date">January 21, 2026</p>
+              <p class="date">January 23, 2026</p>
             </div>
           </div>
           
@@ -473,7 +507,7 @@ Thus, this study empirically validates the proposed Information-Theoretical mode
       <div class="abstract">
         <div class="block-title">Abstract</div>
         <p>The classical BTL analysis has become the standard approach for analyzing comparative judgment (CJ) data because it provides a simple method for measuring traits and conducting related analysis. This simplicity arises from two key features. First, the approach relies on the Bradley-Terry-Luce (BTL) model to estimate latent traits. Second, it uses of ad hoc procedures to conduct related analysis. However, recent studies question whether the BTL model assumptions hold in contemporary CJ applications and whether the ad hoc procedures effectively fulfill their intended analytical goals.</p>
-        <p>To address these concerns, <span class="citation" data-cites="Rivera_et_al_2025"><span class="nocase">Rivera et al.</span> (<a href="#ref-Rivera_et_al_2025" role="doc-biblioref">2025</a>)</span> proposed an approach that extends the general form of Thurstone’s law of comparative judgment. The approach enables the development of a model tailored to the assumed data-generating process of the CJ system under study, eliminating the need for simplifying assumptions. Moreover, by integrating measurement and inference within a single analytical framework, it also removes the dependence on ad hoc analytical procedures. Despite these advantages, the approach still requires empirical validation.</p>
+        <p>To address these concerns, Rivera and colleagues <span class="citation" data-cites="Rivera_et_al_2025">(<a href="#ref-Rivera_et_al_2025" role="doc-biblioref">2025</a>)</span> proposed an approach that extends the general form of Thurstone’s law of comparative judgment. The approach enables the development of a model tailored to the assumed data-generating process of the CJ system under study, eliminating the need for simplifying assumptions. Moreover, by integrating measurement and inference within a single analytical framework, it also removes the dependence on ad hoc analytical procedures. Despite these advantages, the approach still requires empirical validation.</p>
         <p>Thus, this study empirically validates the proposed Information-Theoretical model for CJ, benchmarked against the classical BTL analysis, and demonstrates its practical implementation. The document includes a structured tutorial based on a simulated speech-quality dataset, providing guidance on data simulation, prior specification, model estimation, and interpretation using <code>Stan</code>, <code>R</code>, and the interface packages <code>cmdstan</code> and <code>brms</code>. Ultimately, the study equips researchers with practical tools to apply the model to more complex CJ studies.</p>
       </div>
     </div>
@@ -499,8 +533,8 @@ Thus, this study empirically validates the proposed Information-Theoretical mode
   </ul></li>
   <li><a href="#sec-theory" id="toc-sec-theory" class="nav-link" data-scroll-target="#sec-theory"><span class="header-section-number">2</span> A tale of two analytical approaches</a>
   <ul>
-  <li><a href="#sec-theory_CBTL" id="toc-sec-theory_CBTL" class="nav-link" data-scroll-target="#sec-theory_CBTL"><span class="header-section-number">2.1</span> The classical BTL analysis</a></li>
-  <li><a href="#sec-theory_ITCJ" id="toc-sec-theory_ITCJ" class="nav-link" data-scroll-target="#sec-theory_ITCJ"><span class="header-section-number">2.2</span> The Information-Theoretical model for CJ</a></li>
+  <li><a href="#sec-theory_CBTL" id="toc-sec-theory_CBTL" class="nav-link" data-scroll-target="#sec-theory_CBTL"><span class="header-section-number">2.1</span> The CBTL analysis</a></li>
+  <li><a href="#sec-theory_ITCJ" id="toc-sec-theory_ITCJ" class="nav-link" data-scroll-target="#sec-theory_ITCJ"><span class="header-section-number">2.2</span> The ITCJ analysis</a></li>
   </ul></li>
   <li><a href="#sec-methods" id="toc-sec-methods" class="nav-link" data-scroll-target="#sec-methods"><span class="header-section-number">3</span> Methods</a>
   <ul>
@@ -574,11 +608,11 @@ Thus, this study empirically validates the proposed Information-Theoretical mode
 <!-- do not make it about speech quality, Put examples of many applications, add a couple more examples. Present it in a more broader way, e.g., "using speech quality as an example" -->
 <p><em>Comparative judgment</em> (CJ) has emerged as a valuable methodology for measuring latent traits across diverse fields, including education <span class="citation" data-cites="Kimbell_2012 Jones_et_al_2015 vanDaal_et_al_2016 Bartholomew_et_al_2018">(<a href="#ref-Kimbell_2012" role="doc-biblioref">Kimbell 2012</a>; <a href="#ref-Jones_et_al_2015" role="doc-biblioref">Jones and Inglis 2015</a>; <a href="#ref-vanDaal_et_al_2016" role="doc-biblioref"><span class="nocase">van Daal et al.</span> 2016</a>; <a href="#ref-Bartholomew_et_al_2018" role="doc-biblioref">Bartholomew et al. 2018</a>)</span>, political sciences <span class="citation" data-cites="Zucco_et_al_2019">(<a href="#ref-Zucco_et_al_2019" role="doc-biblioref">ZuccoJr. et al. 2019</a>)</span>, linguistics <span class="citation" data-cites="Boonen_et_al_2020">(<a href="#ref-Boonen_et_al_2020" role="doc-biblioref">Boonen et al. 2020</a>)</span>, and criminology <span class="citation" data-cites="Seymour_et_al_2025">(<a href="#ref-Seymour_et_al_2025" role="doc-biblioref">Seymour and Hernandez 2025</a>)</span>. In CJ studies, judges actively compare pairs of stimuli to determine which stimulus exhibits more of the latent trait of interest <span class="citation" data-cites="Thurstone_1927a Thurstone_1927b">(<a href="#ref-Thurstone_1927a" role="doc-biblioref">Thurstone 1927b</a>, <a href="#ref-Thurstone_1927b" role="doc-biblioref">1927a</a>)</span>.</p>
 <!-- 2. How does CJ data is analyzed? -->
-<p>A specific data analysis workflow has become the standard approach for analyzing CJ data <span class="citation" data-cites="Thwaites_et_al_2024">(see, e.g., <a href="#ref-Thwaites_et_al_2024" role="doc-biblioref">Thwaites and Paquot 2024</a>)</span>. In this study, we refer to this workflow as the <em>classical BTL analysis</em>. Researchers favor this approach because it provides a simple method for measuring traits and conducting related analyses <span class="citation" data-cites="Andrich_1978 Pollitt_2012b">(<a href="#ref-Andrich_1978" role="doc-biblioref">Andrich 1978</a>; <a href="#ref-Pollitt_2012b" role="doc-biblioref">Pollitt 2012</a>)</span>. This simplicity, in turn, arises from two key features. First, the approach relies on the Bradley-Terry-Luce (BTL) model <span class="citation" data-cites="Bradley_et_al_1952 Luce_1959">(<a href="#ref-Bradley_et_al_1952" role="doc-biblioref">Bradley and Terry 1952</a>; <a href="#ref-Luce_1959" role="doc-biblioref">Luce 1959</a>)</span> to estimate latent traits. The model facilitates trait estimation by imposing several simplifying assumptions about traits, judges, and stimuli in CJ assessments <span class="citation" data-cites="Thurstone_1927b Bramley_2008">(<a href="#ref-Thurstone_1927b" role="doc-biblioref">Thurstone 1927a</a>; <a href="#ref-Bramley_2008" role="doc-biblioref">Bramley 2008</a>)</span>. Second, the approach uses ad hoc procedures to conduct related analysis, including data summarization and statistical inference <span class="citation" data-cites="Pollitt_2012b">(<a href="#ref-Pollitt_2012b" role="doc-biblioref">Pollitt 2012</a>)</span>.</p>
+<p>A specific data analysis workflow has become the standard approach for analyzing CJ data <span class="citation" data-cites="Thwaites_et_al_2024">(see, e.g., <a href="#ref-Thwaites_et_al_2024" role="doc-biblioref">Thwaites and Paquot 2024</a>)</span>. In this study, we refer to this workflow as the classical BTL analysis or <em>CBTL analysis</em>. Researchers favor this approach because it provides a simple method for measuring traits and conducting related analyses <span class="citation" data-cites="Andrich_1978 Pollitt_2012b">(<a href="#ref-Andrich_1978" role="doc-biblioref">Andrich 1978</a>; <a href="#ref-Pollitt_2012b" role="doc-biblioref">Pollitt 2012b</a>)</span>. This simplicity arises from two key features. First, the approach relies on the Bradley-Terry-Luce (BTL) model <span class="citation" data-cites="Bradley_et_al_1952 Luce_1959">(<a href="#ref-Bradley_et_al_1952" role="doc-biblioref">Bradley and Terry 1952</a>; <a href="#ref-Luce_1959" role="doc-biblioref">Luce 1959</a>)</span> to estimate latent traits. The model facilitates trait estimation by imposing several simplifying assumptions about traits, judges, and stimuli present in CJ assessments <span class="citation" data-cites="Thurstone_1927b Bramley_2008">(<a href="#ref-Thurstone_1927b" role="doc-biblioref">Thurstone 1927a</a>; <a href="#ref-Bramley_2008" role="doc-biblioref">Bramley 2008</a>)</span>. Second, the approach uses ad hoc procedures to conduct related analysis, including data summarization and statistical inference <span class="citation" data-cites="Pollitt_2012b">(<a href="#ref-Pollitt_2012b" role="doc-biblioref">Pollitt 2012b</a>)</span>.</p>
 <!-- 3. But what is the problem with using the BTL model? -->
-<p>Recent studies, however, question whether the assumptions of the BTL model hold in contemporary CJ applications and whether the ad hoc procedures achieve their intended analytical goals <span class="citation" data-cites="Bramley_2008 Kelly_et_al_2022 Rivera_et_al_2025">(<a href="#ref-Bramley_2008" role="doc-biblioref">Bramley 2008</a>; <a href="#ref-Kelly_et_al_2022" role="doc-biblioref">Kelly et al. 2022</a>; <a href="#ref-Rivera_et_al_2025" role="doc-biblioref"><span class="nocase">Rivera et al.</span> 2025</a>)</span>. For instance, Rivera and colleagues <span class="citation" data-cites="Rivera_et_al_2025">(<a href="#ref-Rivera_et_al_2025" role="doc-biblioref">2025</a>)</span> argue that while the assumptions of equal dispersions and zero correlations between stimuli simplify trait measurement, they may fail to represent complex traits or heterogeneous stimuli adequately <span class="citation" data-cites="Thurstone_1927a Andrich_1978 vanDaal_et_al_2016 Lesterhuis_et_al_2018 Chambers_et_al_2022">(<a href="#ref-Thurstone_1927a" role="doc-biblioref">Thurstone 1927b</a>; <a href="#ref-Andrich_1978" role="doc-biblioref">Andrich 1978</a>; <a href="#ref-vanDaal_et_al_2016" role="doc-biblioref"><span class="nocase">van Daal et al.</span> 2016</a>; <a href="#ref-Lesterhuis_et_al_2018" role="doc-biblioref"><span class="nocase">Lesterhuis et al.</span> 2018</a>; <a href="#ref-Chambers_et_al_2022" role="doc-biblioref">Chambers and Cunningham 2022</a>)</span>. As a result, such assumptions can compromise the reliability and accuracy of trait estimates <span class="citation" data-cites="Ackerman_1989 Zimmerman_1994 McElreath_2020 Wu_et_al_2022 Miller_2023 Hoyle_et_al_2023">(<a href="#ref-Ackerman_1989" role="doc-biblioref">Ackerman 1989</a>; <a href="#ref-Zimmerman_1994" role="doc-biblioref">Zimmerman 1994</a>; <a href="#ref-McElreath_2020" role="doc-biblioref">McElreath 2020</a>; <a href="#ref-Wu_et_al_2022" role="doc-biblioref">Wu et al. 2022</a>; <a href="#ref-Miller_2023" role="doc-biblioref">Miller 2023</a>; <a href="#ref-Hoyle_et_al_2023" role="doc-biblioref">Hoyle 2023</a>)</span>. Moreover, the same authors note that although ad hoc procedures simplify data analyses, the use of untested methods can also undermine the validity of statistical inferences derived from CJ data <span class="citation" data-cites="McElreath_2020 Kline_et_al_2023 Hoyle_et_al_2023">(<a href="#ref-McElreath_2020" role="doc-biblioref">McElreath 2020</a>; <a href="#ref-Kline_et_al_2023" role="doc-biblioref">Kline 2023</a>; <a href="#ref-Hoyle_et_al_2023" role="doc-biblioref">Hoyle 2023</a>)</span>.</p>
+<p>Recent studies, however, question whether the assumptions of the BTL model hold in contemporary CJ applications and whether the ad hoc procedures achieve their intended analytical goals <span class="citation" data-cites="Bramley_2008 Kelly_et_al_2022 Rivera_et_al_2025">(<a href="#ref-Bramley_2008" role="doc-biblioref">Bramley 2008</a>; <a href="#ref-Kelly_et_al_2022" role="doc-biblioref">Kelly et al. 2022</a>; <a href="#ref-Rivera_et_al_2025" role="doc-biblioref"><span class="nocase">Rivera et al.</span> 2025</a>)</span>. For instance, Rivera and colleagues <span class="citation" data-cites="Rivera_et_al_2025">(<a href="#ref-Rivera_et_al_2025" role="doc-biblioref">2025</a>)</span> argue that while the assumptions of equal dispersions and zero correlations between stimuli simplify trait measurement, they may fail to represent complex traits or heterogeneous stimuli adequately <span class="citation" data-cites="Thurstone_1927a Andrich_1978 vanDaal_et_al_2016 Lesterhuis_et_al_2018 Chambers_et_al_2022">(<a href="#ref-Thurstone_1927a" role="doc-biblioref">Thurstone 1927b</a>; <a href="#ref-Andrich_1978" role="doc-biblioref">Andrich 1978</a>; <a href="#ref-vanDaal_et_al_2016" role="doc-biblioref"><span class="nocase">van Daal et al.</span> 2016</a>; <a href="#ref-Lesterhuis_et_al_2018" role="doc-biblioref"><span class="nocase">Lesterhuis et al.</span> 2018</a>; <a href="#ref-Chambers_et_al_2022" role="doc-biblioref">Chambers and Cunningham 2022</a>)</span>. As a result, such assumptions can compromise the reliability and accuracy of trait estimates <span class="citation" data-cites="Ackerman_1989 Zimmerman_1994 McElreath_2020 Wu_et_al_2022 Miller_2023 Hoyle_et_al_2023">(<a href="#ref-Ackerman_1989" role="doc-biblioref">Ackerman 1989</a>; <a href="#ref-Zimmerman_1994" role="doc-biblioref">Zimmerman 1994</a>; <a href="#ref-McElreath_2020" role="doc-biblioref">McElreath 2020</a>; <a href="#ref-Wu_et_al_2022" role="doc-biblioref">Wu et al. 2022</a>; <a href="#ref-Miller_2023" role="doc-biblioref">Miller 2023</a>; <a href="#ref-Hoyle_et_al_2023" role="doc-biblioref">Hoyle 2023</a>)</span>. Moreover, the same authors note that although ad hoc procedures simplify data analyses, the use of untested methods can also undermine the validity of inferences derived from CJ data <span class="citation" data-cites="McElreath_2020 Kline_et_al_2023 Hoyle_et_al_2023">(<a href="#ref-McElreath_2020" role="doc-biblioref">McElreath 2020</a>; <a href="#ref-Kline_et_al_2023" role="doc-biblioref">Kline 2023</a>; <a href="#ref-Hoyle_et_al_2023" role="doc-biblioref">Hoyle 2023</a>)</span>.</p>
 <!-- 4. How it has been solved? -->
-<p>To address these concerns, <span class="citation" data-cites="Rivera_et_al_2025"><span class="nocase">Rivera et al.</span> (<a href="#ref-Rivera_et_al_2025" role="doc-biblioref">2025</a>)</span> proposed an approach that extends the general form of Thurstone’s law of comparative judgment <span class="citation" data-cites="Thurstone_1927a Thurstone_1927b">(<a href="#ref-Thurstone_1927a" role="doc-biblioref">Thurstone 1927b</a>, <a href="#ref-Thurstone_1927b" role="doc-biblioref">1927a</a>)</span>. This approach leverages causal and Bayesian inference methods to combine Thurstone’s core theoretical principles with key design features of CJ assessment. By doing so, it enables the development of a model tailored to the assumed data-generating process of the CJ system under study. This tailoring effectively removes the need to rely on the simplifying assumptions of the BTL model. Moreover, by integrating measurement and inference within a single analytical framework, the approach also eliminates the dependence on ad hoc analytical procedures. Ultimately, this approach has the potential to produce reliable trait estimates and accurate statistical inferences. However, its effectiveness still required empirical validation.</p>
+<p>To address these concerns, <span class="citation" data-cites="Rivera_et_al_2025"><span class="nocase">Rivera et al.</span> (<a href="#ref-Rivera_et_al_2025" role="doc-biblioref">2025</a>)</span> proposed an approach that extends the general form of Thurstone’s law of comparative judgment <span class="citation" data-cites="Thurstone_1927a Thurstone_1927b">(<a href="#ref-Thurstone_1927a" role="doc-biblioref">Thurstone 1927b</a>, <a href="#ref-Thurstone_1927b" role="doc-biblioref">1927a</a>)</span>, referred to as the Information-Theoretical model for CJ (hereafter, ITCJ analysis). This approach leverages causal and Bayesian inference methods to combine Thurstone’s core theoretical principles with key design features of CJ assessment. By doing so, it enables the development of a model tailored to the assumed data-generating process of the CJ system under study. This tailoring effectively removes the need to rely on the simplifying assumptions of the BTL model. Moreover, by integrating measurement and inference within a single analytical framework, the approach also eliminates the dependence on ad hoc analytical procedures.</p>
 <section id="sec-introduction_goals" class="level2" data-number="1.1">
 <h2 data-number="1.1" class="anchored" data-anchor-id="sec-introduction_goals"><span class="header-section-number">1.1</span> Research goals</h2>
 <!-- Sven and Tine 25.08.25, time: 00:10:25 - 00:10:50 -->
@@ -588,8 +622,9 @@ Thus, this study empirically validates the proposed Information-Theoretical mode
 <!-- - Make sure to state what do researchers learn from the document -->
 <!-- Sven and Tine 2025.09.04, time: 00:28:45 - 00:30:20 -->
 <!-- The model stills need to be empirically tested, the ITCJ implies a complex models which put challenges to integrate it in the workflow -->
-<!-- 1. So, what are we going to do? -->
-<p>Building on the introduction, this study pursues two closely related research goals. The first goal is to <em>empirically validate</em> the proposed Information-Theoretical model for CJ (hereafter, ITCJ analysis) by evaluating the accuracy and reliability of its trait estimates and inference parameters, benchmarked against the classical BTL analysis (hereafter, CBTL analysis). The second goal emerges as a practical byproduct of this validation: to demonstrate how to implement the model in practice. To this end, the document provides a structured tutorial based on a simulated speech-quality dataset, offering guidance on data simulation, prior specification, model estimation, and interpretation using <code>Stan</code><span class="citation" data-cites="Stan_2026a Stan_2026b">(<a href="#ref-Stan_2026a" role="doc-biblioref">Stan Development Team. 2026b</a>, <a href="#ref-Stan_2026b" role="doc-biblioref">2026a</a>)</span>, <code>R</code> <span class="citation" data-cites="R_2015">(<a href="#ref-R_2015" role="doc-biblioref">R Core Team 2015</a>)</span>, and the interface packages <code>cmdstan</code> <span class="citation" data-cites="Gabry_et_al_2025b">(<a href="#ref-Gabry_et_al_2025b" role="doc-biblioref">Gabry et al. 2025</a>)</span> and <code>brms</code> <span class="citation" data-cites="Burkner_2017 Burkner_2018">(<a href="#ref-Burkner_2017" role="doc-biblioref">Bürkner 2017</a>, <a href="#ref-Burkner_2018" role="doc-biblioref">2018</a>)</span>. By combining model validation and practical instruction, the study can evaluate the methodological performance of the ITCJ analysis and provide researchers with practical tools to apply it to more complex CJ studies.</p>
+<!-- 1. Why we want to do it and what are we going to do-->
+<p>The ITCJ analysis <span class="citation" data-cites="Rivera_et_al_2025">(<a href="#ref-Rivera_et_al_2025" role="doc-biblioref"><span class="nocase">Rivera et al.</span> 2025</a>)</span> shows theoretical promise for yielding reliable trait estimates and accurate statistical inferences. However, as noted by the authors, this promise has not yet been empirically validated. Thus, the present study addresses this gap by pursuing two closely related research goals. The first goal is to <em>empirically validate</em> the proposed ITCJ analysis by evaluating the accuracy and reliability of its trait estimates and inference parameters, benchmarked against the CBTL analysis.</p>
+<p>The second goal emerges as a practical byproduct of this validation: <em>to demonstrate how to implement the model in practice</em>. To this end, the document provides a structured tutorial based on a simulated speech-quality dataset, offering guidance on data simulation, prior specification, model estimation, and interpretation using <code>Stan</code><span class="citation" data-cites="Stan_2026a Stan_2026b">(<a href="#ref-Stan_2026a" role="doc-biblioref">Stan Development Team. 2026b</a>, <a href="#ref-Stan_2026b" role="doc-biblioref">2026a</a>)</span>, <code>R</code> <span class="citation" data-cites="R_2015">(<a href="#ref-R_2015" role="doc-biblioref">R Core Team 2015</a>)</span>, and the interface packages <code>cmdstan</code> <span class="citation" data-cites="Gabry_et_al_2025b">(<a href="#ref-Gabry_et_al_2025b" role="doc-biblioref">Gabry et al. 2025</a>)</span> and <code>brms</code> <span class="citation" data-cites="Burkner_2017 Burkner_2018">(<a href="#ref-Burkner_2017" role="doc-biblioref">Bürkner 2017</a>, <a href="#ref-Burkner_2018" role="doc-biblioref">2018</a>)</span>. By combining model validation and practical instruction, the study evaluates the methodological performance of the ITCJ analysis and equips researchers with practical tools to apply it to more complex CJ studies.</p>
 <!-- 6. what is the organization of the manuscript? -->
 <p>The remainder of this manuscript is organized into five sections. <a href="#sec-theory" class="quarto-xref">Section&nbsp;2</a> reviews the two analytical approaches commonly applied to CJ data: the CBTL and ITCJ analyses. <a href="#sec-methods" class="quarto-xref">Section&nbsp;3</a> details the assumed data-generating process for the simulated dataset, the simulation procedure, the practical implementation of each analytical approach, and the evaluation criteria aligned with the research goals. <a href="#sec-results" class="quarto-xref">Section&nbsp;4</a> presents the data description and modeling results. <a href="#sec-discussion" class="quarto-xref">Section&nbsp;5</a> interprets the findings, outlines future research directions, and considers the study limitations. Finally, <a href="#sec-conclusion" class="quarto-xref">Section&nbsp;6</a> offers the concluding remarks.</p>
 <!-- []{style="color:red;"} -->
@@ -601,15 +636,93 @@ Thus, this study empirically validates the proposed Information-Theoretical mode
 <!-- Sven and Tine 2025.08.25, time: 00:12:20 - 00:14:00 -->
 <!-- Sven and Tine 2025.09.04, time: 00:04:05 - 00:04:40 -->
 <!-- Sven and Tine 2025.09.15, time: 00:03:30 - 00:04:20 -->
+<p>Pairwise comparison data, and more specifically CJ data, can be analyzed using two main approaches: the CBTL and the ITCJ analysis. The CBTL approach applies a sequence of separate analytical steps to estimate traits and draw inferences. In contrast, the ITCJ analysis uses a single, systematic, and integrated approach to achieve the same objectives. This section describes the two approaches in detail.</p>
 <section id="sec-theory_CBTL" class="level2" data-number="2.1">
-<h2 data-number="2.1" class="anchored" data-anchor-id="sec-theory_CBTL"><span class="header-section-number">2.1</span> The classical BTL analysis</h2>
+<h2 data-number="2.1" class="anchored" data-anchor-id="sec-theory_CBTL"><span class="header-section-number">2.1</span> The CBTL analysis</h2>
 <!-- Sven and Tine 2025.09.04, time: 00:04:40 - 00:07:00 -->
 <!-- Sven 2025.09.29, time: 00:00:00 - 00:02:10, issues with residuals -->
+<p>The CBTL approach implements a sequence of separate analytical steps, each serving a distinct purpose <span class="citation" data-cites="Pollitt_2012a Pollitt_2012b Jones_et_al_2019 Boonen_et_al_2020 Chambers_et_al_2022 Bouwer_et_al_2023">(<a href="#ref-Pollitt_2012a" role="doc-biblioref">Pollitt 2012a</a>, <a href="#ref-Pollitt_2012b" role="doc-biblioref">2012b</a>; <a href="#ref-Jones_et_al_2019" role="doc-biblioref">Jones et al. 2019</a>; <a href="#ref-Boonen_et_al_2020" role="doc-biblioref">Boonen et al. 2020</a>; <a href="#ref-Chambers_et_al_2022" role="doc-biblioref">Chambers and Cunningham 2022</a>; <a href="#ref-Bouwer_et_al_2023" role="doc-biblioref">Bouwer et al. 2023</a>)</span>. This multi-step procedure typically unfolds as follows. First, analysts apply the BTL model to the CJ data to produce two outputs: (1) point estimates of stimulus traits along with their standard errors, and (2) residuals at the stimulus level. These outputs provide the foundation for the subsequent analyses.</p>
+<p>Second, researchers summarize or fit regression models to the stimulus point estimates. This step serves multiple purposes, including aggregating stimulus-level estimates to the individual level, partitioning variability between and within individuals, and drawing inferences about factors that influence trait values. For example, <span class="citation" data-cites="Boonen_et_al_2020">Boonen et al. (<a href="#ref-Boonen_et_al_2020" role="doc-biblioref">2020</a>)</span> applied a multilevel regression model to the stimulus point estimates to examine whether children’s age or hearing status affects their intelligibility scores.</p>
+<p>Third, analysts summarize or fit regression models to the BTL residuals. This step helps to aggregate the remaining variability at the judge level, partition residual variability between and within judges, test for systematic biases, and identify potential misfitting judgments, stimuli, or judges. For instance, <span class="citation" data-cites="Wu_2025">Wu (<a href="#ref-Wu_2025" role="doc-biblioref">2025</a>)</span> fitted an analysis of variance (ANOVA) model to the infit statistic for each rater to examine the potential effects of raters’ expertise on their judgments. The infit statistics is a weighted average of the squared Pearson residuals <span class="citation" data-cites="Wright_et_al_1982">(<a href="#ref-Wright_et_al_1982" role="doc-biblioref">Wright and Masters 1982</a>)</span>.</p>
+<p>While this stepwise approach is the standard practice in fields such as education <span class="citation" data-cites="Wu_2025">(see, <a href="#ref-Wu_2025" role="doc-biblioref">Wu 2025</a>)</span> and linguistics <span class="citation" data-cites="Thwaites_et_al_2024">(see, <a href="#ref-Thwaites_et_al_2024" role="doc-biblioref">Thwaites and Paquot 2024</a>)</span>, it presents several limitations. First, each stage treats outputs from previous steps as fixed data, rather than acknowledging their status as uncertain parameter estimates. Failure to account for this uncertainty can introduce bias and decrease the precision of inferences. The direction and magnitude of these biases can be unpredictable: results may be attenuated, amplified, or remain unaffected depending on the uncertainty in the scores and the actual effects being tested <span class="citation" data-cites="McElreath_2020 Kline_et_al_2023 Hoyle_et_al_2023">(<a href="#ref-McElreath_2020" role="doc-biblioref">McElreath 2020</a>; <a href="#ref-Kline_et_al_2023" role="doc-biblioref">Kline 2023</a>; <a href="#ref-Hoyle_et_al_2023" role="doc-biblioref">Hoyle 2023</a>)</span>. Moreover, the loss of precision diminishes statistical power and increases the likelihood of committing type I or type II errors <span class="citation" data-cites="McElreath_2020">(<a href="#ref-McElreath_2020" role="doc-biblioref">McElreath 2020</a>)</span>. Second, the procedure lacks theoretical coherence, as it combines models with different underlying assumptions. For example, third-step analyses treat residuals as outputs that ostensibly capture deviations from expected comparison outcomes, potentially reflecting judge-specific tendencies or idiosyncrasies in judgments, without providing evidence on whether these assumptions hold.</p>
 </section>
 <section id="sec-theory_ITCJ" class="level2" data-number="2.2">
-<h2 data-number="2.2" class="anchored" data-anchor-id="sec-theory_ITCJ"><span class="header-section-number">2.2</span> The Information-Theoretical model for CJ</h2>
+<h2 data-number="2.2" class="anchored" data-anchor-id="sec-theory_ITCJ"><span class="header-section-number">2.2</span> The ITCJ analysis</h2>
 <!-- Sven and Tine 2025.09.04, time: 00:07:00 - 00:09:40 -->
 <!-- commands for d-separation -->
+<p>The ITCJ analysis addresses the aforementioned limitations by providing a unified and systematic approach to analyzing CJ data <span class="citation" data-cites="Rivera_et_al_2025">(<a href="#ref-Rivera_et_al_2025" role="doc-biblioref"><span class="nocase">Rivera et al.</span> 2025</a>)</span>. It starts with a general <em>Directed Acyclic Graph (DAG)</em> and a corresponding <em>Structural Causal Model (SCM)</em> <span class="citation" data-cites="Morgan_et_al_2014 Gross_et_al_2018 Neal_2020">(<a href="#ref-Morgan_et_al_2014" role="doc-biblioref">Morgan and Winship 2014</a>; <a href="#ref-Gross_et_al_2018" role="doc-biblioref">Gross et al. 2018</a>; <a href="#ref-Neal_2020" role="doc-biblioref">Neal 2020</a>)</span>, which together establish a coherent theoretical foundation for CJ analysis by explicitly representing the relationships among observed judgments, discriminal differences, stimulus traits, individual traits, judge biases, and the sampling and comparison mechanisms. Next, the approach adapts the general SCM and DAG to the assumed data-generating process of the CJ system under study. Then, it derives one or more bespoke <em>probabilistic</em> and <em>statistical</em> models tailored to that system. Finally, it uses one or more statistical models to estimate traits and conduct statistical inference. <a href="#fig-ITCJ_dag" class="quarto-xref">Figure&nbsp;1</a> illustrates an example of a general DAG structure.</p>
+<div id="fig-ITCJ_dag" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-pos="H" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-fig" id="fig-ITCJ_dag-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1: ITCJ analysis: DAG
+</figcaption>
+<div aria-describedby="fig-ITCJ_dag-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="3_results/theory/figures/png/CJ_TM_15.png" class="lightbox" data-gallery="quarto-lightbox-gallery-1" title="Figure&nbsp;1: ITCJ analysis: DAG"><img src="3_results/theory/figures/png/CJ_TM_15.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:72.0%" data-fig-pos="H"></a>
+</div>
+</figure>
+</div>
+<p>In this representation, <span class="math inline">\(O_{R}\)</span> denotes the observed judgment outcome vector, and <span class="math inline">\(D_{R}\)</span> represents the discriminal difference vector. <span class="math inline">\(T_{IA}\)</span> captures the vector of stimulus traits, and <span class="math inline">\(T_{I}\)</span> represents the vector of individual traits. The vector of judgment biases is represented by <span class="math inline">\(B_{JK}\)</span>, while the vector of judges’ biases by <span class="math inline">\(B_J\)</span>. Covariates at the stimulus and individual levels appear as <span class="math inline">\(X_{IA}\)</span> and <span class="math inline">\(X_{I}\)</span>, respectively; while <span class="math inline">\(Z_{JK}\)</span> and <span class="math inline">\(Z_{J}\)</span> represent covariates at the judgment and judge levels. The error terms (<span class="math inline">\(e_{IA}\)</span>, <span class="math inline">\(e_{I}\)</span>, <span class="math inline">\(e_{JK}\)</span>, <span class="math inline">\(e_{J}\)</span>) capture residual variation at each level.</p>
+<p>The DAG also represents the sampling and comparison mechanisms as the vectors <span class="math inline">\(S\)</span> and <span class="math inline">\(C\)</span>, two conditioned variables that determine how population outcomes become “observed” outcomes. Importantly, the DAG depicts <span class="math inline">\(S\)</span> and <span class="math inline">\(C\)</span> as independent from all other variables by showing no arrows pointing into them. Regarding <span class="math inline">\(S\)</span>, this indicates that the DAG applies to <em>Simple Random Sampling (SRSg)</em> designs, where each repeated judgment, judge, stimulus, and individual has an equal probability of inclusion within their respective groups <span class="citation" data-cites="Lawson_2015">(<a href="#ref-Lawson_2015" role="doc-biblioref">Lawson 2015</a>)</span>. Regarding <span class="math inline">\(C\)</span>, the DAG applies to <em>Random Allocation Comparative Designs</em> <span class="citation" data-cites="Bramley_2015">(<a href="#ref-Bramley_2015" role="doc-biblioref">Bramley 2015</a>)</span> or <em>Incomplete Block Designs</em> <span class="citation" data-cites="Lawson_2015">(<a href="#ref-Lawson_2015" role="doc-biblioref">Lawson 2015</a>)</span>, where every repeated judgment has an equal chance of being included in the sample.</p>
+<p>Researchers can then translate this DAG representation into SCMs and probabilistic forms that express the joint distribution of a complex CJ system as a product of simpler <em>conditional probability distributions (CPDs)</em> <span class="citation" data-cites="Pearl_et_al_2016 Neal_2020 Rivera_et_al_2025">(<a href="#ref-Pearl_et_al_2016" role="doc-biblioref">Pearl et al. 2016</a>; <a href="#ref-Neal_2020" role="doc-biblioref">Neal 2020</a>; see also <a href="#ref-Rivera_et_al_2025" role="doc-biblioref"><span class="nocase">Rivera et al.</span> 2025, sec. 5</a>)</span>, as illustrated in <a href="#fig-ITCJ" class="quarto-xref">Figure&nbsp;2</a>.</p>
+<div id="fig-ITCJ" class="quarto-layout-panel">
+<figure class="quarto-float quarto-float-fig figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-fig" id="fig-ITCJ-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;2: ITCJ analysis. SCM (left) and probabilistic (right) representations for DAG in <a href="#fig-ITCJ_dag" class="quarto-xref">Figure&nbsp;1</a>.
+</figcaption>
+<div aria-describedby="fig-ITCJ-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="quarto-layout-row quarto-layout-valign-top">
+<div class="quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-ITCJ" style="flex-basis: 50.0%;justify-content: flex-start;">
+<div id="fig-ITCJ_scm" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-subfloat-fig figure">
+<figcaption class="quarto-float-caption-top quarto-subfloat-caption quarto-subfloat-fig" id="fig-ITCJ_scm-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(a) SCM
+</figcaption>
+<div aria-describedby="fig-ITCJ_scm-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<p><span class="math display">\[
+\begin{aligned}
+  O_{R} &amp; := f_{O}(D_{R}, S, C) \\
+  D_{R} &amp; := f_{D}(T_{IA}, B_{JK}) \\
+  T_{IA} &amp; := f_{T}(T_{I}, X_{IA}, e_{IA}) \\
+  T_{I} &amp; := f_{T}(X_{I}, e_{I}) \\
+  B_{JK} &amp; := f_{B}(B_{J}, Z_{JK}, e_{JK}) \\
+  B_{J} &amp; := f_{B}(Z_{J}, e_{J}) \\ \\
+  e_{I} &amp; \:\bot\:\{ e_{J}, e_{IA}, e_{JK} \} \\
+  e_{J} &amp; \:\bot\:\{ e_{IA}, e_{JK} \} \\
+  e_{IA} &amp; \:\bot\:e_{JK}
+\end{aligned}
+\]</span></p>
+</div>
+</figure>
+</div>
+</div>
+<div class="quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-ITCJ" style="flex-basis: 50.0%;justify-content: flex-start;">
+<div id="fig-ITCJ_prob" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-subfloat-fig figure">
+<figcaption class="quarto-float-caption-top quarto-subfloat-caption quarto-subfloat-fig" id="fig-ITCJ_prob-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(b) Probabilistic model
+</figcaption>
+<div aria-describedby="fig-ITCJ_prob-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<p><span class="math display">\[
+\begin{aligned}
+  &amp; P( O_{R} \mid D_{R}, S, C ) \\
+  &amp; P( D_{R} \mid T_{IA}, B_{JK} ) \\
+  &amp; P( T_{IA} \mid T_{I}, X_{IA}, e_{IA} ) \\
+  &amp; P( T_{I} \mid X_{I}, e_{I} ) \\
+  &amp; P( B_{JK} \mid B_{J}, Z_{JK}, e_{JK} ) \\
+  &amp; P( B_{J} \mid Z_{J}, e_{J} ) \\ \\
+  &amp; P( e_{I} ) P( e_{IA} ) P( e_{J} ) P( e_{JK} ) \\ \\ \\
+\end{aligned}
+\]</span></p>
+</div>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</figure>
+</div>
+<p>Critically, the approach allows tailoring this general structure to a specific CJ context, enabling development of parsimonious models that match the assumed data-generating process without imposing unnecessary constraints. For example, <span class="citation" data-cites="Rivera_et_al_2025"><span class="nocase">Rivera et al.</span> (<a href="#ref-Rivera_et_al_2025" role="doc-biblioref">2025</a>)</span> modeled a CJ assessment designed to evaluate the impact of different teaching methods on students’ writing ability. In this case, the observed outcome was binary, so the model assumed <span class="math inline">\(O_{R}\)</span> followed a Bernoulli distribution. The discriminal difference <span class="math inline">\((D_{R})\)</span> was determined by the texts’ discriminal processes <span class="math inline">\((T_{IA})\)</span> and the judgment biases <span class="math inline">\((B_{JK})\)</span>. Student-level variables <span class="math inline">\(X_{I}\)</span>, such as teaching method, were included, whereas text-level variables <span class="math inline">\(X_{IA}\)</span> (e.g., text length) were not gathered. Similarly, judge-level variables <span class="math inline">\(Z_{J}\)</span>, like judgment expertise, were incorporated, while judgment-level variables <span class="math inline">\(Z_{JK}\)</span> (e.g., number of judgments per judge) were absent. Finally, the probabilistic assumptions for the idiosyncratic errors (<span class="math inline">\(e_{I}\)</span>, <span class="math inline">\(e_{IA}\)</span>, <span class="math inline">\(e_{J}\)</span>, <span class="math inline">\(e_{JK}\)</span>) resolved indeterminacies in <em>location</em>, <em>orientation</em>, and <em>scale</em> for the variables <span class="math inline">\(T_{I}\)</span>, <span class="math inline">\(T_{IA}\)</span>, <span class="math inline">\(B_{J}\)</span>, <span class="math inline">\(B_{JK}\)</span>, as required in latent variable models <span class="citation" data-cites="Depaoli_2021 deAyala_2009">(<a href="#ref-Depaoli_2021" role="doc-biblioref">Depaoli 2021</a>; <a href="#ref-deAyala_2009" role="doc-biblioref"><span class="nocase">de Ayala</span> 2009</a>)</span>.</p>
+<p>Lastly, researcher can derive one or more <em>bespoke</em> statistical models tailored to the CJ system of interest, as demonstrated in <span class="citation" data-cites="Rivera_et_al_2025"><span class="nocase">Rivera et al.</span> (<a href="#ref-Rivera_et_al_2025" role="doc-biblioref">2025</a>)</span>. At this stage, the ITCJ analysis differs fundamentally from the CBTL approach in how it handles parameter estimation and inference. Rather than fitting multiple separate models, the approach simultaneously estimates all parameters within a single coherent framework using <em>Bayesian inference</em>. This joint estimation accounts for uncertainty at all levels and enables direct inference about quantities of interest without relying on post-hoc procedures <span class="citation" data-cites="McElreath_2020">(<a href="#ref-McElreath_2020" role="doc-biblioref">McElreath 2020</a>)</span>.</p>
 <!-- ######################################### -->
 </section>
 </section>
@@ -906,11 +1019,17 @@ Bartholomew, S., L. Nadelson, W. Goodridge, and E. Reeve. 2018. <span>“Adaptiv
 <div id="ref-Boonen_et_al_2020" class="csl-entry" role="listitem">
 Boonen, N., H. Kloots, and S. Gillis. 2020. <span>“Rating the Overall Speech Quality of Hearing-Impaired Children by Means of Comparative Judgements.”</span> <em>Journal of Communication Disorders</em> 83: 1675–87. <a href="https://doi.org/10.1016/j.jcomdis.2019.105969">https://doi.org/10.1016/j.jcomdis.2019.105969</a>.
 </div>
+<div id="ref-Bouwer_et_al_2023" class="csl-entry" role="listitem">
+Bouwer, R., M. Lesterhuis, F. De Smedt, H. Van Keer, and S. De Maeyer. 2023. <span>“Comparative Approaches to the Assessment of Writing: Reliability and Validity of Benchmark Rating and Comparative Judgement.”</span> <em>Journal of Writing Research</em> 15 (3): 497–518. <a href="https://doi.org/10.17239/jowr-2024.15.03.03">https://doi.org/10.17239/jowr-2024.15.03.03</a>.
+</div>
 <div id="ref-Bradley_et_al_1952" class="csl-entry" role="listitem">
 Bradley, R., and M. Terry. 1952. <span>“Rank Analysis of Incomplete Block Designs: I. The Method of Paired Comparisons.”</span> <em>Biometrika</em> 39 (3-4): 324–45. <a href="https://doi.org/10.2307/2334029">https://doi.org/10.2307/2334029</a>.
 </div>
 <div id="ref-Bramley_2008" class="csl-entry" role="listitem">
 Bramley, T. 2008. <span>“Paired Comparison Methods.”</span> In <em>Techniques for Monitoring the Comparability of Examination Standards</em>, edited by P. Newton, J. Baird, H. Goldsteing, H. Patrick, and P. Tymms. GOV.UK. <a href="https://assets.publishing.service.gov.uk/media/5a80d75940f0b62305b8d734/2007-comparability-exam-standards-i-chapter7.pdf">https://assets.publishing.service.gov.uk/media/5a80d75940f0b62305b8d734/2007-comparability-exam-standards-i-chapter7.pdf</a>.
+</div>
+<div id="ref-Bramley_2015" class="csl-entry" role="listitem">
+Bramley, T. 2015. <em>Investigating the Reliability of Adaptive Comparative Judgment</em>. <a href="http://www.cambridgeassessment.org.uk/Images/232694-investigating-the-reliability-of-adaptive-comparative-judgment.pdf">http://www.cambridgeassessment.org.uk/Images/232694-investigating-the-reliability-of-adaptive-comparative-judgment.pdf</a>.
 </div>
 <div id="ref-Burkner_2017" class="csl-entry" role="listitem">
 Bürkner, Paul-Christian. 2017. <span>“<span class="nocase">brms</span>: An <span>R</span> Package for <span>Bayesian</span> Multilevel Models Using <span>Stan</span>.”</span> <em>Journal of Statistical Software</em> 80 (1): 1–28. <a href="https://doi.org/10.18637/jss.v080.i01">https://doi.org/10.18637/jss.v080.i01</a>.
@@ -921,11 +1040,23 @@ Bürkner, Paul-Christian. 2018. <span>“Advanced <span>Bayesian</span> Multilev
 <div id="ref-Chambers_et_al_2022" class="csl-entry" role="listitem">
 Chambers, L., and E. Cunningham. 2022. <span>“Exploring the Validity of Comparative Judgement: Do Judges Attend to Construct-Irrelevant Features?”</span> <em>Frontiers in Education</em>, ahead of print. <a href="https://doi.org/10.3389/feduc.2022.802392">https://doi.org/10.3389/feduc.2022.802392</a>.
 </div>
+<div id="ref-deAyala_2009" class="csl-entry" role="listitem">
+<span class="nocase">de Ayala, R.</span> 2009. <em><a href="">The Theory and Practice of Item Response Theory</a></em>. Methodology in the Social Sciences. The Guilford Press.
+</div>
+<div id="ref-Depaoli_2021" class="csl-entry" role="listitem">
+Depaoli, S. 2021. <em><a href="">Bayesian Structural Equation Modeling</a></em>. Methodology in the Social Sciences. The Guilford Press.
+</div>
 <div id="ref-Gabry_et_al_2025b" class="csl-entry" role="listitem">
 Gabry, J., R. C̆es̆novar, A. Johnson, and S. Bronder. 2025. <em>Cmdstanr: R Interface to ’CmdStan’</em>. <a href="https://mc-stan.org/cmdstanr/">https://mc-stan.org/cmdstanr/</a>.
 </div>
+<div id="ref-Gross_et_al_2018" class="csl-entry" role="listitem">
+Gross, J., J. Yellen, and M. Anderson. 2018. <em>Graph Theory and Its Applications</em>. Textbooks in Mathematics. Chapman; Hall/CRC. https://doi.org/<a href="https://doi.org/10.1201/9780429425134 ">https://doi.org/10.1201/9780429425134 </a>.
+</div>
 <div id="ref-Hoyle_et_al_2023" class="csl-entry" role="listitem">
 Hoyle, R. (eds.). 2023. <em><a href="">Handbook of Structural Equation Modeling</a></em>. Guilford Press.
+</div>
+<div id="ref-Jones_et_al_2019" class="csl-entry" role="listitem">
+Jones, I., M. Bisson, C. Gilmore, and M. Inglis. 2019. <span>“Measuring Conceptual Understanding in Randomised Controlled Trials: Can Comparative Judgement Help?”</span> <em>British Educational Research Journal</em> 45 (3): 662–80. <a href="https://doi.org/10.1002/berj.3519">https://doi.org/10.1002/berj.3519</a>.
 </div>
 <div id="ref-Jones_et_al_2015" class="csl-entry" role="listitem">
 Jones, I., and M. Inglis. 2015. <span>“The Problem of Assessing Problem Solving: Can Comparative Judgement Help?”</span> <em>Educational Studies in Mathematics</em> 89 (3): 337–55. <a href="https://doi.org/10.1007/s10649-015-9607-1">https://doi.org/10.1007/s10649-015-9607-1</a>.
@@ -939,6 +1070,9 @@ Kimbell, R. 2012. <span>“Evolving Project e-Scape for National Assessment.”<
 <div id="ref-Kline_et_al_2023" class="csl-entry" role="listitem">
 Kline, R. 2023. <em><a href="">Principles and Practice of Structural Equation Modeling</a></em>. Methodology in the Social Sciences. Guilford Press.
 </div>
+<div id="ref-Lawson_2015" class="csl-entry" role="listitem">
+Lawson, J. 2015. <em><a href="">Design and Analysis of Experiments with r</a></em>. Chapman; Hall/CRC.
+</div>
 <div id="ref-Lesterhuis_et_al_2018" class="csl-entry" role="listitem">
 <span class="nocase">Lesterhuis, M., T. van Daal, R. Van Gasse, L. Coertjens, V. Donche, and S. De Maeyer</span>. 2018. <span>“When Teachers Compare Argumentative Texts: Decisions Informed by Multiple Complex Aspects of Text Quality.”</span> <em>L1-Educational Studies in Language and Literature</em> 18 (1): 1–22. <a href="https://doi.org/10.17239/L1ESLL-2018.18.01.02">https://doi.org/10.17239/L1ESLL-2018.18.01.02</a>.
 </div>
@@ -951,8 +1085,20 @@ McElreath, R. 2020. <em>Statistical Rethinking: A Bayesian Course with Examples 
 <div id="ref-Miller_2023" class="csl-entry" role="listitem">
 Miller, J. 2023. <span>“Outlier Exclusion Procedures for Reaction Time Analysis: The Cures Are Generally Worse Than the Disease.”</span> <em>Journal of Experimental Psychology: General</em> 152 (11): 3189–217. <a href="https://doi.org/10.1037/xge0001450">https://doi.org/10.1037/xge0001450</a>.
 </div>
+<div id="ref-Morgan_et_al_2014" class="csl-entry" role="listitem">
+Morgan, S., and C. Winship. 2014. <em><a href="">Counterfactuals and Causal Inference: Methods and Principles for Social Research</a></em>. 2nd ed. Analytical Methods for Social Research. Cambridge University Press.
+</div>
+<div id="ref-Neal_2020" class="csl-entry" role="listitem">
+Neal, B. 2020. <em>Introduction to Causal Inference from a Machine Learning Perspective</em>. <a href="https://www.bradyneal.com/Introduction_to_Causal_Inference-Dec17_2020-Neal.pdf">https://www.bradyneal.com/Introduction_to_Causal_Inference-Dec17_2020-Neal.pdf</a>.
+</div>
+<div id="ref-Pearl_et_al_2016" class="csl-entry" role="listitem">
+Pearl, J., M. Glymour, and N. Jewell. 2016. <em><a href="">Causal Inference in Statistics: A Primer</a></em>. John Wiley &amp; Sons, Inc.
+</div>
+<div id="ref-Pollitt_2012a" class="csl-entry" role="listitem">
+Pollitt, A. 2012a. <span>“Comparative Judgement for Assessment.”</span> <em>International Journal of Technology and Design Education</em> 22 (2): 157--170. <a href="https://doi.org/10.1007/s10798-011-9189-x">https://doi.org/10.1007/s10798-011-9189-x</a>.
+</div>
 <div id="ref-Pollitt_2012b" class="csl-entry" role="listitem">
-Pollitt, A. 2012. <span>“The Method of Adaptive Comparative Judgement.”</span> <em>Assessment in Education: Principles, Policy and Practice</em> 19 (3): 281--300. <a href="https://doi.org/10.1080/0969594X.2012.665354">https://doi.org/10.1080/0969594X.2012.665354</a>.
+Pollitt, A. 2012b. <span>“The Method of Adaptive Comparative Judgement.”</span> <em>Assessment in Education: Principles, Policy and Practice</em> 19 (3): 281--300. <a href="https://doi.org/10.1080/0969594X.2012.665354">https://doi.org/10.1080/0969594X.2012.665354</a>.
 </div>
 <div id="ref-R_2015" class="csl-entry" role="listitem">
 R Core Team. 2015. <em>R: A Language and Environment for Statistical Computing</em>. R Foundation for Statistical Computing. <a href="http://www.R-project.org/">http://www.R-project.org/</a>.
@@ -981,6 +1127,12 @@ Thwaites, Peter, and Magali Paquot. 2024. <span>“Comparative Judgement for Adv
 <div id="ref-vanDaal_et_al_2016" class="csl-entry" role="listitem">
 <span class="nocase">van Daal, T., M. Lesterhuis, L. Coertjens, V. Donche, and S. De Maeyer</span>. 2016. <span>“Validity of Comparative Judgement to Assess Academic Writing: Examining Implications of Its Holistic Character and Building on a Shared Consensus.”</span> <em>Assessment in Education: Principles, Policy &amp; Practice</em> 26 (1): 59–74. <a href="https://doi.org/10.1080/0969594X.2016.1253542">https://doi.org/10.1080/0969594X.2016.1253542</a>.
 </div>
+<div id="ref-Wright_et_al_1982" class="csl-entry" role="listitem">
+Wright, B., and G. Masters. 1982. <em>Rating Scale Analysis</em>. MESA Press. <a href="https://research.acer.edu.au/measurement/2">https://research.acer.edu.au/measurement/2</a>.
+</div>
+<div id="ref-Wu_2025" class="csl-entry" role="listitem">
+Wu, Qian. 2025. <span>“Comparative Judgment: Building a Shared Consensus over Rater Variation in Assessing Second Language Writing Performance.”</span> <em>Sage Open</em> 15 (2): 21582440251346346. <a href="https://doi.org/10.1177/21582440251346346">https://doi.org/10.1177/21582440251346346</a>.
+</div>
 <div id="ref-Wu_et_al_2022" class="csl-entry" role="listitem">
 Wu, W., N. Niezink, and B. Junker. 2022. <span>“A Diagnostic Framework for the Bradley–Terry Model.”</span> <em>Journal of the Royal Statistical Society Series A: Statistics in Society</em> 185 (Supplement_2): S461–84. <a href="https://doi.org/10.1111/rssa.12959">https://doi.org/10.1111/rssa.12959</a>.
 </div>
@@ -996,7 +1148,7 @@ ZuccoJr., Cesar, Mariana Batista, and Timothy J. Power. 2019. <span>“Measuring
     Sven and Gillis, Steven},
   title = {Finding {Thurstone:} Modeling Comparative Judgment Data with
     {`R`} (and {`Stan`)}},
-  date = {2026-01-21},
+  date = {2026-01-23},
   langid = {en},
   abstract = {The classical BTL analysis has become the standard
     approach for analyzing comparative judgment (CJ) data because it
@@ -1007,28 +1159,29 @@ ZuccoJr., Cesar, Mariana Batista, and Timothy J. Power. 2019. <span>“Measuring
     related analysis. However, recent studies question whether the BTL
     model assumptions hold in contemporary CJ applications and whether
     the ad hoc procedures effectively fulfill their intended analytical
-    goals. To address these concerns, @Rivera\_et\_al\_2025 proposed an
-    approach that extends the general form of Thurstone’s law of
-    comparative judgment. The approach enables the development of a
-    model tailored to the assumed data-generating process of the CJ
-    system under study, eliminating the need for simplifying
-    assumptions. Moreover, by integrating measurement and inference
-    within a single analytical framework, it also removes the dependence
-    on ad hoc analytical procedures. Despite these advantages, the
-    approach still requires empirical validation. Thus, this study
-    empirically validates the proposed Information-Theoretical model for
-    CJ, benchmarked against the classical BTL analysis, and demonstrates
-    its practical implementation. The document includes a structured
-    tutorial based on a simulated speech-quality dataset, providing
-    guidance on data simulation, prior specification, model estimation,
-    and interpretation using `Stan`, `R`, and the interface packages
+    goals. To address these concerns, Rivera and colleagues
+    {[}-@Rivera\_et\_al\_2025{]} proposed an approach that extends the
+    general form of Thurstone’s law of comparative judgment. The
+    approach enables the development of a model tailored to the assumed
+    data-generating process of the CJ system under study, eliminating
+    the need for simplifying assumptions. Moreover, by integrating
+    measurement and inference within a single analytical framework, it
+    also removes the dependence on ad hoc analytical procedures. Despite
+    these advantages, the approach still requires empirical validation.
+    Thus, this study empirically validates the proposed
+    Information-Theoretical model for CJ, benchmarked against the
+    classical BTL analysis, and demonstrates its practical
+    implementation. The document includes a structured tutorial based on
+    a simulated speech-quality dataset, providing guidance on data
+    simulation, prior specification, model estimation, and
+    interpretation using `Stan`, `R`, and the interface packages
     `cmdstan` and `brms`. Ultimately, the study equips researchers with
     practical tools to apply the model to more complex CJ studies.}
 }
 </code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre><div class="quarto-appendix-secondary-label">For attribution, please cite this work as:</div><div id="ref-rivera_espejo2026" class="csl-entry quarto-appendix-citeas" role="listitem">
 Rivera Espejo, Jose Manuel, Tine van Daal, Sven De Maeyer, and Steven
 Gillis. 2026. <span>“Finding Thurstone: Modeling Comparative Judgment
-Data with `R` (and `Stan`).”</span> January 21.
+Data with `R` (and `Stan`).”</span> January 23.
 </div></div></section></div></main>
 <!-- /main column -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -1432,6 +1585,38 @@ Data with `R` (and `Stan`).”</span> January 21.
   });
   </script>
 </div> <!-- /content -->
+<script>var lightboxQuarto = GLightbox({"closeEffect":"zoom","descPosition":"bottom","loop":false,"openEffect":"zoom","selector":".lightbox"});
+(function() {
+  let previousOnload = window.onload;
+  window.onload = () => {
+    if (previousOnload) {
+      previousOnload();
+    }
+    lightboxQuarto.on('slide_before_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      const href = trigger.getAttribute('href');
+      if (href !== null) {
+        const imgEl = window.document.querySelector(`a[href="${href}"] img`);
+        if (imgEl !== null) {
+          const srcAttr = imgEl.getAttribute("src");
+          if (srcAttr && srcAttr.startsWith("data:")) {
+            slideConfig.href = srcAttr;
+          }
+        }
+      } 
+    });
+  
+    lightboxQuarto.on('slide_after_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(slideNode);
+      }
+    });
+  
+  };
+  
+})();
+          </script>
 
 
 

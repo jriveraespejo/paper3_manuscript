@@ -213,15 +213,15 @@ studies question whether the BTL model assumptions hold in contemporary
 CJ applications and whether the ad hoc procedures effectively fulfill
 their intended analytical goals.
 
-To address these concerns, \citet{Rivera_et_al_2025} proposed an
-approach that extends the general form of Thurstone's law of comparative
-judgment. The approach enables the development of a model tailored to
-the assumed data-generating process of the CJ system under study,
-eliminating the need for simplifying assumptions. Moreover, by
-integrating measurement and inference within a single analytical
-framework, it also removes the dependence on ad hoc analytical
-procedures. Despite these advantages, the approach still requires
-empirical validation.
+To address these concerns, Rivera and colleagues
+\citeyearpar{Rivera_et_al_2025} proposed an approach that extends the
+general form of Thurstone's law of comparative judgment. The approach
+enables the development of a model tailored to the assumed
+data-generating process of the CJ system under study, eliminating the
+need for simplifying assumptions. Moreover, by integrating measurement
+and inference within a single analytical framework, it also removes the
+dependence on ad hoc analytical procedures. Despite these advantages,
+the approach still requires empirical validation.
 
 Thus, this study empirically validates the proposed
 Information-Theoretical model for CJ, benchmarked against the classical
@@ -259,16 +259,16 @@ which stimulus exhibits more of the latent trait of interest
 
 A specific data analysis workflow has become the standard approach for
 analyzing CJ data \citep[see, e.g.,][]{Thwaites_et_al_2024}. In this
-study, we refer to this workflow as the \emph{classical BTL analysis}.
-Researchers favor this approach because it provides a simple method for
-measuring traits and conducting related analyses
-\citep{Andrich_1978, Pollitt_2012b}. This simplicity, in turn, arises
+study, we refer to this workflow as the classical BTL analysis or
+\emph{CBTL analysis}. Researchers favor this approach because it
+provides a simple method for measuring traits and conducting related
+analyses \citep{Andrich_1978, Pollitt_2012b}. This simplicity arises
 from two key features. First, the approach relies on the
 Bradley-Terry-Luce (BTL) model \citep{Bradley_et_al_1952, Luce_1959} to
 estimate latent traits. The model facilitates trait estimation by
 imposing several simplifying assumptions about traits, judges, and
-stimuli in CJ assessments \citep{Thurstone_1927b, Bramley_2008}. Second,
-the approach uses ad hoc procedures to conduct related analysis,
+stimuli present in CJ assessments \citep{Thurstone_1927b, Bramley_2008}.
+Second, the approach uses ad hoc procedures to conduct related analysis,
 including data summarization and statistical inference
 \citep{Pollitt_2012b}.
 
@@ -286,43 +286,44 @@ accuracy of trait estimates
 \citep{Ackerman_1989, Zimmerman_1994, McElreath_2020, Wu_et_al_2022, Miller_2023, Hoyle_et_al_2023}.
 Moreover, the same authors note that although ad hoc procedures simplify
 data analyses, the use of untested methods can also undermine the
-validity of statistical inferences derived from CJ data
+validity of inferences derived from CJ data
 \citep{McElreath_2020, Kline_et_al_2023, Hoyle_et_al_2023}.
 
 To address these concerns, \citet{Rivera_et_al_2025} proposed an
 approach that extends the general form of Thurstone's law of comparative
-judgment \citep{Thurstone_1927a, Thurstone_1927b}. This approach
-leverages causal and Bayesian inference methods to combine Thurstone's
-core theoretical principles with key design features of CJ assessment.
-By doing so, it enables the development of a model tailored to the
-assumed data-generating process of the CJ system under study. This
-tailoring effectively removes the need to rely on the simplifying
+judgment \citep{Thurstone_1927a, Thurstone_1927b}, referred to as the
+Information-Theoretical model for CJ (hereafter, ITCJ analysis). This
+approach leverages causal and Bayesian inference methods to combine
+Thurstone's core theoretical principles with key design features of CJ
+assessment. By doing so, it enables the development of a model tailored
+to the assumed data-generating process of the CJ system under study.
+This tailoring effectively removes the need to rely on the simplifying
 assumptions of the BTL model. Moreover, by integrating measurement and
 inference within a single analytical framework, the approach also
-eliminates the dependence on ad hoc analytical procedures. Ultimately,
-this approach has the potential to produce reliable trait estimates and
-accurate statistical inferences. However, its effectiveness still
-required empirical validation.
+eliminates the dependence on ad hoc analytical procedures.
 
 \subsection{Research goals}\label{sec-introduction_goals}
 
-Building on the introduction, this study pursues two closely related
-research goals. The first goal is to \emph{empirically validate} the
-proposed Information-Theoretical model for CJ (hereafter, ITCJ analysis)
-by evaluating the accuracy and reliability of its trait estimates and
-inference parameters, benchmarked against the classical BTL analysis
-(hereafter, CBTL analysis). The second goal emerges as a practical
-byproduct of this validation: to demonstrate how to implement the model
-in practice. To this end, the document provides a structured tutorial
-based on a simulated speech-quality dataset, offering guidance on data
-simulation, prior specification, model estimation, and interpretation
-using \texttt{Stan}\citep{Stan_2026a, Stan_2026b}, \texttt{R}
-\citep{R_2015}, and the interface packages \texttt{cmdstan}
-\citep{Gabry_et_al_2025b} and \texttt{brms}
-\citep{Burkner_2017, Burkner_2018}. By combining model validation and
-practical instruction, the study can evaluate the methodological
-performance of the ITCJ analysis and provide researchers with practical
-tools to apply it to more complex CJ studies.
+The ITCJ analysis \citep{Rivera_et_al_2025} shows theoretical promise
+for yielding reliable trait estimates and accurate statistical
+inferences. However, as noted by the authors, this promise has not yet
+been empirically validated. Thus, the present study addresses this gap
+by pursuing two closely related research goals. The first goal is to
+\emph{empirically validate} the proposed ITCJ analysis by evaluating the
+accuracy and reliability of its trait estimates and inference
+parameters, benchmarked against the CBTL analysis.
+
+The second goal emerges as a practical byproduct of this validation:
+\emph{to demonstrate how to implement the model in practice}. To this
+end, the document provides a structured tutorial based on a simulated
+speech-quality dataset, offering guidance on data simulation, prior
+specification, model estimation, and interpretation using
+\texttt{Stan}\citep{Stan_2026a, Stan_2026b}, \texttt{R} \citep{R_2015},
+and the interface packages \texttt{cmdstan} \citep{Gabry_et_al_2025b}
+and \texttt{brms} \citep{Burkner_2017, Burkner_2018}. By combining model
+validation and practical instruction, the study evaluates the
+methodological performance of the ITCJ analysis and equips researchers
+with practical tools to apply it to more complex CJ studies.
 
 The remainder of this manuscript is organized into five sections.
 Section~\ref{sec-theory} reviews the two analytical approaches commonly
@@ -338,13 +339,212 @@ offers the concluding remarks.
 
 \section{A tale of two analytical approaches}\label{sec-theory}
 
-\subsection{The classical BTL analysis}\label{sec-theory_CBTL}
+Pairwise comparison data, and more specifically CJ data, can be analyzed
+using two main approaches: the CBTL and the ITCJ analysis. The CBTL
+approach applies a sequence of separate analytical steps to estimate
+traits and draw inferences. In contrast, the ITCJ analysis uses a
+single, systematic, and integrated approach to achieve the same
+objectives. This section describes the two approaches in detail.
 
-\subsection{The Information-Theoretical model for
-CJ}\label{sec-theory_ITCJ}
+\subsection{The CBTL analysis}\label{sec-theory_CBTL}
+
+The CBTL approach implements a sequence of separate analytical steps,
+each serving a distinct purpose
+\citep{Pollitt_2012a, Pollitt_2012b, Jones_et_al_2019, Boonen_et_al_2020, Chambers_et_al_2022, Bouwer_et_al_2023}.
+This multi-step procedure typically unfolds as follows. First, analysts
+apply the BTL model to the CJ data to produce two outputs: (1) point
+estimates of stimulus traits along with their standard errors, and (2)
+residuals at the stimulus level. These outputs provide the foundation
+for the subsequent analyses.
+
+Second, researchers summarize or fit regression models to the stimulus
+point estimates. This step serves multiple purposes, including
+aggregating stimulus-level estimates to the individual level,
+partitioning variability between and within individuals, and drawing
+inferences about factors that influence trait values. For example,
+\citet{Boonen_et_al_2020} applied a multilevel regression model to the
+stimulus point estimates to examine whether children's age or hearing
+status affects their intelligibility scores.
+
+Third, analysts summarize or fit regression models to the BTL residuals.
+This step helps to aggregate the remaining variability at the judge
+level, partition residual variability between and within judges, test
+for systematic biases, and identify potential misfitting judgments,
+stimuli, or judges. For instance, \citet{Wu_2025} fitted an analysis of
+variance (ANOVA) model to the infit statistic for each rater to examine
+the potential effects of raters' expertise on their judgments. The infit
+statistics is a weighted average of the squared Pearson residuals
+\citep{Wright_et_al_1982}.
+
+While this stepwise approach is the standard practice in fields such as
+education \citep[see,][]{Wu_2025} and linguistics
+\citep[see,][]{Thwaites_et_al_2024}, it presents several limitations.
+First, each stage treats outputs from previous steps as fixed data,
+rather than acknowledging their status as uncertain parameter estimates.
+Failure to account for this uncertainty can introduce bias and decrease
+the precision of inferences. The direction and magnitude of these biases
+can be unpredictable: results may be attenuated, amplified, or remain
+unaffected depending on the uncertainty in the scores and the actual
+effects being tested
+\citep{McElreath_2020, Kline_et_al_2023, Hoyle_et_al_2023}. Moreover,
+the loss of precision diminishes statistical power and increases the
+likelihood of committing type I or type II errors
+\citep{McElreath_2020}. Second, the procedure lacks theoretical
+coherence, as it combines models with different underlying assumptions.
+For example, third-step analyses treat residuals as outputs that
+ostensibly capture deviations from expected comparison outcomes,
+potentially reflecting judge-specific tendencies or idiosyncrasies in
+judgments, without providing evidence on whether these assumptions hold.
+
+\subsection{The ITCJ analysis}\label{sec-theory_ITCJ}
 
 \newcommand{\dsep}{\:\bot\:}
 \newcommand{\ndsep}{\:\not\bot\:}
+
+The ITCJ analysis addresses the aforementioned limitations by providing
+a unified and systematic approach to analyzing CJ data
+\citep{Rivera_et_al_2025}. It starts with a general \emph{Directed
+Acyclic Graph (DAG)} and a corresponding \emph{Structural Causal Model
+(SCM)} \citep{Morgan_et_al_2014, Gross_et_al_2018, Neal_2020}, which
+together establish a coherent theoretical foundation for CJ analysis by
+explicitly representing the relationships among observed judgments,
+discriminal differences, stimulus traits, individual traits, judge
+biases, and the sampling and comparison mechanisms. Next, the approach
+adapts the general SCM and DAG to the assumed data-generating process of
+the CJ system under study. Then, it derives one or more bespoke
+\emph{probabilistic} and \emph{statistical} models tailored to that
+system. Finally, it uses one or more statistical models to estimate
+traits and conduct statistical inference. Figure~\ref{fig-ITCJ_dag}
+illustrates an example of a general DAG structure.
+
+\begin{figure}[H]
+
+\centering{
+
+\includegraphics[width=0.72\linewidth,height=\textheight,keepaspectratio]{3_results/theory/figures/png/CJ_TM_15.png}
+
+}
+
+\caption{\label{fig-ITCJ_dag}ITCJ analysis: DAG}
+
+\end{figure}%
+
+In this representation, \(O_{R}\) denotes the observed judgment outcome
+vector, and \(D_{R}\) represents the discriminal difference vector.
+\(T_{IA}\) captures the vector of stimulus traits, and \(T_{I}\)
+represents the vector of individual traits. The vector of judgment
+biases is represented by \(B_{JK}\), while the vector of judges' biases
+by \(B_J\). Covariates at the stimulus and individual levels appear as
+\(X_{IA}\) and \(X_{I}\), respectively; while \(Z_{JK}\) and \(Z_{J}\)
+represent covariates at the judgment and judge levels. The error terms
+(\(e_{IA}\), \(e_{I}\), \(e_{JK}\), \(e_{J}\)) capture residual
+variation at each level.
+
+The DAG also represents the sampling and comparison mechanisms as the
+vectors \(S\) and \(C\), two conditioned variables that determine how
+population outcomes become ``observed'' outcomes. Importantly, the DAG
+depicts \(S\) and \(C\) as independent from all other variables by
+showing no arrows pointing into them. Regarding \(S\), this indicates
+that the DAG applies to \emph{Simple Random Sampling (SRSg)} designs,
+where each repeated judgment, judge, stimulus, and individual has an
+equal probability of inclusion within their respective groups
+\citep{Lawson_2015}. Regarding \(C\), the DAG applies to \emph{Random
+Allocation Comparative Designs} \citep{Bramley_2015} or \emph{Incomplete
+Block Designs} \citep{Lawson_2015}, where every repeated judgment has an
+equal chance of being included in the sample.
+
+Researchers can then translate this DAG representation into SCMs and
+probabilistic forms that express the joint distribution of a complex CJ
+system as a product of simpler \emph{conditional probability
+distributions (CPDs)}
+\citetext{\citealp{Pearl_et_al_2016}; \citealp{Neal_2020}; \citealp[see
+also][section 5]{Rivera_et_al_2025}}, as illustrated in
+Figure~\ref{fig-ITCJ}.
+
+\begin{figure}
+
+\begin{minipage}{0.50\linewidth}
+
+\centering{
+
+\[
+\begin{aligned}
+  O_{R} & := f_{O}(D_{R}, S, C) \\ 
+  D_{R} & := f_{D}(T_{IA}, B_{JK}) \\
+  T_{IA} & := f_{T}(T_{I}, X_{IA}, e_{IA}) \\
+  T_{I} & := f_{T}(X_{I}, e_{I}) \\
+  B_{JK} & := f_{B}(B_{J}, Z_{JK}, e_{JK}) \\
+  B_{J} & := f_{B}(Z_{J}, e_{J}) \\ \\
+  e_{I} & \:\bot\:\{ e_{J}, e_{IA}, e_{JK} \} \\
+  e_{J} & \:\bot\:\{ e_{IA}, e_{JK} \} \\
+  e_{IA} & \:\bot\:e_{JK}
+\end{aligned}
+\]
+
+}
+
+\subcaption{\label{fig-ITCJ_scm}SCM}
+
+\end{minipage}%
+%
+\begin{minipage}{0.50\linewidth}
+
+\centering{
+
+\[
+\begin{aligned}
+  & P( O_{R} \mid D_{R}, S, C ) \\
+  & P( D_{R} \mid T_{IA}, B_{JK} ) \\
+  & P( T_{IA} \mid T_{I}, X_{IA}, e_{IA} ) \\
+  & P( T_{I} \mid X_{I}, e_{I} ) \\
+  & P( B_{JK} \mid B_{J}, Z_{JK}, e_{JK} ) \\
+  & P( B_{J} \mid Z_{J}, e_{J} ) \\ \\
+  & P( e_{I} ) P( e_{IA} ) P( e_{J} ) P( e_{JK} ) \\ \\ \\
+\end{aligned}
+\]
+
+}
+
+\subcaption{\label{fig-ITCJ_prob}Probabilistic model}
+
+\end{minipage}%
+
+\caption{\label{fig-ITCJ}ITCJ analysis. SCM (left) and probabilistic
+(right) representations for DAG in Figure~\ref{fig-ITCJ_dag}.}
+
+\end{figure}%
+
+Critically, the approach allows tailoring this general structure to a
+specific CJ context, enabling development of parsimonious models that
+match the assumed data-generating process without imposing unnecessary
+constraints. For example, \citet{Rivera_et_al_2025} modeled a CJ
+assessment designed to evaluate the impact of different teaching methods
+on students' writing ability. In this case, the observed outcome was
+binary, so the model assumed \(O_{R}\) followed a Bernoulli
+distribution. The discriminal difference \((D_{R})\) was determined by
+the texts' discriminal processes \((T_{IA})\) and the judgment biases
+\((B_{JK})\). Student-level variables \(X_{I}\), such as teaching
+method, were included, whereas text-level variables \(X_{IA}\) (e.g.,
+text length) were not gathered. Similarly, judge-level variables
+\(Z_{J}\), like judgment expertise, were incorporated, while
+judgment-level variables \(Z_{JK}\) (e.g., number of judgments per
+judge) were absent. Finally, the probabilistic assumptions for the
+idiosyncratic errors (\(e_{I}\), \(e_{IA}\), \(e_{J}\), \(e_{JK}\))
+resolved indeterminacies in \emph{location}, \emph{orientation}, and
+\emph{scale} for the variables \(T_{I}\), \(T_{IA}\), \(B_{J}\),
+\(B_{JK}\), as required in latent variable models
+\citep{Depaoli_2021, deAyala_2009}.
+
+Lastly, researcher can derive one or more \emph{bespoke} statistical
+models tailored to the CJ system of interest, as demonstrated in
+\citet{Rivera_et_al_2025}. At this stage, the ITCJ analysis differs
+fundamentally from the CBTL approach in how it handles parameter
+estimation and inference. Rather than fitting multiple separate models,
+the approach simultaneously estimates all parameters within a single
+coherent framework using \emph{Bayesian inference}. This joint
+estimation accounts for uncertainty at all levels and enables direct
+inference about quantities of interest without relying on post-hoc
+procedures \citep{McElreath_2020}.
 
 \section{Methods}\label{sec-methods}
 
