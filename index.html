@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.9.18">
+<meta name="generator" content="quarto-1.9.26">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -10,7 +10,7 @@
 <meta name="author" content="Tine van Daal">
 <meta name="author" content="Sven De Maeyer">
 <meta name="author" content="Steven Gillis">
-<meta name="dcterms.date" content="2026-02-03">
+<meta name="dcterms.date" content="2026-03-02">
 <meta name="keywords" content="tutorial, causal inference, bayesian inference, thustone, comparative judgement">
 
 <title>Finding Thurstone: modeling comparative judgment data with R (and Stan)</title>
@@ -54,15 +54,14 @@ div.csl-indent {
 <script src="site_libs/clipboard/clipboard.min.js"></script>
 <script src="site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
-<script src="site_libs/quarto-html/axe/axe-check.js" type="module"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-e3fecfe3565d481478fb93785bd05dc0.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-61780a260fdcf47536a34fde95582725.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-0e532e83d47e3f25af4bdc72d18504c3.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-317c05b54359e864b46bc9748296409d.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script src="site_libs/quarto-contrib/glightbox/glightbox.min.js"></script>
 <link href="site_libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
 <link href="site_libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet">
@@ -104,21 +103,21 @@ window.Quarto = {
 </script>
 
 <meta name="citation_title" content="Finding Thurstone: modeling comparative judgment data with `R` (and `Stan`)">
-<meta name="citation_abstract" content="The classical BTL analysis has become the standard approach for analyzing comparative judgment (CJ) data. Researchers favor this approach because it provides a simple method for measuring traits and conducting related analysis. The simplicity of the approach arises from two key features. First, it relies on the Bradley-Terry-Luce (BTL) model to estimate latent traits. Second, it uses ad hoc procedures to conduct related analysis. However, recent studies question whether the BTL model assumptions hold in contemporary CJ applications and whether the ad hoc procedures effectively fulfill their intended analytical goals.
+<meta name="citation_abstract" content="The classical CJ analysis has become the standard workflow for analyzing comparative judgment (CJ) data in education, linguistics, and psychology. Researchers favor it because it offers a convenient and simple method for measuring traits and conducting subsequent analyses. Its simplicity rests on two key features: reliance on narrowly specified Thurstone-based models to estimate latent traits, and te useof ad hoc procedures for follow-up analyses. However, recent studies question whether the assumptions of these models--particularly the Bradley-Terry-Luce (BTL) model--hold in contemporary CJ applications, and whether the ad hoc procedures effectively fulfill their intended analytical goals.
 
-To address these concerns, Rivera and colleagues [-@Rivera_et_al_2025] proposed an approach that extends the general form of Thurstone&amp;amp;#039;s Law of Comparative Judgment. The approach enables the development of a model tailored to the assumed data-generating process of the CJ system under study, eliminating the need for simplifying assumptions. Moreover, by integrating measurement and inference within a single analytical framework, it also removes the dependence on ad hoc analytical procedures. Despite these advantages, the approach still requires empirical validation.
+To address these concerns, @Rivera_et_al_2025 proposed an umbrella analytical workflow designed to accommodate the complexity often observed in applied CJ settings. The approach enables the development of models tailored to the assumed data-generating process of the CJ system under study, thereby reducing reliance on simplifying assumptions. Moreover, by integrating measurement and inference within a single framework, it also removes dependence on ad hoc analytical procedures. Nonetheless, these potential advantages require empirical validation.
 
-Thus, this study empirically validates the proposed Information-Theoretical model for CJ using a simulated speech-quality dataset, benchmarking its performance against the classical BTL analysis. Moreover, the study demonstrates how to implement the model in practice. Specifically, the manuscript adopts a tutorial format, providing step-by-step guidance on data simulation, prior specification, model estimation, and interpretation using `Stan`, `R`, and the interface packages `cmdstan` and `brms`. Ultimately, the study equips researchers with practical tools to apply the model to more complex CJ assessments.
+Thus, this study empirically validates the proposed analytical workflow for CJ using a simulated speech-quality dataset, benchmarking its performance against the classical CJ analysis. It also demonstrates its practical implementation, adopting a tutorial format with step-by-step guidance on data simulation, prior specification, model estimation, and interpretation using `R`, `Stan`, `cmdstan` and `brms`. Ultimately, the study equips researchers with practical tools to apply the model to more complex CJ assessments.
 ">
 <meta name="citation_keywords" content="tutorial,causal inference,bayesian inference,thustone,comparative judgement">
 <meta name="citation_author" content="Jose Manuel Rivera Espejo">
 <meta name="citation_author" content="Tine van Daal">
 <meta name="citation_author" content="Sven De Maeyer">
 <meta name="citation_author" content="Steven Gillis">
-<meta name="citation_publication_date" content="2026-02-03">
-<meta name="citation_cover_date" content="2026-02-03">
+<meta name="citation_publication_date" content="2026-03-02">
+<meta name="citation_cover_date" content="2026-03-02">
 <meta name="citation_year" content="2026">
-<meta name="citation_online_date" content="2026-02-03">
+<meta name="citation_online_date" content="2026-03-02">
 <meta name="citation_language" content="en">
 <meta name="citation_reference" content="citation_title=Correlation and causation;,citation_author=S. Wright;,citation_publication_date=1927;,citation_cover_date=1927;,citation_year=1927;,citation_fulltext_html_url=https://books.google.co.ao/books/about/Journal_of_Agricultural_Research.html?hl=pt-PT&amp;amp;amp;id=lNNdIV_qpwIC;,citation_issue=7;,citation_volume=20;,citation_journal_title=Correlation and causation;">
 <meta name="citation_reference" content="citation_title=On the interpretation of χ2 from contingency tables, and the calculation of p;,citation_author=R. Fisher;,citation_publication_date=1922;,citation_cover_date=1922;,citation_year=1922;,citation_fulltext_html_url=http://www.jstor.org/stable/2340521;,citation_issue=1;,citation_doi=10.2307/2340521;,citation_volume=85;,citation_journal_title=Journal of the Royal Statistical Society;,citation_publisher=[Wiley, Royal Statistical Society];">
@@ -496,7 +495,7 @@ Thus, this study empirically validates the proposed Information-Theoretical mode
                 <div>
             <div class="quarto-title-meta-heading">Published</div>
             <div class="quarto-title-meta-contents">
-              <p class="date">February 3, 2026</p>
+              <p class="date">March 2, 2026</p>
             </div>
           </div>
           
@@ -510,9 +509,9 @@ Thus, this study empirically validates the proposed Information-Theoretical mode
     <div>
       <div class="abstract">
         <div class="block-title">Abstract</div>
-        <p>The classical BTL analysis has become the standard approach for analyzing comparative judgment (CJ) data. Researchers favor this approach because it provides a simple method for measuring traits and conducting related analysis. The simplicity of the approach arises from two key features. First, it relies on the Bradley-Terry-Luce (BTL) model to estimate latent traits. Second, it uses ad hoc procedures to conduct related analysis. However, recent studies question whether the BTL model assumptions hold in contemporary CJ applications and whether the ad hoc procedures effectively fulfill their intended analytical goals.</p>
-        <p>To address these concerns, Rivera and colleagues <span class="citation" data-cites="Rivera_et_al_2025">(<a href="#ref-Rivera_et_al_2025" role="doc-biblioref">2025</a>)</span> proposed an approach that extends the general form of Thurstone’s Law of Comparative Judgment. The approach enables the development of a model tailored to the assumed data-generating process of the CJ system under study, eliminating the need for simplifying assumptions. Moreover, by integrating measurement and inference within a single analytical framework, it also removes the dependence on ad hoc analytical procedures. Despite these advantages, the approach still requires empirical validation.</p>
-        <p>Thus, this study empirically validates the proposed Information-Theoretical model for CJ using a simulated speech-quality dataset, benchmarking its performance against the classical BTL analysis. Moreover, the study demonstrates how to implement the model in practice. Specifically, the manuscript adopts a tutorial format, providing step-by-step guidance on data simulation, prior specification, model estimation, and interpretation using <code>Stan</code>, <code>R</code>, and the interface packages <code>cmdstan</code> and <code>brms</code>. Ultimately, the study equips researchers with practical tools to apply the model to more complex CJ assessments.</p>
+        <p>The classical CJ analysis has become the standard workflow for analyzing comparative judgment (CJ) data in education, linguistics, and psychology. Researchers favor it because it offers a convenient and simple method for measuring traits and conducting subsequent analyses. Its simplicity rests on two key features: reliance on narrowly specified Thurstone-based models to estimate latent traits, and te useof ad hoc procedures for follow-up analyses. However, recent studies question whether the assumptions of these models–particularly the Bradley-Terry-Luce (BTL) model–hold in contemporary CJ applications, and whether the ad hoc procedures effectively fulfill their intended analytical goals.</p>
+        <p>To address these concerns, <span class="citation" data-cites="Rivera_et_al_2025"><span class="nocase">Rivera et al.</span> (<a href="#ref-Rivera_et_al_2025" role="doc-biblioref">2025</a>)</span> proposed an umbrella analytical workflow designed to accommodate the complexity often observed in applied CJ settings. The approach enables the development of models tailored to the assumed data-generating process of the CJ system under study, thereby reducing reliance on simplifying assumptions. Moreover, by integrating measurement and inference within a single framework, it also removes dependence on ad hoc analytical procedures. Nonetheless, these potential advantages require empirical validation.</p>
+        <p>Thus, this study empirically validates the proposed analytical workflow for CJ using a simulated speech-quality dataset, benchmarking its performance against the classical CJ analysis. It also demonstrates its practical implementation, adopting a tutorial format with step-by-step guidance on data simulation, prior specification, model estimation, and interpretation using <code>R</code>, <code>Stan</code>, <code>cmdstan</code> and <code>brms</code>. Ultimately, the study equips researchers with practical tools to apply the model to more complex CJ assessments.</p>
       </div>
     </div>
 
@@ -531,56 +530,58 @@ Thus, this study empirically validates the proposed Information-Theoretical mode
     <h2 id="toc-title">Table of Contents</h2>
    
   <ul>
-  <li><a href="#sec-introduction" id="toc-sec-introduction" class="nav-link active" data-scroll-target="#sec-introduction"><span class="header-section-number">1</span> Introduction</a></li>
+  <li><a href="#sec-introduction" id="toc-sec-introduction" class="nav-link active" data-scroll-target="#sec-introduction"><span class="header-section-number">1</span> Introduction</a>
+  <ul>
+  <li><a href="#sec-introduction_goals" id="toc-sec-introduction_goals" class="nav-link" data-scroll-target="#sec-introduction_goals"><span class="header-section-number">1.1</span> Research goals</a></li>
+  </ul></li>
   <li><a href="#sec-theory" id="toc-sec-theory" class="nav-link" data-scroll-target="#sec-theory"><span class="header-section-number">2</span> A tale of two analytical approaches</a>
   <ul>
-  <li><a href="#sec-theory_CBTL" id="toc-sec-theory_CBTL" class="nav-link" data-scroll-target="#sec-theory_CBTL"><span class="header-section-number">2.1</span> The CBTL analysis</a></li>
+  <li><a href="#sec-theory_CCJ" id="toc-sec-theory_CCJ" class="nav-link" data-scroll-target="#sec-theory_CCJ"><span class="header-section-number">2.1</span> The CCJ analysis</a></li>
   <li><a href="#sec-theory_ITCJ" id="toc-sec-theory_ITCJ" class="nav-link" data-scroll-target="#sec-theory_ITCJ"><span class="header-section-number">2.2</span> The ITCJ analysis</a></li>
   </ul></li>
-  <li><a href="#sec-introduction_goals" id="toc-sec-introduction_goals" class="nav-link" data-scroll-target="#sec-introduction_goals"><span class="header-section-number">3</span> Research goals</a></li>
-  <li><a href="#sec-methods" id="toc-sec-methods" class="nav-link" data-scroll-target="#sec-methods"><span class="header-section-number">4</span> Methods</a>
+  <li><a href="#sec-methods" id="toc-sec-methods" class="nav-link" data-scroll-target="#sec-methods"><span class="header-section-number">3</span> Methods</a>
   <ul>
-  <li><a href="#sec-methods_step1" id="toc-sec-methods_step1" class="nav-link" data-scroll-target="#sec-methods_step1"><span class="header-section-number">4.1</span> Step 1, from Theory to Design: Data-generating assumptions</a></li>
-  <li><a href="#sec-methods_step2" id="toc-sec-methods_step2" class="nav-link" data-scroll-target="#sec-methods_step2"><span class="header-section-number">4.2</span> Step 2, from Design to Data: Data simulation</a></li>
-  <li><a href="#sec-methods_step5" id="toc-sec-methods_step5" class="nav-link" data-scroll-target="#sec-methods_step5"><span class="header-section-number">4.3</span> Step 5, from Estimator and Sample to Estimate(s): The analysis aproaches</a>
+  <li><a href="#sec-methods_step1" id="toc-sec-methods_step1" class="nav-link" data-scroll-target="#sec-methods_step1"><span class="header-section-number">3.1</span> Step 1, from Theory to Design: Data-generating assumptions</a></li>
+  <li><a href="#sec-methods_step2" id="toc-sec-methods_step2" class="nav-link" data-scroll-target="#sec-methods_step2"><span class="header-section-number">3.2</span> Step 2, from Design to Data: Data simulation</a></li>
+  <li><a href="#sec-methods_step5" id="toc-sec-methods_step5" class="nav-link" data-scroll-target="#sec-methods_step5"><span class="header-section-number">3.3</span> Step 5, from Estimator and Sample to Estimate(s): The analysis aproaches</a>
   <ul class="collapse">
-  <li><a href="#sec-methods_step5_1" id="toc-sec-methods_step5_1" class="nav-link" data-scroll-target="#sec-methods_step5_1"><span class="header-section-number">4.3.1</span> The CBTL analysis</a></li>
-  <li><a href="#sec-methods_step5_2" id="toc-sec-methods_step5_2" class="nav-link" data-scroll-target="#sec-methods_step5_2"><span class="header-section-number">4.3.2</span> The ITCJ analysis</a>
+  <li><a href="#sec-methods_step5_1" id="toc-sec-methods_step5_1" class="nav-link" data-scroll-target="#sec-methods_step5_1"><span class="header-section-number">3.3.1</span> The CCJ analysis</a></li>
+  <li><a href="#sec-methods_step5_2" id="toc-sec-methods_step5_2" class="nav-link" data-scroll-target="#sec-methods_step5_2"><span class="header-section-number">3.3.2</span> The ITCJ analysis</a>
   <ul class="collapse">
-  <li><a href="#sec-sec-methods_step5_2_itcj_1" id="toc-sec-sec-methods_step5_2_itcj_1" class="nav-link" data-scroll-target="#sec-sec-methods_step5_2_itcj_1"><span class="header-section-number">4.3.2.1</span> Model 1</a></li>
-  <li><a href="#sec-sec-methods_step5_2_itcj_2" id="toc-sec-sec-methods_step5_2_itcj_2" class="nav-link" data-scroll-target="#sec-sec-methods_step5_2_itcj_2"><span class="header-section-number">4.3.2.2</span> Model 2</a></li>
-  <li><a href="#sec-sec-methods_step5_2_itcj_3" id="toc-sec-sec-methods_step5_2_itcj_3" class="nav-link" data-scroll-target="#sec-sec-methods_step5_2_itcj_3"><span class="header-section-number">4.3.2.3</span> Model 3</a></li>
-  <li><a href="#sec-sec-methods_step5_2_itcj_4" id="toc-sec-sec-methods_step5_2_itcj_4" class="nav-link" data-scroll-target="#sec-sec-methods_step5_2_itcj_4"><span class="header-section-number">4.3.2.4</span> Model 4</a></li>
-  <li><a href="#sec-sec-methods_step5_2_itcj_5" id="toc-sec-sec-methods_step5_2_itcj_5" class="nav-link" data-scroll-target="#sec-sec-methods_step5_2_itcj_5"><span class="header-section-number">4.3.2.5</span> Model 5</a></li>
-  <li><a href="#sec-sec-methods_step5_2_itcj_6" id="toc-sec-sec-methods_step5_2_itcj_6" class="nav-link" data-scroll-target="#sec-sec-methods_step5_2_itcj_6"><span class="header-section-number">4.3.2.6</span> Model 6</a></li>
+  <li><a href="#sec-sec-methods_step5_2_itcj_1" id="toc-sec-sec-methods_step5_2_itcj_1" class="nav-link" data-scroll-target="#sec-sec-methods_step5_2_itcj_1"><span class="header-section-number">3.3.2.1</span> Model 1</a></li>
+  <li><a href="#sec-sec-methods_step5_2_itcj_2" id="toc-sec-sec-methods_step5_2_itcj_2" class="nav-link" data-scroll-target="#sec-sec-methods_step5_2_itcj_2"><span class="header-section-number">3.3.2.2</span> Model 2</a></li>
+  <li><a href="#sec-sec-methods_step5_2_itcj_3" id="toc-sec-sec-methods_step5_2_itcj_3" class="nav-link" data-scroll-target="#sec-sec-methods_step5_2_itcj_3"><span class="header-section-number">3.3.2.3</span> Model 3</a></li>
+  <li><a href="#sec-sec-methods_step5_2_itcj_4" id="toc-sec-sec-methods_step5_2_itcj_4" class="nav-link" data-scroll-target="#sec-sec-methods_step5_2_itcj_4"><span class="header-section-number">3.3.2.4</span> Model 4</a></li>
+  <li><a href="#sec-sec-methods_step5_2_itcj_5" id="toc-sec-sec-methods_step5_2_itcj_5" class="nav-link" data-scroll-target="#sec-sec-methods_step5_2_itcj_5"><span class="header-section-number">3.3.2.5</span> Model 5</a></li>
+  <li><a href="#sec-sec-methods_step5_2_itcj_6" id="toc-sec-sec-methods_step5_2_itcj_6" class="nav-link" data-scroll-target="#sec-sec-methods_step5_2_itcj_6"><span class="header-section-number">3.3.2.6</span> Model 6</a></li>
   </ul></li>
   </ul></li>
-  <li><a href="#sec-methods_step6" id="toc-sec-methods_step6" class="nav-link" data-scroll-target="#sec-methods_step6"><span class="header-section-number">4.4</span> Step 6, from Estimate(s) to Diagnostics and Posterior predictives: The evaluation criteria</a></li>
+  <li><a href="#sec-methods_step6" id="toc-sec-methods_step6" class="nav-link" data-scroll-target="#sec-methods_step6"><span class="header-section-number">3.4</span> Step 6, from Estimate(s) to Diagnostics and Posterior predictives: The evaluation criteria</a></li>
   </ul></li>
-  <li><a href="#sec-results" id="toc-sec-results" class="nav-link" data-scroll-target="#sec-results"><span class="header-section-number">5</span> Results</a>
+  <li><a href="#sec-results" id="toc-sec-results" class="nav-link" data-scroll-target="#sec-results"><span class="header-section-number">4</span> Results</a>
   <ul>
-  <li><a href="#sec-results_data" id="toc-sec-results_data" class="nav-link" data-scroll-target="#sec-results_data"><span class="header-section-number">5.1</span> Data description</a></li>
-  <li><a href="#sec-results_modeling" id="toc-sec-results_modeling" class="nav-link" data-scroll-target="#sec-results_modeling"><span class="header-section-number">5.2</span> Data modeling</a>
+  <li><a href="#sec-results_data" id="toc-sec-results_data" class="nav-link" data-scroll-target="#sec-results_data"><span class="header-section-number">4.1</span> Data description</a></li>
+  <li><a href="#sec-results_modeling" id="toc-sec-results_modeling" class="nav-link" data-scroll-target="#sec-results_modeling"><span class="header-section-number">4.2</span> Data modeling</a>
   <ul class="collapse">
-  <li><a href="#sec-results_modeling_1" id="toc-sec-results_modeling_1" class="nav-link" data-scroll-target="#sec-results_modeling_1"><span class="header-section-number">5.2.1</span> The CBTL analysis</a></li>
-  <li><a href="#sec-results_modeling_2" id="toc-sec-results_modeling_2" class="nav-link" data-scroll-target="#sec-results_modeling_2"><span class="header-section-number">5.2.2</span> The ITCJ analysis</a>
+  <li><a href="#sec-results_modeling_1" id="toc-sec-results_modeling_1" class="nav-link" data-scroll-target="#sec-results_modeling_1"><span class="header-section-number">4.2.1</span> The CCJ analysis</a></li>
+  <li><a href="#sec-results_modeling_2" id="toc-sec-results_modeling_2" class="nav-link" data-scroll-target="#sec-results_modeling_2"><span class="header-section-number">4.2.2</span> The ITCJ analysis</a>
   <ul class="collapse">
-  <li><a href="#sec-results_modeling_2_1" id="toc-sec-results_modeling_2_1" class="nav-link" data-scroll-target="#sec-results_modeling_2_1"><span class="header-section-number">5.2.2.1</span> Model 1</a></li>
-  <li><a href="#sec-results_modeling_2_2" id="toc-sec-results_modeling_2_2" class="nav-link" data-scroll-target="#sec-results_modeling_2_2"><span class="header-section-number">5.2.2.2</span> Model 2</a></li>
-  <li><a href="#sec-results_modeling_2_3" id="toc-sec-results_modeling_2_3" class="nav-link" data-scroll-target="#sec-results_modeling_2_3"><span class="header-section-number">5.2.2.3</span> Model 3</a></li>
-  <li><a href="#sec-results_modeling_2_4" id="toc-sec-results_modeling_2_4" class="nav-link" data-scroll-target="#sec-results_modeling_2_4"><span class="header-section-number">5.2.2.4</span> Model 4</a></li>
-  <li><a href="#sec-results_modeling_2_5" id="toc-sec-results_modeling_2_5" class="nav-link" data-scroll-target="#sec-results_modeling_2_5"><span class="header-section-number">5.2.2.5</span> Model 5</a></li>
-  <li><a href="#sec-results_modeling_2_6" id="toc-sec-results_modeling_2_6" class="nav-link" data-scroll-target="#sec-results_modeling_2_6"><span class="header-section-number">5.2.2.6</span> Model 6</a></li>
-  <li><a href="#sec-results_modeling_2_7" id="toc-sec-results_modeling_2_7" class="nav-link" data-scroll-target="#sec-results_modeling_2_7"><span class="header-section-number">5.2.2.7</span> Model comparison</a></li>
+  <li><a href="#sec-results_modeling_2_1" id="toc-sec-results_modeling_2_1" class="nav-link" data-scroll-target="#sec-results_modeling_2_1"><span class="header-section-number">4.2.2.1</span> Model 1</a></li>
+  <li><a href="#sec-results_modeling_2_2" id="toc-sec-results_modeling_2_2" class="nav-link" data-scroll-target="#sec-results_modeling_2_2"><span class="header-section-number">4.2.2.2</span> Model 2</a></li>
+  <li><a href="#sec-results_modeling_2_3" id="toc-sec-results_modeling_2_3" class="nav-link" data-scroll-target="#sec-results_modeling_2_3"><span class="header-section-number">4.2.2.3</span> Model 3</a></li>
+  <li><a href="#sec-results_modeling_2_4" id="toc-sec-results_modeling_2_4" class="nav-link" data-scroll-target="#sec-results_modeling_2_4"><span class="header-section-number">4.2.2.4</span> Model 4</a></li>
+  <li><a href="#sec-results_modeling_2_5" id="toc-sec-results_modeling_2_5" class="nav-link" data-scroll-target="#sec-results_modeling_2_5"><span class="header-section-number">4.2.2.5</span> Model 5</a></li>
+  <li><a href="#sec-results_modeling_2_6" id="toc-sec-results_modeling_2_6" class="nav-link" data-scroll-target="#sec-results_modeling_2_6"><span class="header-section-number">4.2.2.6</span> Model 6</a></li>
+  <li><a href="#sec-results_modeling_2_7" id="toc-sec-results_modeling_2_7" class="nav-link" data-scroll-target="#sec-results_modeling_2_7"><span class="header-section-number">4.2.2.7</span> Model comparison</a></li>
   </ul></li>
   </ul></li>
   </ul></li>
-  <li><a href="#sec-discussion" id="toc-sec-discussion" class="nav-link" data-scroll-target="#sec-discussion"><span class="header-section-number">6</span> Discussion</a>
+  <li><a href="#sec-discussion" id="toc-sec-discussion" class="nav-link" data-scroll-target="#sec-discussion"><span class="header-section-number">5</span> Discussion</a>
   <ul>
-  <li><a href="#sec-discussion_RD" id="toc-sec-discussion_RD" class="nav-link" data-scroll-target="#sec-discussion_RD"><span class="header-section-number">6.1</span> Future research directions</a></li>
-  <li><a href="#sec-discussion_limitations" id="toc-sec-discussion_limitations" class="nav-link" data-scroll-target="#sec-discussion_limitations"><span class="header-section-number">6.2</span> Study limitations</a></li>
+  <li><a href="#sec-discussion_RD" id="toc-sec-discussion_RD" class="nav-link" data-scroll-target="#sec-discussion_RD"><span class="header-section-number">5.1</span> Future research directions</a></li>
+  <li><a href="#sec-discussion_limitations" id="toc-sec-discussion_limitations" class="nav-link" data-scroll-target="#sec-discussion_limitations"><span class="header-section-number">5.2</span> Study limitations</a></li>
   </ul></li>
-  <li><a href="#sec-conclusion" id="toc-sec-conclusion" class="nav-link" data-scroll-target="#sec-conclusion"><span class="header-section-number">7</span> Conclusion</a></li>
+  <li><a href="#sec-conclusion" id="toc-sec-conclusion" class="nav-link" data-scroll-target="#sec-conclusion"><span class="header-section-number">6</span> Conclusion</a></li>
   
   
   
@@ -612,29 +613,56 @@ Thus, this study empirically validates the proposed Information-Theoretical mode
 <!-- do not make it about speech quality, Put examples of many applications, add a couple more examples. Present it in a more broader way, e.g., "using speech quality as an example" -->
 <p><em>Comparative judgment</em> (CJ) has emerged as a valuable methodology for measuring latent traits across diverse fields, including education <span class="citation" data-cites="Kimbell_2012 Jones_et_al_2015 vanDaal_et_al_2016 Bartholomew_et_al_2018">(<a href="#ref-Kimbell_2012" role="doc-biblioref">Kimbell 2012</a>; <a href="#ref-Jones_et_al_2015" role="doc-biblioref">Jones and Inglis 2015</a>; <a href="#ref-vanDaal_et_al_2016" role="doc-biblioref"><span class="nocase">van Daal et al.</span> 2016</a>; <a href="#ref-Bartholomew_et_al_2018" role="doc-biblioref">Bartholomew et al. 2018</a>)</span>, political sciences <span class="citation" data-cites="Zucco_et_al_2019">(<a href="#ref-Zucco_et_al_2019" role="doc-biblioref">ZuccoJr. et al. 2019</a>)</span>, linguistics <span class="citation" data-cites="Boonen_et_al_2020">(<a href="#ref-Boonen_et_al_2020" role="doc-biblioref">Boonen et al. 2020</a>)</span>, and criminology <span class="citation" data-cites="Seymour_et_al_2025">(<a href="#ref-Seymour_et_al_2025" role="doc-biblioref">Seymour and Hernandez 2025</a>)</span>. In CJ studies, judges actively compare pairs of stimuli to determine which stimulus exhibits more of the latent trait of interest <span class="citation" data-cites="Thurstone_1927a Thurstone_1927b">(<a href="#ref-Thurstone_1927a" role="doc-biblioref">Thurstone 1927b</a>, <a href="#ref-Thurstone_1927b" role="doc-biblioref">1927a</a>)</span>.</p>
 <!-- 2. How does CJ data is analyzed? -->
-<p>A specific data analysis workflow has become the standard approach for analyzing CJ data <span class="citation" data-cites="Thwaites_et_al_2024">(see, e.g., <a href="#ref-Thwaites_et_al_2024" role="doc-biblioref">Thwaites and Paquot 2024</a>)</span>. In this study, we refer to this workflow as the classical BTL analysis or <em>CBTL analysis</em>. Researchers favor this approach because it provides a simple method for measuring traits and conducting related analyses <span class="citation" data-cites="Andrich_1978 Pollitt_2012b">(<a href="#ref-Andrich_1978" role="doc-biblioref">Andrich 1978</a>; <a href="#ref-Pollitt_2012b" role="doc-biblioref">Pollitt 2012b</a>)</span>. The simplicity of the approach arises from two key features. First, it relies on the Bradley-Terry-Luce (BTL) model <span class="citation" data-cites="Bradley_et_al_1952 Luce_1959">(<a href="#ref-Bradley_et_al_1952" role="doc-biblioref">Bradley and Terry 1952</a>; <a href="#ref-Luce_1959" role="doc-biblioref">Luce 1959</a>)</span> to estimate latent traits. The model facilitates trait estimation by imposing several simplifying assumptions about traits, judges, and stimuli present in CJ assessments <span class="citation" data-cites="Thurstone_1927b Bramley_2008">(<a href="#ref-Thurstone_1927b" role="doc-biblioref">Thurstone 1927a</a>; <a href="#ref-Bramley_2008" role="doc-biblioref">Bramley 2008</a>)</span>. Second, it uses ad hoc procedures to conduct related analysis, including data summarization and statistical inference <span class="citation" data-cites="Pollitt_2012b">(<a href="#ref-Pollitt_2012b" role="doc-biblioref">Pollitt 2012b</a>)</span>.</p>
+<p>A specific data analysis workflow has become the standard approach for analyzing CJ data in education, linguistics, and psychology <span class="citation" data-cites="Wu_2025 Thwaites_et_al_2024 Maydeu-Olivares_et_al_2005">(see, e.g., <a href="#ref-Wu_2025" role="doc-biblioref">Wu 2025</a>; <a href="#ref-Thwaites_et_al_2024" role="doc-biblioref">Thwaites and Paquot 2024</a>; <a href="#ref-Maydeu-Olivares_et_al_2005" role="doc-biblioref">Maydeu-Olivares and Böckenholt 2005</a>)</span>. In this study, we refer to this workflow as the classical CJ analysis (hereafter, <em>CCJ analysis</em>). Researchers favor this approach because it provides a convenient and simple method for measuring traits and conducting subsequent analyses <span class="citation" data-cites="Andrich_1978 Pollitt_2012b">(<a href="#ref-Andrich_1978" role="doc-biblioref">Andrich 1978</a>; <a href="#ref-Pollitt_2012b" role="doc-biblioref">Pollitt 2012b</a>)</span>. This simplicity rests on two key features. First, it relies on narrowly specified Thurstone-based models to estimate latent traits. These models facilitate trait estimation by imposing several simplifying assumptions about traits, judges, and stimuli present in the CJ assessments under study <span class="citation" data-cites="Thurstone_1927b Bramley_2008">(<a href="#ref-Thurstone_1927b" role="doc-biblioref">Thurstone 1927a</a>; <a href="#ref-Bramley_2008" role="doc-biblioref">Bramley 2008</a>)</span>. Second, the approach uses ad hoc procedures to conduct follow-up analyses, including data summarization and statistical inference <span class="citation" data-cites="Pollitt_2012b">(<a href="#ref-Pollitt_2012b" role="doc-biblioref">Pollitt 2012b</a>)</span>.</p>
 <!-- 3. But what is the problem with using the BTL model? -->
-<p>Recent studies, however, question whether the assumptions of the BTL model hold in contemporary CJ applications and whether the ad hoc procedures achieve their intended analytical goals <span class="citation" data-cites="Bramley_2008 Kelly_et_al_2022 Rivera_et_al_2025">(<a href="#ref-Bramley_2008" role="doc-biblioref">Bramley 2008</a>; <a href="#ref-Kelly_et_al_2022" role="doc-biblioref">Kelly et al. 2022</a>; <a href="#ref-Rivera_et_al_2025" role="doc-biblioref"><span class="nocase">Rivera et al.</span> 2025</a>)</span>. For instance, Rivera and colleagues <span class="citation" data-cites="Rivera_et_al_2025">(<a href="#ref-Rivera_et_al_2025" role="doc-biblioref">2025</a>)</span> argue that while the assumptions of equal dispersions and zero correlations between stimuli simplify trait measurement, they may fail to represent complex traits or heterogeneous stimuli adequately <span class="citation" data-cites="Thurstone_1927a Andrich_1978 vanDaal_et_al_2016 Lesterhuis_et_al_2018 Chambers_et_al_2022">(<a href="#ref-Thurstone_1927a" role="doc-biblioref">Thurstone 1927b</a>; <a href="#ref-Andrich_1978" role="doc-biblioref">Andrich 1978</a>; <a href="#ref-vanDaal_et_al_2016" role="doc-biblioref"><span class="nocase">van Daal et al.</span> 2016</a>; <a href="#ref-Lesterhuis_et_al_2018" role="doc-biblioref"><span class="nocase">Lesterhuis et al.</span> 2018</a>; <a href="#ref-Chambers_et_al_2022" role="doc-biblioref">Chambers and Cunningham 2022</a>)</span>. As a result, such assumptions can compromise the reliability and accuracy of trait estimates <span class="citation" data-cites="Ackerman_1989 Zimmerman_1994 McElreath_2020 Wu_et_al_2022 Miller_2023 Hoyle_et_al_2023">(<a href="#ref-Ackerman_1989" role="doc-biblioref">Ackerman 1989</a>; <a href="#ref-Zimmerman_1994" role="doc-biblioref">Zimmerman 1994</a>; <a href="#ref-McElreath_2020" role="doc-biblioref">McElreath 2020</a>; <a href="#ref-Wu_et_al_2022" role="doc-biblioref">Wu et al. 2022</a>; <a href="#ref-Miller_2023" role="doc-biblioref">Miller 2023</a>; <a href="#ref-Hoyle_et_al_2023" role="doc-biblioref">Hoyle 2023</a>)</span>. Moreover, the same authors note that although ad hoc procedures simplify data analyses, the use of untested methods can also undermine the validity of inferences derived from CJ data <span class="citation" data-cites="McElreath_2020 Kline_et_al_2023 Hoyle_et_al_2023">(<a href="#ref-McElreath_2020" role="doc-biblioref">McElreath 2020</a>; <a href="#ref-Kline_et_al_2023" role="doc-biblioref">Kline 2023</a>; <a href="#ref-Hoyle_et_al_2023" role="doc-biblioref">Hoyle 2023</a>)</span>.</p>
+<p>Recent studies, however, question whether the assumptions of these models–particularly the Bradley-Terry-Luce (BTL) model <span class="citation" data-cites="Bradley_et_al_1952 Luce_1959">(<a href="#ref-Bradley_et_al_1952" role="doc-biblioref">Bradley and Terry 1952</a>; <a href="#ref-Luce_1959" role="doc-biblioref">Luce 1959</a>)</span>–hold in contemporary CJ applications, and whether the ad hoc procedures achieve their intended analytical goals <span class="citation" data-cites="Bramley_2008 Kelly_et_al_2022 Rivera_et_al_2025">(<a href="#ref-Bramley_2008" role="doc-biblioref">Bramley 2008</a>; <a href="#ref-Kelly_et_al_2022" role="doc-biblioref">Kelly et al. 2022</a>; <a href="#ref-Rivera_et_al_2025" role="doc-biblioref"><span class="nocase">Rivera et al.</span> 2025</a>)</span>. For instance, <span class="citation" data-cites="Rivera_et_al_2025"><span class="nocase">Rivera et al.</span> (<a href="#ref-Rivera_et_al_2025" role="doc-biblioref">2025</a>)</span> note that while BTL model assumptions of equal dispersions and zero correlations between stimuli simplify trait measurement, they may fail to represent complex traits or heterogeneous stimuli adequately <span class="citation" data-cites="Thurstone_1927a Andrich_1978 vanDaal_et_al_2016 Lesterhuis_et_al_2018 Chambers_et_al_2022">(<a href="#ref-Thurstone_1927a" role="doc-biblioref">Thurstone 1927b</a>; <a href="#ref-Andrich_1978" role="doc-biblioref">Andrich 1978</a>; <a href="#ref-vanDaal_et_al_2016" role="doc-biblioref"><span class="nocase">van Daal et al.</span> 2016</a>; <a href="#ref-Lesterhuis_et_al_2018" role="doc-biblioref"><span class="nocase">Lesterhuis et al.</span> 2018</a>; <a href="#ref-Chambers_et_al_2022" role="doc-biblioref">Chambers and Cunningham 2022</a>)</span>. Thus, such assumptions can compromise the reliability and accuracy of trait estimates <span class="citation" data-cites="Ackerman_1989 Zimmerman_1994 McElreath_2020 Wu_et_al_2022 Miller_2023 Hoyle_et_al_2023">(<a href="#ref-Ackerman_1989" role="doc-biblioref">Ackerman 1989</a>; <a href="#ref-Zimmerman_1994" role="doc-biblioref">Zimmerman 1994</a>; <a href="#ref-McElreath_2020" role="doc-biblioref">McElreath 2020</a>; <a href="#ref-Wu_et_al_2022" role="doc-biblioref">Wu et al. 2022</a>; <a href="#ref-Miller_2023" role="doc-biblioref">Miller 2023</a>; <a href="#ref-Hoyle_et_al_2023" role="doc-biblioref">Hoyle 2023</a>)</span>. Moreover, although ad hoc procedures simplify data analyses, the use of untested methods can also undermine the validity of inferences derived from CJ data <span class="citation" data-cites="McElreath_2020 Kline_et_al_2023 Hoyle_et_al_2023">(<a href="#ref-McElreath_2020" role="doc-biblioref">McElreath 2020</a>; <a href="#ref-Kline_et_al_2023" role="doc-biblioref">Kline 2023</a>; <a href="#ref-Hoyle_et_al_2023" role="doc-biblioref">Hoyle 2023</a>)</span>.</p>
 <!-- 4. How it has been solved? -->
-<p>To address these concerns, <span class="citation" data-cites="Rivera_et_al_2025"><span class="nocase">Rivera et al.</span> (<a href="#ref-Rivera_et_al_2025" role="doc-biblioref">2025</a>)</span> proposed an approach that extends the general form of Thurstone’s Law of Comparative Judgment <span class="citation" data-cites="Thurstone_1927a Thurstone_1927b">(<a href="#ref-Thurstone_1927a" role="doc-biblioref">Thurstone 1927b</a>, <a href="#ref-Thurstone_1927b" role="doc-biblioref">1927a</a>)</span>, referred to as the Information-Theoretical model for CJ (hereafter, ITCJ analysis). The approach leverages causal and Bayesian inference methods to combine Thurstone’s core theoretical principles with key design features of CJ assessment. By doing so, it enables the development of a model tailored to the assumed data-generating process of the CJ system under study. This tailoring effectively removes the need to rely on the simplifying assumptions of the BTL model. Moreover, by integrating measurement and inference within a single analytical framework, the approach also eliminates the dependence on ad hoc analytical procedures.</p>
+<!-- Sven and Tine p2 2026.02.02, time: 00:07:09 - 00:09:55 -->
+<!-- Summary of Tine:  -->
+<p>To address these concerns, <span class="citation" data-cites="Rivera_et_al_2025"><span class="nocase">Rivera et al.</span> (<a href="#ref-Rivera_et_al_2025" role="doc-biblioref">2025</a>)</span> proposed the Information-Theoretical analysis for CJ (hereafter, <em>ITCJ analysis</em>), an umbrella analytical workflow designed to accommodate the complexity often observed in applied CJ settings. The approach leverages causal and Bayesian inference methods to combine Thurstone’s core theoretical principles <span class="citation" data-cites="Thurstone_1927a Thurstone_1927b">(<a href="#ref-Thurstone_1927a" role="doc-biblioref">Thurstone 1927b</a>, <a href="#ref-Thurstone_1927b" role="doc-biblioref">1927a</a>)</span> with key design features of CJ assessment. This integration enables researchers to develop models tailored to the assumed data-generating process of the CJ system under study, reducing reliance on simplifying assumptions. Moreover, by integrating measurement and inference within a single framework, the ITCJ analysis also eliminates the need for ad hoc analytical procedures.</p>
+<p>Given the persistent challenges in education, linguistics, and psychology–where CJ data frequently exhibit substantial heterogeneity and design-specific variability <span class="citation" data-cites="Thurstone_1927a Andrich_1978 vanDaal_et_al_2016 Lesterhuis_et_al_2018 Chambers_et_al_2022">(<a href="#ref-Thurstone_1927a" role="doc-biblioref">Thurstone 1927b</a>; <a href="#ref-Andrich_1978" role="doc-biblioref">Andrich 1978</a>; <a href="#ref-vanDaal_et_al_2016" role="doc-biblioref"><span class="nocase">van Daal et al.</span> 2016</a>; <a href="#ref-Lesterhuis_et_al_2018" role="doc-biblioref"><span class="nocase">Lesterhuis et al.</span> 2018</a>; <a href="#ref-Chambers_et_al_2022" role="doc-biblioref">Chambers and Cunningham 2022</a>)</span>–the flexibility of the ITCJ analysis is particularly valuable. More broadly, any discipline implementing CJ assessments can benefit from an approach that enables researchers to model the processes they aim to investigate, rather than those imposed by restrictive statistical models.</p>
+<section id="sec-introduction_goals" class="level2" data-number="1.1">
+<h2 data-number="1.1" class="anchored" data-anchor-id="sec-introduction_goals"><span class="header-section-number">1.1</span> Research goals</h2>
+<!-- Sven and Tine 25.08.25, time: 00:10:25 - 00:10:50 -->
+<!-- Sven and Tine 25.08.25, time: 00:23:30 - 00:32:50 -->
+<!-- The way to present the document is: this document that aims to validate the model, and by the way this also allow us to guide researchers on how to use the model (a side product). -->
+<!-- - Make sure you tell that this paper is a validation study -->
+<!-- - Make sure to state what do researchers learn from the document -->
+<!-- Sven and Tine 2025.09.04, time: 00:28:45 - 00:30:20 -->
+<!-- The model stills need to be empirically tested, the ITCJ implies a complex models which put challenges to integrate it in the workflow -->
+<!-- Sven and Tine p2 2026.02.02, time: 00:02:49 - 00:04:35 -->
+<!-- It is an "assist" to connect the discussion of the 2nd paper with the research goals of this: "this is a model that it is hard to implement" -->
+<!-- 1. Why we want to do it and what are we going to do-->
+<p>The ITCJ analysis <span class="citation" data-cites="Rivera_et_al_2025">(<a href="#ref-Rivera_et_al_2025" role="doc-biblioref"><span class="nocase">Rivera et al.</span> 2025</a>)</span> shows theoretical promise for producing reliable trait estimates and accurate statistical inferences. However, as the authors note, this promise has not yet been empirically validated. This study addresses this gap by pursuing two closely related research goals. The first goal is to <em>empirically validate</em> the proposed ITCJ analysis using a simulated speech-quality dataset. This validation assesses the accuracy and reliability of its trait estimates and inference parameters, benchmarked against the CCJ analysis.</p>
+<p>The second goal emerges as a practical extension of this validation: <em>to demonstrate its practical implementation</em>. This demonstration equips researchers with tools to apply the approach to more complex CJ assessments. To this end, the document adopts a tutorial format, providing step-by-step guidance on data simulation, prior specification, model estimation, and interpretation using <code>R</code> <span class="citation" data-cites="R_2015">(<a href="#ref-R_2015" role="doc-biblioref">R Core Team 2015</a>)</span>, <code>Stan</code><span class="citation" data-cites="Stan_2026a Stan_2026b">(<a href="#ref-Stan_2026a" role="doc-biblioref">Stan Development Team. 2026b</a>, <a href="#ref-Stan_2026b" role="doc-biblioref">2026a</a>)</span>, and their interface packages <code>cmdstanr</code> <span class="citation" data-cites="Gabry_et_al_2025b">(<a href="#ref-Gabry_et_al_2025b" role="doc-biblioref">Gabry et al. 2025</a>)</span> and <code>brms</code> <span class="citation" data-cites="Burkner_2017 Burkner_2018">(<a href="#ref-Burkner_2017" role="doc-biblioref">Bürkner 2017</a>, <a href="#ref-Burkner_2018" role="doc-biblioref">2018</a>)</span>.</p>
+<!-- 6. what is the organization of the manuscript? -->
+<p>The remainder of this manuscript is organized into five sections. <a href="#sec-theory" class="quarto-xref">Section&nbsp;2</a> reviews the two analytical approaches commonly applied to CJ data: the CCJ and ITCJ analyses. <a href="#sec-methods" class="quarto-xref">Section&nbsp;3</a> details the assumed data-generating process for the simulated dataset, the simulation procedure, the practical implementation of each analytical approach, and the evaluation criteria aligned with the research goals. <a href="#sec-results" class="quarto-xref">Section&nbsp;4</a> presents the data description and modeling results. <a href="#sec-discussion" class="quarto-xref">Section&nbsp;5</a> interprets the findings, outlines future research directions, and considers the study limitations. Finally, <a href="#sec-conclusion" class="quarto-xref">Section&nbsp;6</a> offers the concluding remarks.</p>
 <!-- ######################################### -->
+</section>
 </section>
 <section id="sec-theory" class="level1" data-number="2">
 <h1 data-number="2"><span class="header-section-number">2</span> A tale of two analytical approaches</h1>
 <!-- Sven and Tine 2025.08.25, time: 00:12:20 - 00:14:00 -->
 <!-- Sven and Tine 2025.09.04, time: 00:04:05 - 00:04:40 -->
 <!-- Sven and Tine 2025.09.15, time: 00:03:30 - 00:04:20 -->
-<p>Pairwise comparison data, and more specifically CJ data, can be analyzed using two main approaches: the CBTL and the ITCJ analysis. The CBTL approach applies a sequence of separate analytical steps to estimate traits and draw inferences. In contrast, the ITCJ analysis uses a single, systematic, and integrated approach to achieve the same objectives. This section describes the two approaches in detail.</p>
-<section id="sec-theory_CBTL" class="level2" data-number="2.1">
-<h2 data-number="2.1" class="anchored" data-anchor-id="sec-theory_CBTL"><span class="header-section-number">2.1</span> The CBTL analysis</h2>
+<p>Pairwise comparison data can be analyzed using two main approaches: the CCJ and the ITCJ analysis. The CCJ approach relies on a sequence of separate analytical steps to estimate traits and draw inferences. In contrast, the ITCJ analysis uses a single, systematic, and integrated approach to achieve the same objectives. This section describes the two approaches in detail.</p>
+<section id="sec-theory_CCJ" class="level2" data-number="2.1">
+<h2 data-number="2.1" class="anchored" data-anchor-id="sec-theory_CCJ"><span class="header-section-number">2.1</span> The CCJ analysis</h2>
 <!-- Sven and Tine 2025.09.04, time: 00:04:40 - 00:07:00 -->
 <!-- Sven 2025.09.29, time: 00:00:00 - 00:02:10, issues with residuals -->
-<p>The CBTL approach implements a sequence of separate analytical steps, each serving a distinct purpose <span class="citation" data-cites="Pollitt_2012a Pollitt_2012b Jones_et_al_2019 Boonen_et_al_2020 Chambers_et_al_2022 Bouwer_et_al_2023">(<a href="#ref-Pollitt_2012a" role="doc-biblioref">Pollitt 2012a</a>, <a href="#ref-Pollitt_2012b" role="doc-biblioref">2012b</a>; <a href="#ref-Jones_et_al_2019" role="doc-biblioref">Jones et al. 2019</a>; <a href="#ref-Boonen_et_al_2020" role="doc-biblioref">Boonen et al. 2020</a>; <a href="#ref-Chambers_et_al_2022" role="doc-biblioref">Chambers and Cunningham 2022</a>; <a href="#ref-Bouwer_et_al_2023" role="doc-biblioref">Bouwer et al. 2023</a>)</span>. This multi-step procedure typically unfolds as follows. First, analysts apply the BTL model to the CJ data to produce two outputs: (1) point estimates of stimulus latent scores along with their standard errors, and (2) residuals at the stimulus level. These outputs form the basis for all subsequent analyses.</p>
+<!-- Sven 2026.02.16, time: 00:00:55 - 00:10:20, comment of paper reading -->
+<p>The CCJ analysis implements a sequence of separate analytical steps, each serving a distinct purpose <span class="citation" data-cites="Pollitt_2012a Pollitt_2012b Jones_et_al_2019 Boonen_et_al_2020 Chambers_et_al_2022 Bouwer_et_al_2023">(<a href="#ref-Pollitt_2012a" role="doc-biblioref">Pollitt 2012a</a>, <a href="#ref-Pollitt_2012b" role="doc-biblioref">2012b</a>; <a href="#ref-Jones_et_al_2019" role="doc-biblioref">Jones et al. 2019</a>; <a href="#ref-Boonen_et_al_2020" role="doc-biblioref">Boonen et al. 2020</a>; <a href="#ref-Chambers_et_al_2022" role="doc-biblioref">Chambers and Cunningham 2022</a>; <a href="#ref-Bouwer_et_al_2023" role="doc-biblioref">Bouwer et al. 2023</a>)</span>. This multi-step procedure typically unfolds as follows. First, analysts apply narrowly defined Thurstone-based model to the CJ data to produce two outputs: (1) point estimates of stimulus latent scores along with their standard errors, and (2) residuals at the comparison level. These outputs form the basis for all subsequent analyses.</p>
 <!-- Sven and Tine p2 2026.02.02, time: 00:09:55 - 00:11:05 -->
-<!-- Add @Maydeu-Olivares_et_al_2005 to this part of the example -->
-<p>Second, researchers summarize or fit regression models to the stimulus latent score estimates. This step serves multiple purposes, including aggregating stimulus-level point estimates to the individual level, partitioning variability between and within individuals, and drawing inferences about factors that influence trait scores. For example, <span class="citation" data-cites="Boonen_et_al_2020">Boonen et al. (<a href="#ref-Boonen_et_al_2020" role="doc-biblioref">2020</a>)</span> applied a multilevel regression model to the stimulus latent scores to examine whether children’s age or hearing status affects their intelligibility scores. Similarly, <span class="citation" data-cites="Maydeu-Olivares_et_al_2005">Maydeu-Olivares and Böckenholt (<a href="#ref-Maydeu-Olivares_et_al_2005" role="doc-biblioref">2005</a>)</span> …</p>
+<p>Second, researchers summarize or fit regression models to the stimulus latent score estimates. This step serves multiple purposes, including aggregating stimulus-level point estimates to the individual level, partitioning variability between and within individuals, and drawing inferences about factors that influence trait scores. For example, <span class="citation" data-cites="Boonen_et_al_2020">Boonen et al. (<a href="#ref-Boonen_et_al_2020" role="doc-biblioref">2020</a>)</span> applied a multilevel regression model to stimulus latent scores to examine whether children’s age or hearing status affects their intelligibility scores. Similarly, <span class="citation" data-cites="Maydeu-Olivares_et_al_2005">Maydeu-Olivares and Böckenholt (<a href="#ref-Maydeu-Olivares_et_al_2005" role="doc-biblioref">2005</a>)</span> fitted multiple factor models to latent utility means representing preferences for compact cars to assess whether these preferences could be explained by differences among individuals making the comparisons.</p>
 <p>Third, analysts summarize or fit regression models to the BTL residuals. This step usually seeks to aggregate the remaining variability at the judge level, partition residual variability between and within judges, test for systematic biases, and identify potential misfitting judgments, stimuli, or judges. For instance, <span class="citation" data-cites="Wu_2025">Wu (<a href="#ref-Wu_2025" role="doc-biblioref">2025</a>)</span> fitted an analysis of variance (ANOVA) model to rater’s infit statistic to examine whether rater expertise influence judgments behavior. The infit statistics is a weighted average of the squared Pearson residuals <span class="citation" data-cites="Wright_et_al_1982">(<a href="#ref-Wright_et_al_1982" role="doc-biblioref">Wright and Masters 1982</a>)</span>.</p>
 <p>While this stepwise approach is the standard practice in fields such as education <span class="citation" data-cites="Wu_2025">(see, <a href="#ref-Wu_2025" role="doc-biblioref">Wu 2025</a>)</span>, linguistics <span class="citation" data-cites="Thwaites_et_al_2024">(see, <a href="#ref-Thwaites_et_al_2024" role="doc-biblioref">Thwaites and Paquot 2024</a>)</span> and psychology <span class="citation" data-cites="Maydeu-Olivares_et_al_2005">(see, <a href="#ref-Maydeu-Olivares_et_al_2005" role="doc-biblioref">Maydeu-Olivares and Böckenholt 2005</a>)</span>, it presents several limitations. First, each stage treats outputs from previous steps as fixed data, rather than acknowledging their status as uncertain parameter estimates. Failure to account for this uncertainty can introduce bias and decrease the precision of inferences. The direction and magnitude of these biases can be unpredictable: results may be attenuated, amplified, or remain unaffected depending on the uncertainty in the scores and the actual effects being tested <span class="citation" data-cites="McElreath_2020 Kline_et_al_2023 Hoyle_et_al_2023">(<a href="#ref-McElreath_2020" role="doc-biblioref">McElreath 2020</a>; <a href="#ref-Kline_et_al_2023" role="doc-biblioref">Kline 2023</a>; <a href="#ref-Hoyle_et_al_2023" role="doc-biblioref">Hoyle 2023</a>)</span>. Moreover, the loss of precision diminishes statistical power and increases the likelihood of committing type I or type II errors <span class="citation" data-cites="McElreath_2020">(<a href="#ref-McElreath_2020" role="doc-biblioref">McElreath 2020</a>)</span>. Second, the procedure lacks theoretical coherence, as it combines models with different underlying assumptions. For example, third-step analyses treat residuals as outputs that ostensibly capture deviations from expected comparison outcomes, potentially reflecting judge-specific tendencies or idiosyncrasies in judgments, without providing evidence on whether these assumptions hold.</p>
+<!-- Sven 2026.02.16, time: 00:10:20 - 00:16:10, other paper's integration -->
+<!-- On top of that there are recent developments in the CJ literature where people also introduce some things like ..., but still they address one (or two) data-generating features at a time. -->
+<!-- Although recent developments in modeling procedures for the analysis of CJ data have tried to address specific features of the data, most address one (or two) data-generating features at a time. For instance, @Gray_et_al_2024  -->
+<!-- SUPER IMPORTANT -->
+<!-- Several attempts to extend/improve the BTL model have been proposed. For example. @Gray_et_al_2024 models the number of wins as outcomes and @Rao_et_al_1967 and @Seymour_et_al_2025 model outcomes with ties. Moreover, @Schramm_et_al_2021 models the hierarchy of the CJ data, and @Seymour_et_al_2022 extend the model to consider spatial parameter correlation. However, we argue that our approach contemplates all of these extensions as special cases.  -->
+<!-- One thing that is obvious from @Seymour_et_al_2022 is that by implementing each of these models, its seems each author has to develop a new package with a new set of optimization methods.  -->
+<!-- @Seymour_et_al_2022 took one day to run a model!!, and does not consider covariates at the levels of the wards -->
 </section>
 <section id="sec-theory_ITCJ" class="level2" data-number="2.2">
 <h2 data-number="2.2" class="anchored" data-anchor-id="sec-theory_ITCJ"><span class="header-section-number">2.2</span> The ITCJ analysis</h2>
@@ -714,51 +742,32 @@ Figure&nbsp;2: ITCJ analysis. SCM (left) and probabilistic (right) representatio
 </div>
 <p>Critically, the approach allows tailoring this general structure to a specific CJ context, enabling development of parsimonious models that match the assumed data-generating process without imposing unnecessary constraints. For example, <span class="citation" data-cites="Rivera_et_al_2025"><span class="nocase">Rivera et al.</span> (<a href="#ref-Rivera_et_al_2025" role="doc-biblioref">2025</a>)</span> modeled a CJ assessment designed to evaluate the impact of different teaching methods on students’ writing ability. In this case, the observed outcome was binary, so the model assumed <span class="math inline">\(O_{R}\)</span> followed a Bernoulli distribution. The discriminal difference <span class="math inline">\((D_{R})\)</span> was determined by the texts’ discriminal processes <span class="math inline">\((T_{IA})\)</span> and the judgment biases <span class="math inline">\((B_{JK})\)</span>. Student-level variables <span class="math inline">\(X_{I}\)</span>, such as teaching method, were included, whereas text-level variables <span class="math inline">\(X_{IA}\)</span> (e.g., text length) were not gathered. Similarly, judge-level variables <span class="math inline">\(Z_{J}\)</span>, like judgment expertise, were incorporated, while judgment-level variables <span class="math inline">\(Z_{JK}\)</span> (e.g., number of judgments per judge) were absent. Finally, the probabilistic assumptions for the idiosyncratic errors (<span class="math inline">\(e_{I}\)</span>, <span class="math inline">\(e_{IA}\)</span>, <span class="math inline">\(e_{J}\)</span>, <span class="math inline">\(e_{JK}\)</span>) were specifically made to resolve indeterminacies in <em>location</em>, <em>orientation</em>, and <em>scale</em> for the variables <span class="math inline">\(T_{I}\)</span>, <span class="math inline">\(T_{IA}\)</span>, <span class="math inline">\(B_{J}\)</span>, <span class="math inline">\(B_{JK}\)</span>, as required in latent variable models <span class="citation" data-cites="Depaoli_2021 deAyala_2009">(<a href="#ref-Depaoli_2021" role="doc-biblioref">Depaoli 2021</a>; <a href="#ref-deAyala_2009" role="doc-biblioref"><span class="nocase">de Ayala</span> 2009</a>)</span>. Other examples include …</p>
 <p>Lastly, researchers derive one or more <em>bespoke</em> statistical models tailored to the CJ system of interest, as demonstrated in <span class="citation" data-cites="Rivera_et_al_2025"><span class="nocase">Rivera et al.</span> (<a href="#ref-Rivera_et_al_2025" role="doc-biblioref">2025</a>)</span>. At this stage, the ITCJ analysis differs fundamentally from the CBTL approach in how it handles parameter estimation and inference. Rather than fitting multiple separate models, the approach simultaneously estimates all parameters within a single coherent framework using <em>Bayesian inference</em>. This joint estimation accounts for uncertainty at all levels and enables direct inference about quantities of interest without relying on post-hoc procedures <span class="citation" data-cites="McElreath_2020">(<a href="#ref-McElreath_2020" role="doc-biblioref">McElreath 2020</a>)</span>.</p>
-</section>
-</section>
-<section id="sec-introduction_goals" class="level1" data-number="3">
-<h1 data-number="3"><span class="header-section-number">3</span> Research goals</h1>
-<!-- Sven and Tine 25.08.25, time: 00:10:25 - 00:10:50 -->
-<!-- Sven and Tine 25.08.25, time: 00:23:30 - 00:32:50 -->
-<!-- The way to present the document is: this document that aims to validate the model, and by the way this also allow us to guide researchers on how to use the model (a side product). -->
-<!-- - Make sure you tell that this paper is a validation study -->
-<!-- - Make sure to state what do researchers learn from the document -->
-<!-- Sven and Tine 2025.09.04, time: 00:28:45 - 00:30:20 -->
-<!-- The model stills need to be empirically tested, the ITCJ implies a complex models which put challenges to integrate it in the workflow -->
-<!-- Sven and Tine p2 2026.02.02, time: 00:02:49 - 00:04:35 -->
-<p>It is an “assist” to connect the discussion of the 2nd paper with the research goals of this: “thi is a model that it is hard to implement”</p>
-<!-- 1. Why we want to do it and what are we going to do-->
-<p>The ITCJ analysis <span class="citation" data-cites="Rivera_et_al_2025">(<a href="#ref-Rivera_et_al_2025" role="doc-biblioref"><span class="nocase">Rivera et al.</span> 2025</a>)</span> shows theoretical promise for yielding reliable trait estimates and accurate statistical inferences. However, as noted by the authors, this promise has not yet been empirically validated. Thus, the present study addresses this gap by pursuing two closely related research goals. The first goal is to <em>empirically validate</em> the proposed ITCJ analysis using a simulated speech-quality dataset. This validation assesses the accuracy and reliability of its trait estimates and inference parameters, benchmarked against the CBTL analysis.</p>
-<p>The second goal emerges as a practical byproduct of this validation: <em>to demonstrate its practical implementation</em>. To this end, the document adopts a tutorial format, providing step-by-step guidance on data simulation, prior specification, model estimation, and interpretation using <code>Stan</code><span class="citation" data-cites="Stan_2026a Stan_2026b">(<a href="#ref-Stan_2026a" role="doc-biblioref">Stan Development Team. 2026b</a>, <a href="#ref-Stan_2026b" role="doc-biblioref">2026a</a>)</span>, <code>R</code> <span class="citation" data-cites="R_2015">(<a href="#ref-R_2015" role="doc-biblioref">R Core Team 2015</a>)</span>, and the interface packages <code>cmdstan</code> <span class="citation" data-cites="Gabry_et_al_2025b">(<a href="#ref-Gabry_et_al_2025b" role="doc-biblioref">Gabry et al. 2025</a>)</span> and <code>brms</code> <span class="citation" data-cites="Burkner_2017 Burkner_2018">(<a href="#ref-Burkner_2017" role="doc-biblioref">Bürkner 2017</a>, <a href="#ref-Burkner_2018" role="doc-biblioref">2018</a>)</span>. Ultimately, the study equips researchers with practical tools to apply the model to more complex CJ assessments.</p>
-<!-- 6. what is the organization of the manuscript? -->
-<p>The remainder of this manuscript is organized into five sections. <a href="#sec-theory" class="quarto-xref">Section&nbsp;2</a> reviews the two analytical approaches commonly applied to CJ data: the CBTL and ITCJ analyses. <a href="#sec-methods" class="quarto-xref">Section&nbsp;4</a> details the assumed data-generating process for the simulated dataset, the simulation procedure, the practical implementation of each analytical approach, and the evaluation criteria aligned with the research goals. <a href="#sec-results" class="quarto-xref">Section&nbsp;5</a> presents the data description and modeling results. <a href="#sec-discussion" class="quarto-xref">Section&nbsp;6</a> interprets the findings, outlines future research directions, and considers the study limitations. Finally, <a href="#sec-conclusion" class="quarto-xref">Section&nbsp;7</a> offers the concluding remarks.</p>
-<!-- Sven and Tine p2 2026.02.02, time: 00:07:09 - 00:09:55 -->
-<!-- Summary of Tine: "there are lots of problems with CJ in education [@Wu_2025], linguistics [@Boonen_et_al_2020] and psychology [@Maydeu-Olivares_et_al_2005], and maybe in other fields as well. What we propose is an umbrella model for CJ that considers Thrustone's theory and the practice of CJ assessment, and enables researchers to really model what they want instead of what they are allowed to model by the statistical tools they use. Potentially, every discipline implementing CJ assessments or analyzing CJ data can benefit from this document. However, fields like education, linguistics, and psychology definitively benefit from this documnet because these type of data is more complex than imagined, requiring bespoke models for its analysis, and there is a lot of variability to control." -->
 <!-- ######################################### -->
 </section>
-<section id="sec-methods" class="level1" data-number="4">
-<h1 data-number="4"><span class="header-section-number">4</span> Methods</h1>
+</section>
+<section id="sec-methods" class="level1" data-number="3">
+<h1 data-number="3"><span class="header-section-number">3</span> Methods</h1>
 <!-- Sven and Tine 2025.09.04, time: 00:09:40 - 00:12:25 -->
 <!-- Sven and Tine 2025.09.04, time: 00:22:10 - 00:23:05 -->
 <!-- Sven and Tine 2025.09.15, time: 00:04:25 - 00:11:45 -->
 <!-- Sven and Tine 2025.09.04, time: 00:33:00 - 00:37:15 -->
-<section id="sec-methods_step1" class="level2" data-number="4.1">
-<h2 data-number="4.1" class="anchored" data-anchor-id="sec-methods_step1"><span class="header-section-number">4.1</span> Step 1, from Theory to Design: Data-generating assumptions</h2>
+<section id="sec-methods_step1" class="level2" data-number="3.1">
+<h2 data-number="3.1" class="anchored" data-anchor-id="sec-methods_step1"><span class="header-section-number">3.1</span> Step 1, from Theory to Design: Data-generating assumptions</h2>
 <!-- Sven and Tine 2025.09.04, time: 00:12:25 - 00:22:10 -->
 <!-- Sven and Tine 2025.09.04, time: 00:39:00 - 00:48:45 -->
 <!-- Sven 2025.09.29, time: 00:02:10 - 00:08:00, estimands -->
 </section>
-<section id="sec-methods_step2" class="level2" data-number="4.2">
-<h2 data-number="4.2" class="anchored" data-anchor-id="sec-methods_step2"><span class="header-section-number">4.2</span> Step 2, from Design to Data: Data simulation</h2>
+<section id="sec-methods_step2" class="level2" data-number="3.2">
+<h2 data-number="3.2" class="anchored" data-anchor-id="sec-methods_step2"><span class="header-section-number">3.2</span> Step 2, from Design to Data: Data simulation</h2>
 <!-- Sven 2025.10.31, time: 00:00:00 - 00:06:15, decision on why one data set -->
 <!-- Express the whole simulation procedure with an algorithm snippet -->
 </section>
-<section id="sec-methods_step5" class="level2" data-number="4.3">
-<h2 data-number="4.3" class="anchored" data-anchor-id="sec-methods_step5"><span class="header-section-number">4.3</span> Step 5, from Estimator and Sample to Estimate(s): The analysis aproaches</h2>
+<section id="sec-methods_step5" class="level2" data-number="3.3">
+<h2 data-number="3.3" class="anchored" data-anchor-id="sec-methods_step5"><span class="header-section-number">3.3</span> Step 5, from Estimator and Sample to Estimate(s): The analysis aproaches</h2>
 <!-- Sven 2025.09.29, time: 00:13:25 - 00:16:55, software -->
 <!-- Tine 2025.10.24, time: 00:02:40 - 00:03:45 -->
-<section id="sec-methods_step5_1" class="level3" data-number="4.3.1">
-<h3 data-number="4.3.1" class="anchored" data-anchor-id="sec-methods_step5_1"><span class="header-section-number">4.3.1</span> The CBTL analysis</h3>
+<section id="sec-methods_step5_1" class="level3" data-number="3.3.1">
+<h3 data-number="3.3.1" class="anchored" data-anchor-id="sec-methods_step5_1"><span class="header-section-number">3.3.1</span> The CCJ analysis</h3>
 <!-- Sven and Tine 2025.09.15, time: 00:11:45 - 00:17:55, make it Bayesian -->
 <!-- Sven and Tine 2025.09.15, time: 00:20:45 - 00:30:30, make it Bayesian -->
 <!-- Sven and Tine 2025.09.15, time: 00:32:30 - 00:32:55 -->
@@ -767,35 +776,35 @@ Figure&nbsp;2: ITCJ analysis. SCM (left) and probabilistic (right) representatio
 <!-- Tine 2025.10.24, time: 00:03:45 - 00:06:00 -->
 <!-- Sven 2025.10.31, time: 00:06:15 - 00:09:15, same explanation as with Tine 2025.10.24 -->
 </section>
-<section id="sec-methods_step5_2" class="level3" data-number="4.3.2">
-<h3 data-number="4.3.2" class="anchored" data-anchor-id="sec-methods_step5_2"><span class="header-section-number">4.3.2</span> The ITCJ analysis</h3>
+<section id="sec-methods_step5_2" class="level3" data-number="3.3.2">
+<h3 data-number="3.3.2" class="anchored" data-anchor-id="sec-methods_step5_2"><span class="header-section-number">3.3.2</span> The ITCJ analysis</h3>
 <!-- Sven and Tine 2025.09.15, time: 00:17:55 - 00:20:45 -->
 <!-- Sven and Tine 2025.09.15, time: 00:30:30 - 00:32:30 -->
 <!-- Tine 2025.10.24, time: 00:06:00 - 00:10:40 -->
 <!-- Sven 2025.10.31, time: 00:09:15 - 00:11:20, same explanation as with Tine 2025.10.24 -->
 <!-- Sven 2025.10.31, time: 00:14:15 - 00:17:25, same explanation as with Tine 2025.10.24 -->
-<section id="sec-sec-methods_step5_2_itcj_1" class="level4" data-number="4.3.2.1">
-<h4 data-number="4.3.2.1" class="anchored" data-anchor-id="sec-sec-methods_step5_2_itcj_1"><span class="header-section-number">4.3.2.1</span> Model 1</h4>
+<section id="sec-sec-methods_step5_2_itcj_1" class="level4" data-number="3.3.2.1">
+<h4 data-number="3.3.2.1" class="anchored" data-anchor-id="sec-sec-methods_step5_2_itcj_1"><span class="header-section-number">3.3.2.1</span> Model 1</h4>
 </section>
-<section id="sec-sec-methods_step5_2_itcj_2" class="level4" data-number="4.3.2.2">
-<h4 data-number="4.3.2.2" class="anchored" data-anchor-id="sec-sec-methods_step5_2_itcj_2"><span class="header-section-number">4.3.2.2</span> Model 2</h4>
+<section id="sec-sec-methods_step5_2_itcj_2" class="level4" data-number="3.3.2.2">
+<h4 data-number="3.3.2.2" class="anchored" data-anchor-id="sec-sec-methods_step5_2_itcj_2"><span class="header-section-number">3.3.2.2</span> Model 2</h4>
 </section>
-<section id="sec-sec-methods_step5_2_itcj_3" class="level4" data-number="4.3.2.3">
-<h4 data-number="4.3.2.3" class="anchored" data-anchor-id="sec-sec-methods_step5_2_itcj_3"><span class="header-section-number">4.3.2.3</span> Model 3</h4>
+<section id="sec-sec-methods_step5_2_itcj_3" class="level4" data-number="3.3.2.3">
+<h4 data-number="3.3.2.3" class="anchored" data-anchor-id="sec-sec-methods_step5_2_itcj_3"><span class="header-section-number">3.3.2.3</span> Model 3</h4>
 </section>
-<section id="sec-sec-methods_step5_2_itcj_4" class="level4" data-number="4.3.2.4">
-<h4 data-number="4.3.2.4" class="anchored" data-anchor-id="sec-sec-methods_step5_2_itcj_4"><span class="header-section-number">4.3.2.4</span> Model 4</h4>
+<section id="sec-sec-methods_step5_2_itcj_4" class="level4" data-number="3.3.2.4">
+<h4 data-number="3.3.2.4" class="anchored" data-anchor-id="sec-sec-methods_step5_2_itcj_4"><span class="header-section-number">3.3.2.4</span> Model 4</h4>
 </section>
-<section id="sec-sec-methods_step5_2_itcj_5" class="level4" data-number="4.3.2.5">
-<h4 data-number="4.3.2.5" class="anchored" data-anchor-id="sec-sec-methods_step5_2_itcj_5"><span class="header-section-number">4.3.2.5</span> Model 5</h4>
+<section id="sec-sec-methods_step5_2_itcj_5" class="level4" data-number="3.3.2.5">
+<h4 data-number="3.3.2.5" class="anchored" data-anchor-id="sec-sec-methods_step5_2_itcj_5"><span class="header-section-number">3.3.2.5</span> Model 5</h4>
 </section>
-<section id="sec-sec-methods_step5_2_itcj_6" class="level4" data-number="4.3.2.6">
-<h4 data-number="4.3.2.6" class="anchored" data-anchor-id="sec-sec-methods_step5_2_itcj_6"><span class="header-section-number">4.3.2.6</span> Model 6</h4>
+<section id="sec-sec-methods_step5_2_itcj_6" class="level4" data-number="3.3.2.6">
+<h4 data-number="3.3.2.6" class="anchored" data-anchor-id="sec-sec-methods_step5_2_itcj_6"><span class="header-section-number">3.3.2.6</span> Model 6</h4>
 </section>
 </section>
 </section>
-<section id="sec-methods_step6" class="level2" data-number="4.4">
-<h2 data-number="4.4" class="anchored" data-anchor-id="sec-methods_step6"><span class="header-section-number">4.4</span> Step 6, from Estimate(s) to Diagnostics and Posterior predictives: The evaluation criteria</h2>
+<section id="sec-methods_step6" class="level2" data-number="3.4">
+<h2 data-number="3.4" class="anchored" data-anchor-id="sec-methods_step6"><span class="header-section-number">3.4</span> Step 6, from Estimate(s) to Diagnostics and Posterior predictives: The evaluation criteria</h2>
 <!-- Sven and Tine 2025.09.04, time: 00:23:40 - 00:26:55, with two datas -->
 <!-- Sven 2025.09.29, time: 00:16:55 - 00:23:40, still with two datas -->
 <!-- Comment2 2025.10.17, posterior confusion matrix, with confidence intervals -->
@@ -804,22 +813,22 @@ Figure&nbsp;2: ITCJ analysis. SCM (left) and probabilistic (right) representatio
 <!-- ######################################### -->
 </section>
 </section>
-<section id="sec-results" class="level1" data-number="5">
-<h1 data-number="5"><span class="header-section-number">5</span> Results</h1>
-<section id="sec-results_data" class="level2" data-number="5.1">
-<h2 data-number="5.1" class="anchored" data-anchor-id="sec-results_data"><span class="header-section-number">5.1</span> Data description</h2>
+<section id="sec-results" class="level1" data-number="4">
+<h1 data-number="4"><span class="header-section-number">4</span> Results</h1>
+<section id="sec-results_data" class="level2" data-number="4.1">
+<h2 data-number="4.1" class="anchored" data-anchor-id="sec-results_data"><span class="header-section-number">4.1</span> Data description</h2>
 <!-- Sven and Tine 2025.09.04, time: 00:58:10 - 01:06:20 -->
 <!-- Sven 2025.09.29, time: 00:23:40 - 00:31:40 -->
 <!-- Sven and Tine 2025.09.13 p1, time: 00:03:35 - 00:07:50 -->
 </section>
-<section id="sec-results_modeling" class="level2" data-number="5.2">
-<h2 data-number="5.2" class="anchored" data-anchor-id="sec-results_modeling"><span class="header-section-number">5.2</span> Data modeling</h2>
+<section id="sec-results_modeling" class="level2" data-number="4.2">
+<h2 data-number="4.2" class="anchored" data-anchor-id="sec-results_modeling"><span class="header-section-number">4.2</span> Data modeling</h2>
 <!-- Sven and Tine 25.08.25, time: 00:36:45 - 00:44:00 -->
 <!-- Mention the dependence on the prior, but consider that the selected priors -->
 <!-- are now determined by the CBTL analysis, so it could happen that you will -->
 <!-- not need to show the dependence of the priors -->
-<section id="sec-results_modeling_1" class="level3" data-number="5.2.1">
-<h3 data-number="5.2.1" class="anchored" data-anchor-id="sec-results_modeling_1"><span class="header-section-number">5.2.1</span> The CBTL analysis</h3>
+<section id="sec-results_modeling_1" class="level3" data-number="4.2.1">
+<h3 data-number="4.2.1" class="anchored" data-anchor-id="sec-results_modeling_1"><span class="header-section-number">4.2.1</span> The CCJ analysis</h3>
 <!-- Sven 2025.09.29, time: 00:31:40 - 00:49:05, do not use all the extra variables from simulation, explanation of the issues with the residuals distribution -->
 <!-- Tine 2025.10.24, time: 00:12:35 - 00:14:25 -->
 <!-- Extreme cases estimation issue, are they the ones that won or loss all comparisons? -->
@@ -842,8 +851,8 @@ Boonen reports (1 logit of difference is really high) -->
 <!-- Sven 2025.10.31, time: 00:40:00 - 00:45:40, same explanation as Tine 2025.10.24  -->
 <!-- Sven 2025.10.31, time: 00:45:40 - 00:46:30, the same influential points in CBTL analysis do not appear on the misfit analysis results (point of discussion) -->
 </section>
-<section id="sec-results_modeling_2" class="level3" data-number="5.2.2">
-<h3 data-number="5.2.2" class="anchored" data-anchor-id="sec-results_modeling_2"><span class="header-section-number">5.2.2</span> The ITCJ analysis</h3>
+<section id="sec-results_modeling_2" class="level3" data-number="4.2.2">
+<h3 data-number="4.2.2" class="anchored" data-anchor-id="sec-results_modeling_2"><span class="header-section-number">4.2.2</span> The ITCJ analysis</h3>
 <!-- Sven and Tine 2025.09.15, time: 00:20:45 - 00:26:00 -->
 <!-- Sven and Tine 2025.09.13 p1, time: 00:44:50 - 00:54:35 -->
 <!-- Sven and Tine 2025.09.13 p2, time: 00:15:25 - 00:21:30, model definitions -->
@@ -855,26 +864,26 @@ Boonen reports (1 logit of difference is really high) -->
 <!-- all model are build in the non-centered parametrization -->
 <!-- Sven 2025.10.31, time: 00:46:30 - 01:02:40, same explanation as Tine 2025.10.24 -->
 <!-- Most important part of the results: 10 percentage points increase in TP and TN compared to the CBTL analysis. -->
-<section id="sec-results_modeling_2_1" class="level4" data-number="5.2.2.1">
-<h4 data-number="5.2.2.1" class="anchored" data-anchor-id="sec-results_modeling_2_1"><span class="header-section-number">5.2.2.1</span> Model 1</h4>
+<section id="sec-results_modeling_2_1" class="level4" data-number="4.2.2.1">
+<h4 data-number="4.2.2.1" class="anchored" data-anchor-id="sec-results_modeling_2_1"><span class="header-section-number">4.2.2.1</span> Model 1</h4>
 </section>
-<section id="sec-results_modeling_2_2" class="level4" data-number="5.2.2.2">
-<h4 data-number="5.2.2.2" class="anchored" data-anchor-id="sec-results_modeling_2_2"><span class="header-section-number">5.2.2.2</span> Model 2</h4>
+<section id="sec-results_modeling_2_2" class="level4" data-number="4.2.2.2">
+<h4 data-number="4.2.2.2" class="anchored" data-anchor-id="sec-results_modeling_2_2"><span class="header-section-number">4.2.2.2</span> Model 2</h4>
 </section>
-<section id="sec-results_modeling_2_3" class="level4" data-number="5.2.2.3">
-<h4 data-number="5.2.2.3" class="anchored" data-anchor-id="sec-results_modeling_2_3"><span class="header-section-number">5.2.2.3</span> Model 3</h4>
+<section id="sec-results_modeling_2_3" class="level4" data-number="4.2.2.3">
+<h4 data-number="4.2.2.3" class="anchored" data-anchor-id="sec-results_modeling_2_3"><span class="header-section-number">4.2.2.3</span> Model 3</h4>
 </section>
-<section id="sec-results_modeling_2_4" class="level4" data-number="5.2.2.4">
-<h4 data-number="5.2.2.4" class="anchored" data-anchor-id="sec-results_modeling_2_4"><span class="header-section-number">5.2.2.4</span> Model 4</h4>
+<section id="sec-results_modeling_2_4" class="level4" data-number="4.2.2.4">
+<h4 data-number="4.2.2.4" class="anchored" data-anchor-id="sec-results_modeling_2_4"><span class="header-section-number">4.2.2.4</span> Model 4</h4>
 </section>
-<section id="sec-results_modeling_2_5" class="level4" data-number="5.2.2.5">
-<h4 data-number="5.2.2.5" class="anchored" data-anchor-id="sec-results_modeling_2_5"><span class="header-section-number">5.2.2.5</span> Model 5</h4>
+<section id="sec-results_modeling_2_5" class="level4" data-number="4.2.2.5">
+<h4 data-number="4.2.2.5" class="anchored" data-anchor-id="sec-results_modeling_2_5"><span class="header-section-number">4.2.2.5</span> Model 5</h4>
 </section>
-<section id="sec-results_modeling_2_6" class="level4" data-number="5.2.2.6">
-<h4 data-number="5.2.2.6" class="anchored" data-anchor-id="sec-results_modeling_2_6"><span class="header-section-number">5.2.2.6</span> Model 6</h4>
+<section id="sec-results_modeling_2_6" class="level4" data-number="4.2.2.6">
+<h4 data-number="4.2.2.6" class="anchored" data-anchor-id="sec-results_modeling_2_6"><span class="header-section-number">4.2.2.6</span> Model 6</h4>
 </section>
-<section id="sec-results_modeling_2_7" class="level4" data-number="5.2.2.7">
-<h4 data-number="5.2.2.7" class="anchored" data-anchor-id="sec-results_modeling_2_7"><span class="header-section-number">5.2.2.7</span> Model comparison</h4>
+<section id="sec-results_modeling_2_7" class="level4" data-number="4.2.2.7">
+<h4 data-number="4.2.2.7" class="anchored" data-anchor-id="sec-results_modeling_2_7"><span class="header-section-number">4.2.2.7</span> Model comparison</h4>
 <!-- Sven 2025.10.31, time: 00:00:00 - 00:00:00 -->
 <!-- Tine 2025.10.24, time: 01:15:50 - 01:17:30 -->
 <!-- Still considering to use a second data set to validate the model, but you have abandoned this idea already -->
@@ -886,8 +895,8 @@ Boonen reports (1 logit of difference is really high) -->
 </section>
 </section>
 </section>
-<section id="sec-discussion" class="level1" data-number="6">
-<h1 data-number="6"><span class="header-section-number">6</span> Discussion</h1>
+<section id="sec-discussion" class="level1" data-number="5">
+<h1 data-number="5"><span class="header-section-number">5</span> Discussion</h1>
 <!-- Sven and Tine 2025.09.13 p1, time: 00:07:50 - 00:08:50, summaries do not help -->
 <!-- Sven and Tine 2025.09.13 p1, time: 00:08:55 - 00:12:45, modeling and variability in CBTL analysis -->
 <!-- Sven and Tine 25.09.04, time: 00:27:45 - 00:00:00 -->
@@ -922,21 +931,21 @@ Boonen reports (1 logit of difference is really high) -->
 <!-- recording: Sven 2025.10.31; time: 01:24:21 - 01:31:30 -->
 <!-- One point that somebody could bring is that: it could be that judges biases may cancel each other from the model. 
 Notably, this assumption entails that the distribution of judges biases is symmetric around the zero axis, that is, two judges biases happen in the same magnitude but in opposite directions of the distribution. Not only that is difficult to happen, but more importantly, the way the CJ experiment takes place ensures that not all judges compare the same stimuli, and not the one stimuli is compared by all the judges. Write down the example that you make in this recording!! -->
-<!-- SUPER IMPROTANT -->
-<!-- Several attempts to extend/improve the BTL model have been proposed. For example. @Gray_et_al_2024 models rankings outcomes and @Rao_et_al_1967 and @Seymour_et_al_2025 model outcomes with ties. Moreover, @Schramm_et_al_2021 models the hierarchy of the CJ data, and @Seymour_et_al_2022 extend the model to consider spatial parameter correlation. However, we argue that our approach contemplates all of these extensions as special cases.  -->
+<!-- SUPER IMPORTANT -->
+<!-- Several attempts to extend/improve the BTL model have been proposed. For example. @Gray_et_al_2024 models the number of wins as outcomes and @Rao_et_al_1967 and @Seymour_et_al_2025 model outcomes with ties. Moreover, @Schramm_et_al_2021 models the hierarchy of the CJ data, and @Seymour_et_al_2022 extend the model to consider spatial parameter correlation. However, we argue that our approach contemplates all of these extensions as special cases.  -->
 <!-- One thing that is obvious from @Seymour_et_al_2022 is that by implementing each of these models, its seems each author has to develop a new package with a new set of optimization methods.  -->
 <!-- @Seymour_et_al_2022 took one day to run a model!!, and does not consider covariates at the levels of the wards -->
 <!-- We fix delta = 0.01 based on initial runs of the algorithm. @Seymour_et_al_2022 pp. 303 -->
-<section id="sec-discussion_RD" class="level2" data-number="6.1">
-<h2 data-number="6.1" class="anchored" data-anchor-id="sec-discussion_RD"><span class="header-section-number">6.1</span> Future research directions</h2>
+<section id="sec-discussion_RD" class="level2" data-number="5.1">
+<h2 data-number="5.1" class="anchored" data-anchor-id="sec-discussion_RD"><span class="header-section-number">5.1</span> Future research directions</h2>
 <!-- We are trying to do prospective power analysis, however, you should pose the possibility that other authors perform replication power (Kruschke 2013, p. 393). -->
 <!-- The next paper is going to perform retrospective power analysis -->
 <!-- Sven and Tine 2025.09.13 p1, time: 00:19:25 - 00:21:00, replication studies -->
 <!-- Sven and Tine 2025.09.13 p2, time: 00:22:30 - 00:22:45, replication studies -->
 <!-- Sven 2025.10.31, time: 01:13:40 - 01:15:55 -->
 </section>
-<section id="sec-discussion_limitations" class="level2" data-number="6.2">
-<h2 data-number="6.2" class="anchored" data-anchor-id="sec-discussion_limitations"><span class="header-section-number">6.2</span> Study limitations</h2>
+<section id="sec-discussion_limitations" class="level2" data-number="5.2">
+<h2 data-number="5.2" class="anchored" data-anchor-id="sec-discussion_limitations"><span class="header-section-number">5.2</span> Study limitations</h2>
 <!-- Robinson (2021) pp. 4-5 (60-61) "Indeed, it is not possible to prove that a model is valid. Instead, it is only possible to think in terms of the confidence that can be placed in a model. The process of verification and validation is not one of trying to demonstrate that the model is correct, but is in fact a process of trying to prove that the model is incorrect. The more tests that are performed in which it cannot be proved that the model is incorrect, the more the clients' (and the modeller’s) confidence in the model grows. The purpose of verification and validation is to increase the confidence in the model and its results to the point where the clients are willing to use it as an aid to decision-making." -->
 <!-- Robinson (2021) pp. 6 (62) Alternatively, by expressing the code in a non-technical format a non-expert could check the data and the logic.  -->
 <!-- Kruschke (2014) p. 394 "Power analysis is only useful when the simulated data imitate actual data ... We assume that the model is a reasonably good description of the actual data". 
@@ -965,8 +974,8 @@ Indeed, that is the reason our model replicates the simulated data, because if i
 <!-- ######################################### -->
 </section>
 </section>
-<section id="sec-conclusion" class="level1" data-number="7">
-<h1 data-number="7"><span class="header-section-number">7</span> Conclusion</h1>
+<section id="sec-conclusion" class="level1" data-number="6">
+<h1 data-number="6"><span class="header-section-number">6</span> Conclusion</h1>
 <!-- Sven 2025.10.31, time: 01:20:45 - 01:21:25, Conclusions -->
 <!-- ######################################### -->
 <div style="page-break-after: always;"></div>
@@ -990,14 +999,14 @@ Indeed, that is the reason our model replicates the simulated data, because if i
 <!-- **Acknowledgements:** -->
 <!-- ######################################### -->
 <div style="page-break-after: always;"></div>
-</div></section><section id="sec-appendix" class="level1 appendix" data-appendix-style="plain" data-number="8"><h2 class="anchored quarto-appendix-heading"><span class="header-section-number">8</span> Appendix</h2><div class="quarto-appendix-contents">
+</div></section><section id="sec-appendix" class="level1 appendix" data-appendix-style="plain" data-number="7"><h2 class="anchored quarto-appendix-heading"><span class="header-section-number">7</span> Appendix</h2><div class="quarto-appendix-contents">
 
 
 
 
-</div></section><section id="sec-appendixA" class="level2 appendix" data-appendix-style="plain" data-number="8.1"><h2 class="anchored quarto-appendix-heading"><span class="header-section-number">8.1</span> Appendix A: Stationarity, converge and mixing</h2><div class="quarto-appendix-contents">
+</div></section><section id="sec-appendixA" class="level2 appendix" data-appendix-style="plain" data-number="7.1"><h2 class="anchored quarto-appendix-heading"><span class="header-section-number">7.1</span> Appendix A: Stationarity, converge and mixing</h2><div class="quarto-appendix-contents">
 
-</div></section><section id="sec-appendixB" class="level2 appendix" data-appendix-style="plain" data-number="8.2"><h2 class="anchored quarto-appendix-heading"><span class="header-section-number">8.2</span> Appendix B: Misfit observations</h2><div class="quarto-appendix-contents">
+</div></section><section id="sec-appendixB" class="level2 appendix" data-appendix-style="plain" data-number="7.2"><h2 class="anchored quarto-appendix-heading"><span class="header-section-number">7.2</span> Appendix B: Misfit observations</h2><div class="quarto-appendix-contents">
 
 <!-- Tine 2025.10.24, time: 00:14:25 - 00:21:05 -->
 <!-- Misfit stimuli are not necessarily extreme values, but the conceptual understanding of misfit does not match with the operationalization -->
@@ -1010,7 +1019,7 @@ Indeed, that is the reason our model replicates the simulated data, because if i
 <!-- recording: Sven 2025.10.31; time: 01:22:35 - 01:24:21 -->
 <!-- It is not the end of the study. But what I'm trying to do is to change the practice. -->
 <!-- Let's assume misfit analysis has its value, how can you be certain that the method is useful, using the wrong model? If you have a slight doubt that your data has judges biases, how can you trust an analysis that does not consider judges biases in the model? -->
-</div></section><section id="sec-appendixC" class="level2 appendix" data-appendix-style="plain" data-number="8.3"><h2 class="anchored quarto-appendix-heading"><span class="header-section-number">8.3</span> Appendix C: Sample size calculations</h2><div class="quarto-appendix-contents">
+</div></section><section id="sec-appendixC" class="level2 appendix" data-appendix-style="plain" data-number="7.3"><h2 class="anchored quarto-appendix-heading"><span class="header-section-number">7.3</span> Appendix C: Sample size calculations</h2><div class="quarto-appendix-contents">
 
 <!-- Sven and Tine 2025.09.04, time: 00:48:45 - 00:58:10 -->
 <!-- Sven 2025.09.29, time: 00:08:00 - 00:13:25 -->
@@ -1164,41 +1173,41 @@ ZuccoJr., Cesar, Mariana Batista, and Timothy J. Power. 2019. <span>“Measuring
     Sven and Gillis, Steven},
   title = {Finding {Thurstone:} Modeling Comparative Judgment Data with
     {`R`} (and {`Stan`)}},
-  date = {2026-02-03},
+  date = {2026-03-02},
   langid = {en},
-  abstract = {The classical BTL analysis has become the standard
-    approach for analyzing comparative judgment (CJ) data. Researchers
-    favor this approach because it provides a simple method for
-    measuring traits and conducting related analysis. The simplicity of
-    the approach arises from two key features. First, it relies on the
-    Bradley-Terry-Luce (BTL) model to estimate latent traits. Second, it
-    uses ad hoc procedures to conduct related analysis. However, recent
-    studies question whether the BTL model assumptions hold in
-    contemporary CJ applications and whether the ad hoc procedures
-    effectively fulfill their intended analytical goals. To address
-    these concerns, Rivera and colleagues {[}-@Rivera\_et\_al\_2025{]}
-    proposed an approach that extends the general form of Thurstone’s
-    Law of Comparative Judgment. The approach enables the development of
-    a model tailored to the assumed data-generating process of the CJ
-    system under study, eliminating the need for simplifying
-    assumptions. Moreover, by integrating measurement and inference
-    within a single analytical framework, it also removes the dependence
-    on ad hoc analytical procedures. Despite these advantages, the
-    approach still requires empirical validation. Thus, this study
-    empirically validates the proposed Information-Theoretical model for
-    CJ using a simulated speech-quality dataset, benchmarking its
-    performance against the classical BTL analysis. Moreover, the study
-    demonstrates how to implement the model in practice. Specifically,
-    the manuscript adopts a tutorial format, providing step-by-step
-    guidance on data simulation, prior specification, model estimation,
-    and interpretation using `Stan`, `R`, and the interface packages
-    `cmdstan` and `brms`. Ultimately, the study equips researchers with
-    practical tools to apply the model to more complex CJ assessments.}
+  abstract = {The classical CJ analysis has become the standard workflow
+    for analyzing comparative judgment (CJ) data in education,
+    linguistics, and psychology. Researchers favor it because it offers
+    a convenient and simple method for measuring traits and conducting
+    subsequent analyses. Its simplicity rests on two key features:
+    reliance on narrowly specified Thurstone-based models to estimate
+    latent traits, and te useof ad hoc procedures for follow-up
+    analyses. However, recent studies question whether the assumptions
+    of these models-\/-particularly the Bradley-Terry-Luce (BTL)
+    model-\/-hold in contemporary CJ applications, and whether the ad
+    hoc procedures effectively fulfill their intended analytical goals.
+    To address these concerns, @Rivera\_et\_al\_2025 proposed an
+    umbrella analytical workflow designed to accommodate the complexity
+    often observed in applied CJ settings. The approach enables the
+    development of models tailored to the assumed data-generating
+    process of the CJ system under study, thereby reducing reliance on
+    simplifying assumptions. Moreover, by integrating measurement and
+    inference within a single framework, it also removes dependence on
+    ad hoc analytical procedures. Nonetheless, these potential
+    advantages require empirical validation. Thus, this study
+    empirically validates the proposed analytical workflow for CJ using
+    a simulated speech-quality dataset, benchmarking its performance
+    against the classical CJ analysis. It also demonstrates its
+    practical implementation, adopting a tutorial format with
+    step-by-step guidance on data simulation, prior specification, model
+    estimation, and interpretation using `R`, `Stan`, `cmdstan` and
+    `brms`. Ultimately, the study equips researchers with practical
+    tools to apply the model to more complex CJ assessments.}
 }
 </code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre><div class="quarto-appendix-secondary-label">For attribution, please cite this work as:</div><div id="ref-rivera_espejo2026" class="csl-entry quarto-appendix-citeas" role="listitem">
 Rivera Espejo, Jose Manuel, Tine van Daal, Sven De Maeyer, and Steven
 Gillis. 2026. <span>“Finding Thurstone: Modeling Comparative Judgment
-Data with `R` (and `Stan`).”</span> February 3.
+Data with `R` (and `Stan`).”</span> March 2.
 </div></div></section></div></main>
 <!-- /main column -->
 <script id="quarto-html-after-body" type="application/javascript">
