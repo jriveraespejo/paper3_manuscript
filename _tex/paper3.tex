@@ -202,34 +202,34 @@ Antwerp, Linguistics},,postcodesep={}}
 
         
 \begin{abstract}
-The classical CJ analysis has become the standard workflow for analyzing
+The classical CJ analysis has become the standard approach for analyzing
 comparative judgment (CJ) data in education, linguistics, and
-psychology. Researchers favor it because it offers a convenient and
-simple method for measuring traits and conducting subsequent analyses.
-Its simplicity rests on two key features: reliance on narrowly specified
-Thurstone-based models to estimate latent traits, and te useof ad hoc
+psychology. Researchers favor it because it offers a simple method for
+measuring traits and conducting subsequent analyses. Its simplicity
+rests on two key features: reliance on narrowly specified
+Thurstone-based models to estimate latent traits, and the use of ad hoc
 procedures for follow-up analyses. However, recent studies question
 whether the assumptions of these models--particularly the
 Bradley-Terry-Luce (BTL) model--hold in contemporary CJ applications,
 and whether the ad hoc procedures effectively fulfill their intended
 analytical goals.
 
-To address these concerns, \citet{Rivera_et_al_2025} proposed an
-umbrella analytical workflow designed to accommodate the complexity
-often observed in applied CJ settings. The approach enables the
-development of models tailored to the assumed data-generating process of
-the CJ system under study, thereby reducing reliance on simplifying
-assumptions. Moreover, by integrating measurement and inference within a
-single framework, it also removes dependence on ad hoc analytical
-procedures. Nonetheless, these potential advantages require empirical
-validation.
+To address these concerns, \citet{Rivera_et_al_2025} proposed the ITCJ
+analysis, an umbrella analytical workflow designed to accommodate the
+complexity often observed in applied CJ settings. The approach enables
+the development of models tailored to the assumed data-generating
+process of the CJ system under study, thereby reducing reliance on
+simplifying assumptions. Moreover, by integrating measurement and
+inference within a single framework, it also removes dependence on ad
+hoc analytical procedures. Nonetheless, these potential advantages
+require empirical validation.
 
-Thus, this study empirically validates the proposed analytical workflow
-for CJ using a simulated speech-quality dataset, benchmarking its
-performance against the classical CJ analysis. It also demonstrates its
-practical implementation, adopting a tutorial format with step-by-step
-guidance on data simulation, prior specification, model estimation, and
-interpretation using \texttt{R}, \texttt{Stan}, \texttt{cmdstan} and
+Thus, this study validates the ITCJ analysis using a simulated
+speech-quality dataset, benchmarking its performance against the
+classical CJ analysis. It also demonstrates its practical
+implementation, adopting a tutorial format with step-by-step guidance on
+data simulation, prior specification, model estimation, and
+interpretation using \texttt{R}, \texttt{Stan}, \texttt{cmdstan}, and
 \texttt{brms}. Ultimately, the study equips researchers with practical
 tools to apply the model to more complex CJ assessments.
 \end{abstract}
@@ -295,22 +295,21 @@ Information-Theoretical analysis for CJ (hereafter, \emph{ITCJ
 analysis}), an umbrella analytical workflow designed to accommodate the
 complexity often observed in applied CJ settings. The approach leverages
 causal and Bayesian inference methods to combine Thurstone's core
-theoretical principles \citep{Thurstone_1927a, Thurstone_1927b} with key
-design features of CJ assessment. This integration enables researchers
-to develop models tailored to the assumed data-generating process of the
-CJ system under study, reducing reliance on simplifying assumptions.
-Moreover, by integrating measurement and inference within a single
-framework, the ITCJ analysis also eliminates the need for ad hoc
-analytical procedures.
+theoretical principles with key design features of CJ assessment. This
+integration enables researchers to develop models tailored to the
+assumed data-generating process of the CJ system under study, thereby
+reducing reliance on simplifying assumptions. Moreover, by integrating
+measurement and inference within a single framework, the ITCJ analysis
+also eliminates the need for ad hoc analytical procedures.
 
-Given the persistent challenges in education, linguistics, and
-psychology--where CJ data frequently exhibit substantial heterogeneity
-and design-specific variability
-\citep{Thurstone_1927a, Andrich_1978, vanDaal_et_al_2016, Lesterhuis_et_al_2018, Chambers_et_al_2022}--the
-flexibility of the ITCJ analysis is particularly valuable. More broadly,
-any discipline implementing CJ assessments can benefit from an approach
-that enables researchers to model the processes they aim to investigate,
-rather than those imposed by restrictive statistical models.
+This flexibility is particularly valuable in fields such as education,
+linguistics, and psychology, where CJ data often arises from complex
+assessment designs
+\citep{Bramley_2008, vanDaal_et_al_2017, Kelly_et_al_2022}. More
+broadly, any discipline implementing CJ assessments can benefit from the
+ITCJ analysis, as it enables researchers to model the processes they
+seek to understand, rather than those imposed by restrictive statistical
+models.
 
 \subsection{Research goals}\label{sec-introduction_goals}
 
@@ -335,80 +334,78 @@ packages \texttt{cmdstanr} \citep{Gabry_et_al_2025b} and \texttt{brms}
 \citep{Burkner_2017, Burkner_2018}.
 
 The remainder of this manuscript is organized into five sections.
-Section~\ref{sec-theory} reviews the two analytical approaches commonly
-applied to CJ data: the CCJ and ITCJ analyses. Section~\ref{sec-methods}
-details the assumed data-generating process for the simulated dataset,
-the simulation procedure, the practical implementation of each
-analytical approach, and the evaluation criteria aligned with the
-research goals. Section~\ref{sec-results} presents the data description
-and modeling results. Section~\ref{sec-discussion} interprets the
-findings, outlines future research directions, and considers the study
-limitations. Finally, Section~\ref{sec-conclusion} offers the concluding
-remarks.
+Section~\ref{sec-theory} reviews the primary analytical approach applied
+to CJ data--the CCJ analysis--and compares it with the ITCJ analysis.
+Section~\ref{sec-methods} describes the assumed data-generating process
+for the simulated dataset, the simulation procedure, the practical
+implementation of each analytical approach, and the evaluation criteria
+aligned with the research goals. Section~\ref{sec-results} presents the
+data description and modeling results. Section~\ref{sec-discussion}
+interprets the findings, outlines future research directions, and
+considers the study limitations. Finally, Section~\ref{sec-conclusion}
+offers the concluding remarks.
 
 \section{A tale of two analytical approaches}\label{sec-theory}
 
 Pairwise comparison data can be analyzed using two main approaches: the
-CCJ and the ITCJ analysis. The CCJ approach relies on a sequence of
-separate analytical steps to estimate traits and draw inferences. In
+CCJ and the ITCJ analysis. The CCJ approach usually relies on a sequence
+of separate analytical steps to estimate traits and draw inferences. In
 contrast, the ITCJ analysis uses a single, systematic, and integrated
 approach to achieve the same objectives. This section describes the two
 approaches in detail.
 
 \subsection{The CCJ analysis}\label{sec-theory_CCJ}
 
-The CCJ analysis implements a sequence of separate analytical steps,
-each serving a distinct purpose
+The CCJ analysis typically proceeds through a sequence of separate
+analytical steps, each serving a distinct purpose
 \citep{Pollitt_2012a, Pollitt_2012b, Jones_et_al_2019, Boonen_et_al_2020, Chambers_et_al_2022, Bouwer_et_al_2023}.
-This multi-step procedure typically unfolds as follows. First, analysts
-apply narrowly defined Thurstone-based model to the CJ data to produce
-two outputs: (1) point estimates of stimulus latent scores along with
-their standard errors, and (2) residuals at the comparison level. These
-outputs form the basis for all subsequent analyses.
+First, analysts apply narrowly defined Thurstone-based models to the CJ
+data to produce two outputs: (1) point estimates of stimulus latent
+scores along with their standard errors, and (2) residuals at the
+comparison level. These outputs form the basis for any subsequent
+analyses.
 
-Second, researchers summarize or fit regression models to the stimulus
-latent score estimates. This step serves multiple purposes, including
+Second, researchers summarize or fit regression models to the estimated
+mean latent scores. This step serves multiple purposes, including
 aggregating stimulus-level point estimates to the individual level,
 partitioning variability between and within individuals, and drawing
 inferences about factors that influence trait scores. For example,
 \citet{Boonen_et_al_2020} applied a multilevel regression model to
-stimulus latent scores to examine whether children's age or hearing
+stimulus mean latent scores to examine whether children's age or hearing
 status affects their intelligibility scores. Similarly,
 \citet{Maydeu-Olivares_et_al_2005} fitted multiple factor models to
-latent utility means representing preferences for compact cars to assess
-whether these preferences could be explained by differences among
-individuals making the comparisons.
+latent means representing individual's preferences for compact cars to
+provide a more parsimonious representation of the preferences.
 
-Third, analysts summarize or fit regression models to the BTL residuals.
-This step usually seeks to aggregate the remaining variability at the
-judge level, partition residual variability between and within judges,
-test for systematic biases, and identify potential misfitting judgments,
-stimuli, or judges. For instance, \citet{Wu_2025} fitted an analysis of
-variance (ANOVA) model to rater's infit statistic to examine whether
-rater expertise influence judgments behavior. The infit statistics is a
-weighted average of the squared Pearson residuals
+A third step may involve summarizing or modeling the residuals.
+Researchers usually use this step to aggregate the remaining variability
+at the judge level, partition residual variability between and within
+judges, test for systematic biases, and identify potential misfitting
+judgments, stimuli, or judges. For instance, \citet{Wu_2025} fitted an
+analysis of variance (ANOVA) model to judges' infit statistic to examine
+whether judge expertise influence judgment behavior. The infit
+statistics, which is a weighted average of the squared Pearson
+residuals, potentially indicates the extent to which judges' decision
+deviate from expectations relative to other judges
 \citep{Wright_et_al_1982}.
 
-While this stepwise approach is the standard practice in fields such as
-education \citep[see,][]{Wu_2025}, linguistics
-\citep[see,][]{Thwaites_et_al_2024} and psychology
-\citep[see,][]{Maydeu-Olivares_et_al_2005}, it presents several
-limitations. First, each stage treats outputs from previous steps as
-fixed data, rather than acknowledging their status as uncertain
-parameter estimates. Failure to account for this uncertainty can
-introduce bias and decrease the precision of inferences. The direction
-and magnitude of these biases can be unpredictable: results may be
-attenuated, amplified, or remain unaffected depending on the uncertainty
-in the scores and the actual effects being tested
-\citep{McElreath_2020, Kline_et_al_2023, Hoyle_et_al_2023}. Moreover,
-the loss of precision diminishes statistical power and increases the
-likelihood of committing type I or type II errors
-\citep{McElreath_2020}. Second, the procedure lacks theoretical
-coherence, as it combines models with different underlying assumptions.
-For example, third-step analyses treat residuals as outputs that
-ostensibly capture deviations from expected comparison outcomes,
-potentially reflecting judge-specific tendencies or idiosyncrasies in
-judgments, without providing evidence on whether these assumptions hold.
+This stepwise approach is standard practice in education, linguistics,
+and psychology
+\citep[see,][respectively]{Wu_2025, Thwaites_et_al_2024, Maydeu-Olivares_et_al_2005}.
+However, it has an important limitation: it treats outputs from earlier
+steps as fixed data rather than as uncertain parameter estimates.
+Ignoring this uncertainty can introduce bias and decrease the precision
+of inferences. The direction and magnitude of these biases can be
+unpredictable: results may be attenuated, amplified, or remain
+unaffected depending on the degree of uncertainty in the scores and the
+true effects under investigation
+\citep{McElreath_2020, Kline_et_al_2023, Hoyle_et_al_2023}. In addition,
+reduced precision lowers statistical power and increases the risk of
+Type I or Type II errors \citep{McElreath_2020}.
+
+{Although recent developments in modeling procedures have tried to
+address specific CJ data-generating features, most studies address one
+(or two) of these features at a time. For instance,}
 
 \subsection{The ITCJ analysis}\label{sec-theory_ITCJ}
 
