@@ -205,14 +205,13 @@ Antwerp, Linguistics},,postcodesep={}}
 The classical CJ analysis has become the standard approach for analyzing
 comparative judgment (CJ) data in education, linguistics, and
 psychology. Researchers favor it because it offers a simple method for
-measuring traits and conducting subsequent analyses. Its simplicity
-rests on two key features: the reliance on narrowly specified
-Thurstone-based models to estimate latent traits, and the use of ad hoc
-procedures for follow-up analyses. Recent studies, however, question
-whether the assumptions of these models--particularly the
-Bradley-Terry-Luce (BTL) model--hold in contemporary CJ applications,
-and whether the ad hoc procedures effectively fulfill their intended
-analytical goals.
+measuring traits and conducting follow-up analyses. Its simplicity rests
+on two key features: the reliance on narrowly specified Thurstone-based
+models to estimate latent traits, and the use of ad hoc procedures for
+subsequent analyses. Recent studies, however, question whether the
+assumptions of these models--particularly the Bradley-Terry-Luce (BTL)
+model--hold in contemporary CJ applications, and whether the ad hoc
+procedures effectively fulfill their intended analytical goals.
 
 To address these concerns, \citet{Rivera_et_al_2025} proposed the ITCJ
 analysis, an umbrella analytical workflow designed to accommodate the
@@ -252,9 +251,10 @@ inference \sep thustone \sep
 for measuring latent traits across diverse fields, including education
 \citep{Kimbell_2012, Jones_et_al_2015, vanDaal_et_al_2016, Bartholomew_et_al_2018},
 political sciences \citep{Zucco_et_al_2019}, linguistics
-\citep{Boonen_et_al_2020}, and criminology \citep{Seymour_et_al_2025}.
-In CJ studies, judges actively compare pairs of stimuli to determine
-which stimulus exhibits more of the latent trait of interest
+\citep{Boonen_et_al_2020}, and criminology
+\citep{Seymour_et_al_2022, Seymour_et_al_2025}. In CJ studies, judges
+actively compare pairs of stimuli to determine which stimulus exhibits
+more of the latent trait of interest
 \citep{Thurstone_1927a, Thurstone_1927b}.
 
 A specific data analysis workflow has become the standard approach for
@@ -263,13 +263,13 @@ e.g.,][]{Wu_2025, Thwaites_et_al_2024, Maydeu-Olivares_et_al_2005}. In
 this study, we refer to this workflow as the classical CJ analysis
 (hereafter, \emph{CCJ analysis}). Researchers favor this approach
 because it provides a convenient and simple method for measuring traits
-and conducting subsequent analyses \citep{Andrich_1978, Pollitt_2012b}.
+and conducting follow-up analyses \citep{Andrich_1978, Pollitt_2012b}.
 This simplicity rests on two key features. First, it relies on narrowly
 specified Thurstone-based models to estimate latent traits. These models
 facilitate trait estimation by imposing several simplifying assumptions
 about traits, judges, and stimuli present in the CJ assessments under
 study \citep{Thurstone_1927b, Bramley_2008}. Second, the approach uses
-ad hoc procedures to conduct follow-up analyses, including data
+ad hoc procedures to conduct subsequent analyses, including data
 summarization and statistical inference \citep{Pollitt_2012b}.
 
 Recent studies, however, question whether the assumptions of these
@@ -349,28 +349,26 @@ offers the concluding remarks.
 \section{A tale of two analytical approaches}\label{sec-theory}
 
 Pairwise comparison data can be analyzed using two main approaches: the
-CCJ and the ITCJ analysis. The CCJ approach usually relies on a sequence
-of separate analytical steps to estimate traits and draw inferences. In
-contrast, the ITCJ analysis uses a single, systematic, and integrated
-approach to achieve the same objectives. This section provides a
-detailed description of both approaches.
+CCJ and the ITCJ analysis. This section provides a detailed description
+of both.
 
 \subsection{The CCJ analysis}\label{sec-theory_CCJ}
 
-The CCJ analysis typically proceeds through a sequence of separate
+In practice, the CCJ analysis proceeds through a sequence of distinct
 analytical steps, each serving a distinct purpose
 \citep{Pollitt_2012a, Pollitt_2012b, Jones_et_al_2019, Boonen_et_al_2020, Chambers_et_al_2022, Bouwer_et_al_2023}.
-First, analysts apply narrowly defined Thurstone-based models to CJ
-data, resulting in two primary outputs: (1) point estimates of stimulus
-latent scores with their corresponding standard errors, and (2)
-residuals at the comparison level. These outputs form the basis for any
-subsequent analyses.
+The approach typically includes one or more of the following steps.
+First, researchers fit narrowly specified Thurstone-based models to the
+CJ data, yielding two primary outputs: (1) point estimates of stimulus
+latent scores with their associated standard errors, and (2) residuals
+at the comparison level. These outputs serve as the foundation for any
+follow-up analyses.
 
-Second, researchers summarize or fit regression models to the estimated
-mean latent scores. This step serves multiple purposes, including
-aggregating stimulus-level point estimates to the individual level,
-partitioning variability between and within individuals, and drawing
-inferences about factors that influence trait scores. For example,
+Second, researchers summarize or fit models to the estimated mean latent
+scores. This step serves multiple purposes, including aggregating
+stimulus-level point estimates to the individual level, partitioning
+variability between and within individuals, and drawing inferences about
+factors that influence trait scores. For example,
 \citet{Maydeu-Olivares_et_al_2005} fitted multiple factor models to
 latent means that represent individuals' preferences for compact cars,
 aiming to provide a more parsimonious representation of these
@@ -384,20 +382,24 @@ variability at the judge level, partition residual variability between
 and within judges, test for systematic biases, and identify potential
 misfitting judgments, stimuli, or judges. For instance, \citet{Wu_2025}
 fitted an analysis of variance (ANOVA) model to judges' infit statistic
-to examine whether judge expertise influence judgment behavior. The
+to examine whether judge expertise influences judgment behavior. The
 infit statistics--a weighted average of the squared Pearson
-residuals--indicates the extent to which judges' decision deviate from
-expectations relative to other judges \citep{Wright_et_al_1982}.
+residuals--potentially indicate the extent to which judges' decisions
+deviate from expectations relative to other judges
+\citep{Wright_et_al_1982}.
 
-One or more of the outlined steps have become standard practice for
-analyzing CJ data in education, linguistics, and psychology
-\citep[see,][respectively]{Wu_2025, Thwaites_et_al_2024, Maydeu-Olivares_et_al_2005}.
-Nevertheless, despite their widespread adoption, this stepwise approach
-has an important limitation: it treats outputs from earlier steps as
-fixed data rather than as uncertain parameter estimates, thereby failing
-to propagate uncertainty from one stage to the next
-\citep{Pritikin_2020}. This lack of uncertainty propagation can
-introduce bias and decrease the precision of inferences. The direction
+The CCJ analysis has become standard practice in education, linguistics,
+psychology, and even criminology \citep[see
+e.g.,][]{Wu_2025, Thwaites_et_al_2024, Maydeu-Olivares_et_al_2005, Seymour_et_al_2025}.
+Nevertheless, despite its widespread adoption, this stepwise approach
+has two important limitations: it treats outputs from earlier steps as
+fixed quantities, and it imposes restrictive models at each step.
+
+Regarding the first limitation, the CCJ analysis treats outputs from
+earlier stages as fixed quantities rather than as uncertain parameter
+estimates, thereby limiting the propagation of uncertainty from one step
+to the next \citep{Pritikin_2020}. When researchers ignore this
+uncertainty, estimates may become biased and less precise. The direction
 and magnitude of these biases can be unpredictable: effects may be
 attenuated, inflated, or remain unaffected depending on the degree of
 uncertainty in the scores and the true effects under investigation
@@ -405,30 +407,54 @@ uncertainty in the scores and the true effects under investigation
 reduced precision lowers statistical power and increases the risk of
 Type I or Type II errors \citep{McElreath_2020}.
 
-{Recent developments in CJ modeling have attempted to account for
-specific features of the CJ data-generating process, thus avoiding
-reliance on this traditional stepwise approach. However, most studies
-address only one or two of these features at a time. For instance,}
+Regarding the second limitation, researchers often impose restrictive
+models at each stage of the CCJ analysis, which limit their ability to
+capture key features of the data-generating process. Although recent
+work incorporates selected features, most studies propose new
+Thurstone-based models that address only one or two at a time. As a
+result, important data components remain unrepresented, leading to model
+misspecification and potentially biased and imprecise parameter
+estimates \citep{Everitt_et_al_2010}.
+
+For example, \citet{Seymour_et_al_2025} extended the BTL model to
+include tied outcomes and spatially correlated stimuli. They applied the
+model to an honour-based abuse dataset. Despite the model
+sophistication, the authors did not assess potential bias arising from
+the convenience sample, including judge biases and judge-specific
+effects. Moreover, because the analysis was limited to a single ward
+within one county, they did not account for ward-level effects or
+hierarchical clustering structures, such as wards nested within
+counties. This oversight restricts the generalizability of the findings.
+Notably, similar limitations are evident in \citet{Pritikin_2020},
+\citet{Schramm_et_al_2021}, \citet{Seymour_et_al_2022}, and
+\citet{Gray_et_al_2024}, where models omit relevant sources of
+heterogeneity or design features that may affect parameter estimates,
+and ultimately, inferences.
+
+Notably, the ITCJ analysis directly addresses these two limitations by
+providing a unified and systematic framework for analyzing CJ data
+\citep{Rivera_et_al_2025}. Specifically, it allows researchers to model
+the processes of substantive interest while propagating uncertainty
+across components, rather than relying on restrictive statistical model
+specifications.
 
 \subsection{The ITCJ analysis}\label{sec-theory_ITCJ}
 
 \newcommand{\dsep}{\:\bot\:}
 \newcommand{\ndsep}{\:\not\bot\:}
 
-The ITCJ analysis addresses the aforementioned limitations by providing
-a unified and systematic approach to analyzing CJ data
-\citep{Rivera_et_al_2025}. It starts with a general \emph{Directed
-Acyclic Graph (DAG)} and a corresponding \emph{Structural Causal Model
-(SCM)} \citep{Morgan_et_al_2014, Gross_et_al_2018, Neal_2020}, which
-explicitly represent the relationships among observed judgments,
-discriminal differences, stimulus traits, individual traits, judge
-biases, and the sampling and comparison mechanisms. This general DAG and
-SCM establish a coherent theoretical foundation for analysis of CJ data.
-Next, the approach adapts the general SCM and DAG to the assumed
-data-generating process of the CJ system under study. Then, it derives
+The approach begins by explicitly representing the relationships among
+observed judgments, discriminal differences, stimulus traits, individual
+traits, judge biases, and the sampling and comparison mechanisms using a
+general \emph{Directed Acyclic Graph (DAG)} and a corresponding
+\emph{Structural Causal Model (SCM)}
+\citep{Morgan_et_al_2014, Gross_et_al_2018, Neal_2020}. This general DAG
+and SCM establish a coherent theoretical foundation for analysis of CJ
+data. Next, the approach adapts the general SCM and DAG to the assumed
+data-generating process of the CJ system under study. It then derives
 one or more bespoke \emph{probabilistic} and \emph{statistical} models
-tailored to that system. Finally, it uses one or more statistical models
-to estimate traits and conduct statistical inference.
+tailored to that system. Finally, it uses one or more of these models to
+estimate, summarize, or conduct statistical inference on the traits.
 Figure~\ref{fig-ITCJ_dag} illustrates an example of a general DAG
 structure.
 
@@ -447,13 +473,14 @@ structure.
 In this representation, \(O_{R}\) denotes the observed judgment outcome
 vector, and \(D_{R}\) represents the discriminal difference vector.
 \(T_{IA}\) captures the vector of stimulus traits, and \(T_{I}\)
-represents the vector of individual traits. The vector of judgment
-biases is represented by \(B_{JK}\), while the vector of judges' biases
-by \(B_J\). Covariates at the stimulus and individual levels appear as
-\(X_{IA}\) and \(X_{I}\), respectively; while \(Z_{JK}\) and \(Z_{J}\)
-represent covariates at the judgment and judge levels. The error terms
-(\(e_{IA}\), \(e_{I}\), \(e_{JK}\), \(e_{J}\)) capture residual
-variation at each level.
+represents the vector of individual traits {(e.g., \ldots{} )}. The
+vector of judgment biases is represented by \(B_{JK}\), while the vector
+of judges' biases by \(B_J\) {(e.g., \ldots{} )}. Covariates at the
+stimulus and individual levels appear as \(X_{IA}\) and \(X_{I}\),
+respectively; while \(Z_{JK}\) and \(Z_{J}\) represent covariates at the
+judgment and judge levels {(these variables could be \ldots{} ,
+respectively )}. The error terms (\(e_{IA}\), \(e_{I}\), \(e_{JK}\),
+\(e_{J}\)) capture residual variation at each level.
 
 The DAG also represents the sampling and comparison mechanisms as the
 vectors \(S\) and \(C\), two conditioned variables that determine how
@@ -532,7 +559,7 @@ Figure~\ref{fig-ITCJ}.
 Critically, the approach allows tailoring this general structure to a
 specific CJ context, enabling development of parsimonious models that
 match the assumed data-generating process without imposing unnecessary
-constraints. For example, \citet{Rivera_et_al_2025} modeled a CJ
+constraints. For example, \citet{Rivera_et_al_2025} exemplified a CJ
 assessment designed to evaluate the impact of different teaching methods
 on students' writing ability. In this case, the observed outcome was
 binary, so the model assumed \(O_{R}\) followed a Bernoulli
@@ -548,10 +575,10 @@ idiosyncratic errors (\(e_{I}\), \(e_{IA}\), \(e_{J}\), \(e_{JK}\)) were
 specifically made to resolve indeterminacies in \emph{location},
 \emph{orientation}, and \emph{scale} for the variables \(T_{I}\),
 \(T_{IA}\), \(B_{J}\), \(B_{JK}\), as required in latent variable models
-\citep{Depaoli_2021, deAyala_2009}. Other examples include \ldots{}
+\citep{Depaoli_2021, deAyala_2009}.
 
-Lastly, researchers derive one or more \emph{bespoke} statistical models
-tailored to the CJ system of interest, as demonstrated in
+Lastly, researchers can derive one or more \emph{bespoke} statistical
+models tailored to the CJ system of interest, as demonstrated in
 \citet{Rivera_et_al_2025}. At this stage, the ITCJ analysis differs
 fundamentally from the CBTL approach in how it handles parameter
 estimation and inference. Rather than fitting multiple separate models,
