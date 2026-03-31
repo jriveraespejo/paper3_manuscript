@@ -259,7 +259,7 @@ studies, judges actively compare pairs of stimuli to determine which
 stimulus exhibits more of the latent trait of interest
 \citep{Thurstone_1927a, Thurstone_1927b}.
 
-The \emph{Classical Comparative Judgment (CCJ)} analysis has become the
+The \emph{Classical Comparative Judgment} (CCJ) analysis has become the
 standard approach for analyzing CJ data across multiple fields,
 including education, linguistics, and psychology \citep[see, for
 example,][]{Wu_2025, Thwaites_et_al_2024, Maydeu-Olivares_et_al_2005}.
@@ -286,7 +286,7 @@ reduce the precision of inferences.
 \citep{Bramley_2008, Kelly_et_al_2022, Rivera_et_al_2025}.
 
 To address these concerns, \citet{Rivera_et_al_2025} proposed the
-\emph{Information-Theoretical Comparative Judgment (ITCJ)} analysis, an
+\emph{Information-Theoretical Comparative Judgment} (ITCJ) analysis, an
 umbrella analytical workflow designed to accommodate the complexity
 often observed in applied CJ settings. The approach leverages causal and
 Bayesian inference methods to combine Thurstone's core theoretical
@@ -363,11 +363,11 @@ derive mean latent scores representing children's overall speech
 quality, together with the corresponding comparison-level residuals.
 
 Researchers then use these two outputs to conduct follow-up analyses. On
-the one hand, analyses of the mean latent scores serve several purposes,
-including summarizing estimates to aid interpretation, aggregating
-stimulus-level estimates to the individual level, partitioning
-variability between and within individuals, and drawing inferences about
-factors that influence trait scores. For example,
+the one hand, analyses of the mean latent scores fulfill several
+purposes, including summarizing estimates to aid interpretation,
+aggregating stimulus-level estimates to the individual level,
+partitioning variability between and within individuals, and drawing
+inferences about factors that influence trait scores. For example,
 \citet{Maydeu-Olivares_et_al_2005} applied various factor models to
 latent means that represent individuals' preferences for compact cars,
 to provide a more parsimonious representation of these preferences.
@@ -405,7 +405,7 @@ treats second-language English texts as independent stimuli that are
 equally informative about individuals' writing performance, despite
 their heterogeneous and complex nature
 \citep{Thurstone_1927a, Andrich_1978, Bramley_2008, Kelly_et_al_2022}.
-Notably, if the texts differ in informativeness due to their
+Notably, if the texts differ in informativeness due to this
 heterogeneous nature, the BTL assumption of equal dispersions may be
 violated, potentially leading to an overestimation of the trait
 reliability and misleading conclusions about differences between stimuli
@@ -417,8 +417,8 @@ reliability
 \citep{vanderLinden_et_al_2017_II, Ackerman_1989, Hoyle_et_al_2023}.
 
 Concerning the second limitation, while giving limited attention to
-specific CJ assessment design features may simplify trait estimation or
-follow-up analyses, Rivera and colleagues
+specific CJ assessment design features may also simplify trait
+estimation or follow-up analyses, Rivera and colleagues
 \citeyearpar{Rivera_et_al_2025} argued that neglecting elements that
 define the CJ data-generating process can obscure their broader role
 within the assessment system. The authors illustrated this concern by
@@ -435,32 +435,32 @@ solely on mean trait estimates or residuals obtained from the estimation
 stage inadvertently treats these outputs as fixed values rather than as
 uncertain parameter estimates \citep{Rivera_et_al_2025}. This separation
 thus prevents the propagation of uncertainty from the estimation stage
-to subsequent analyses \citep{Pritikin_2020}, which can bias parameter
-estimates and reduce their precision. The direction and magnitude of
-these biases are often difficult to predict. Effects may be attenuated,
-inflated, or remain unchanged depending on the level of uncertainty in
-the scores and the true effects under investigation
+to the follow-up analyses \citep{Pritikin_2020}, which can bias
+parameter estimates and reduce their precision. The direction and
+magnitude of these biases are often difficult to predict. Effects may be
+attenuated, inflated, or remain unchanged depending on the level of
+uncertainty in the scores and the true effects under investigation
 \citep{McElreath_2020, Kline_et_al_2023, Hoyle_et_al_2023}. In addition,
 reduced precision lowers statistical power and increases the risk of
 Type I and Type II errors \citep{McElreath_2020}.
 
 Several studies have made valuable attempts to incorporate specific
 features that address some of the limitations discussed above. However,
-most propose new Thurstone-based models that address only one or two
-issues at a time. As a result, other relevant components of the CJ
-process remain unrepresented, which may lead to model misspecification
-and produce biased or imprecise parameter estimates
-\citep{Everitt_et_al_2010}. For instance, \citet{Seymour_et_al_2025}
-extended the BTL model to incorporate spatially correlated stimuli and
-tied outcomes, applying it to measure honour-based abuse. While these
-features capture important aspects of their CJ data, additional relevant
-factors were not included, such as potential bias from the convenience
-sample, judge-specific effects, or hierarchical structures like wards
-nested within counties. Similar patterns appear in
-\citet{Pritikin_2020}, \citet{Schramm_et_al_2021},
-\citet{Seymour_et_al_2022}, and \citet{Gray_et_al_2024}, where models
-typically address one or two key design features or sources of
-heterogeneity at a time.
+most studies propose models that address only one or two issues at a
+time. As a result, other relevant components of the CJ process remain
+unrepresented, which may lead to model misspecification and produce
+biased or imprecise parameter estimates \citep{Everitt_et_al_2010}. For
+instance, \citet{Seymour_et_al_2025} extended the BTL model to
+incorporate spatially correlated stimuli and tied outcomes, applying it
+to measure honour-based abuse. While these features captured important
+aspects of the CJ data, the analysis did not explicitly model other
+potentially relevant factors, such as the sampling mechanism associated
+with the convenience sample, possible judge biases and judge-specific
+effects, or the hierarchical structures such as wards nested within
+counties. Similar patterns appear in \citet{Pritikin_2020},
+\citet{Schramm_et_al_2021}, \citet{Seymour_et_al_2022}, and
+\citet{Gray_et_al_2024}, where models typically address one or two key
+design features or sources of heterogeneity at a time.
 
 Notably, the ITCJ analysis directly addresses these all of the
 limitations by providing a unified and systematic framework for
@@ -474,11 +474,11 @@ restrictive statistical model specifications.
 \newcommand{\dsep}{\:\bot\:}
 \newcommand{\ndsep}{\:\not\bot\:}
 
-The approach begins by explicitly representing the relationships among
-observed judgments, discriminal differences, stimulus traits, individual
-traits, judge biases, and the sampling and comparison mechanisms using a
-general \emph{Directed Acyclic Graph (DAG)} and a corresponding
-\emph{Structural Causal Model (SCM)}
+The ITCJ analysis begins by explicitly representing the relationships
+among observed judgments, stimulus traits, individual traits, judge
+biases, and the sampling and comparison mechanisms using a general
+\emph{Directed Acyclic Graph (DAG)} and a corresponding \emph{Structural
+Causal Model (SCM)}
 \citep{Morgan_et_al_2014, Gross_et_al_2018, Neal_2020}. This general DAG
 and SCM establish a coherent theoretical foundation for analysis of CJ
 data. Next, the approach adapts the general SCM and DAG to the assumed
