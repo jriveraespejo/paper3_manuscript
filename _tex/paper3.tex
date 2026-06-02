@@ -295,7 +295,7 @@ enables researchers to develop models tailored to the assumed
 data-generating process of the CJ system under study, thereby reducing
 reliance on simplifying assumptions. Moreover, by integrating
 measurement, analysis, and relevant design features within a single
-framework, the ITCJ analysis facilitates a coherent and flexible
+framework, the ITCJ analysis facilitates a single, coherent and flexible
 approach for trait estimation and statistical inference.
 
 The flexibility of the ITCJ analysis is especially valuable in
@@ -362,28 +362,29 @@ Bradley-Terry-Luce (BTL) model \citep{Bradley_et_al_1952, Luce_1959} to
 derive mean latent scores representing children's overall speech
 quality, together with the corresponding comparison-level residuals.
 
-Researchers then use these two outputs to conduct follow-up analyses. On
-the one hand, analyses of the mean latent scores fulfill several
-purposes, including summarizing estimates to aid interpretation,
-aggregating stimulus-level estimates to the individual level,
-partitioning variability between and within individuals, and drawing
-inferences about factors that influence trait scores. For example,
-\citet{Maydeu-Olivares_et_al_2005} applied various factor models to
-latent means that represent individuals' preferences for compact cars,
-to provide a more parsimonious representation of these preferences.
-Similarly, \citet{Boonen_et_al_2020} applied a multilevel regression
-model to stimulus mean latent scores to examine whether children's age
-or hearing status affects their speech quality scores. On the other
-hand, analyzing the residuals typically seeks to aggregate the remaining
-variability at the judge level, partition residual variability between
-and within judges, test for systematic biases, and identify potential
-misfitting stimuli or judges. For instance, \citet{Wu_2025} fitted an
-analysis of variance (ANOVA) model to judges' infit statistics to
-examine whether judge expertise influences judgment behavior. The infit
-statistics--a weighted average of the squared Pearson
-residuals--potentially indicate the extent to which judges' decisions
-deviate from expectations relative to those of other judges
-\citep{Wright_et_al_1982}.
+Researchers then use these mean trait estimates and comparison-level
+residuals to conduct follow-up analyses. On the one hand, analyses of
+the mean latent scores fulfill several purposes, including summarizing
+estimates to aid interpretation, aggregating stimulus-level estimates to
+the individual level, partitioning variability between and within
+individuals, and drawing inferences about factors that influence trait
+scores. For example, \citet{Maydeu-Olivares_et_al_2005} applied various
+factor models to latent means that represent individuals' preferences
+for compact cars, to provide a more parsimonious representation of these
+preferences. Similarly, \citet{Boonen_et_al_2020} applied a multilevel
+regression model to mean latent estimates to examine whether children's
+age or hearing status affects their speech quality scores.
+
+On the other hand, analyzing the residuals typically seeks to aggregate
+the remaining variability at the judge level, partition residual
+variability between and within judges, test for systematic biases, and
+identify potential misfitting stimuli, individuals, or judges. For
+instance, \citet{Wu_2025} fitted an analysis of variance (ANOVA) model
+to judges' infit statistics to examine whether judge expertise
+influences judgment behavior. The infit statistics--a weighted average
+of the squared Pearson residuals--potentially indicate the extent to
+which judges' decisions deviate from expectations relative to those of
+other judges \citep{Wright_et_al_1982}.
 
 This two-step CCJ analysis has become standard practice in education,
 linguistics, and psychology \citep[see,
@@ -433,41 +434,43 @@ Lastly, concerning the third limitation, although separating trait
 estimation from follow-up analysis can simplify the latter, focusing
 solely on mean trait estimates or residuals obtained from the estimation
 stage inadvertently treats these outputs as fixed values rather than as
-uncertain parameter estimates \citep{Rivera_et_al_2025}. This separation
-thus prevents the propagation of uncertainty from the estimation stage
-to the follow-up analyses \citep{Pritikin_2020}, which can bias
-parameter estimates and reduce their precision. The direction and
-magnitude of these biases are often difficult to predict. Effects may be
-attenuated, inflated, or remain unchanged depending on the level of
-uncertainty in the scores and the true effects under investigation
+uncertain parameter estimates \citep{McElreath_2020, Rivera_et_al_2025}.
+This separation thus prevents the propagation of uncertainty from the
+estimation stage to the follow-up analyses \citep{Pritikin_2020}, which
+can bias parameter estimates and reduce their precision. The direction
+and magnitude of these biases are often difficult to predict. Effects
+may be attenuated, inflated, or remain unchanged depending on the level
+of uncertainty in the scores and the true effects under investigation
 \citep{McElreath_2020, Kline_et_al_2023, Hoyle_et_al_2023}. In addition,
 reduced precision lowers statistical power and increases the risk of
 Type I and Type II errors \citep{McElreath_2020}.
 
 Several studies have made valuable attempts to incorporate specific
 features that address some of the limitations discussed above. However,
-most studies propose models that address only one or two issues at a
-time. As a result, other relevant components of the CJ process remain
-unrepresented, which may lead to model misspecification and produce
-biased or imprecise parameter estimates \citep{Everitt_et_al_2010}. For
-instance, \citet{Seymour_et_al_2025} extended the BTL model to
-incorporate spatially correlated stimuli and tied outcomes, applying it
-to measure honour-based abuse. While these features captured important
-aspects of the CJ data, the analysis did not explicitly model other
-potentially relevant factors, such as the sampling mechanism associated
-with the convenience sample, possible judge biases and judge-specific
-effects, or the hierarchical structures such as wards nested within
-counties. Similar patterns appear in \citet{Pritikin_2020},
-\citet{Schramm_et_al_2021}, \citet{Seymour_et_al_2022}, and
-\citet{Gray_et_al_2024}, where models typically address one or two key
-design features or sources of heterogeneity at a time.
+most studies propose incremental models that address one or two issues
+at a time. As a result, other relevant components of the CJ process
+remain unrepresented, which may lead to model misspecification and
+produce biased or imprecise parameter estimates
+\citep{Everitt_et_al_2010}. For instance, \citet{Seymour_et_al_2025}
+extended the BTL model to incorporate spatially correlated stimuli and
+tied outcomes, applying it to measure honour-based abuse. While these
+features captured important aspects of the CJ data, the analysis did not
+explicitly model other potentially relevant factors, such as the
+sampling mechanism associated with the convenience sample, possible
+judge biases and judge-specific effects, or the hierarchical structures
+such as wards nested within counties. Similar patterns appear in
+\citet{Pritikin_2020}, \citet{Schramm_et_al_2021},
+\citet{Seymour_et_al_2022}, and \citet{Gray_et_al_2024}, where models
+typically address one or two key design features or sources of
+heterogeneity at a time.
 
-Notably, the ITCJ analysis directly addresses these all of the
-limitations by providing a unified and systematic framework for
-analyzing CJ data \citep{Rivera_et_al_2025}. Specifically, it allows
-researchers to model the processes of substantive interest while
-propagating uncertainty across components, rather than relying on
-restrictive statistical model specifications.
+Notably, the ITCJ analysis directly addresses all of these limitations
+by providing a unified and systematic approach for analyzing CJ data
+\citep{Rivera_et_al_2025}. Specifically, the ITCJ analysis accommodates
+the complex data-generating structures commonly observed in applied CJ
+settings, allowing researchers to model the processes of substantive
+interest while propagating uncertainty across components, rather than
+relying on restricted model specifications.
 
 \subsection{The ITCJ analysis}\label{sec-theory_ITCJ}
 
