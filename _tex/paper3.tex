@@ -410,11 +410,10 @@ Notably, if the texts differ in informativeness due to this
 heterogeneous nature, the BTL assumption of equal dispersions may be
 violated, potentially leading to an overestimation of the trait
 reliability and misleading conclusions about differences between stimuli
-\citep{McElreath_2020, Wu_et_al_2022}. Moreover, when text
-characteristics unevenly influence judges' perceptions, systematic
-biases may arise. Such biases can induce dependencies among stimuli,
-further contributing to an over- or underestimation of the trait
-reliability
+\citep{McElreath_2020, Wu_et_al_2022}. Moreover, if the characteristics
+of these texts unevenly influence judges' perceptions, systematic biases
+may arise. Such biases can induce dependencies among stimuli, further
+contributing to an over- or underestimation of the trait reliability
 \citep{vanderLinden_et_al_2017_II, Ackerman_1989, Hoyle_et_al_2023}.
 
 Concerning the second limitation, while giving limited attention to
@@ -435,7 +434,7 @@ estimation from follow-up analysis can simplify the latter, focusing
 solely on mean trait estimates or residuals obtained from the estimation
 stage inadvertently treats these outputs as fixed values rather than as
 uncertain parameter estimates \citep{McElreath_2020, Rivera_et_al_2025}.
-This separation thus prevents the propagation of uncertainty from the
+This separation prevents the propagation of uncertainty from the
 estimation stage to the follow-up analyses \citep{Pritikin_2020}, which
 can bias parameter estimates and reduce their precision. The direction
 and magnitude of these biases are often difficult to predict. Effects
@@ -456,41 +455,41 @@ extended the BTL model to incorporate spatially correlated stimuli and
 tied outcomes, applying it to measure honour-based abuse. While these
 features captured important aspects of the CJ data, the analysis did not
 explicitly model other potentially relevant factors, such as the
-sampling mechanism associated with the convenience sample, possible
-judge biases and judge-specific effects, or the hierarchical structures
-such as wards nested within counties. Similar patterns appear in
-\citet{Pritikin_2020}, \citet{Schramm_et_al_2021},
+sampling mechanism associated with their ``convenience'' data sample,
+possible judge biases and judge-specific effects, or the hierarchical
+structures such as wards nested within counties. Similar patterns appear
+in \citet{Pritikin_2020}, \citet{Schramm_et_al_2021},
 \citet{Seymour_et_al_2022}, and \citet{Gray_et_al_2024}, where models
 typically address one or two key design features or sources of
 heterogeneity at a time.
 
-Notably, the ITCJ analysis directly addresses all of these limitations
-by providing a unified and systematic approach for analyzing CJ data
-\citep{Rivera_et_al_2025}. Specifically, the ITCJ analysis accommodates
-the complex data-generating structures commonly observed in applied CJ
-settings, allowing researchers to model the processes of substantive
-interest while propagating uncertainty across components, rather than
-relying on restricted model specifications.
+Notably, the \emph{ITCJ analysis} proposed by Rivera and colleagues
+\citeyearpar{Rivera_et_al_2025} provides an alternative approach that
+addresses the limitations outlined above. In the following section, we
+summarize this approach, with particular emphasis on its differences
+from the CCJ analysis.
 
 \subsection{The ITCJ analysis}\label{sec-theory_ITCJ}
 
 \newcommand{\dsep}{\:\bot\:}
 \newcommand{\ndsep}{\:\not\bot\:}
 
-The ITCJ analysis begins by explicitly representing the relationships
-among observed judgments, stimulus traits, individual traits, judge
-biases, and the sampling and comparison mechanisms using a general
-\emph{Directed Acyclic Graph (DAG)} and a corresponding \emph{Structural
+In contrast to the CCJ approach, the ITCJ analysis does not begin with a
+predefined statistical model applied to the CJ data, from which primary
+outputs are extracted for subsequent analysis. Instead, it starts by
+explicitly representing the relationships among observed and latent
+variables that are thought to characterize the data-generating process
+of the CJ system under study. This structure is represented using a
+\emph{Directed Acyclic Graph (DAG)} and an associated \emph{Structural
 Causal Model (SCM)}
-\citep{Morgan_et_al_2014, Gross_et_al_2018, Neal_2020}. This general DAG
-and SCM establish a coherent theoretical foundation for analysis of CJ
-data. Next, the approach adapts the general SCM and DAG to the assumed
-data-generating process of the CJ system under study. It then derives
-one or more bespoke \emph{probabilistic} and \emph{statistical} models
-tailored to that system. Finally, it uses one or more of these models to
-estimate, summarize, or conduct statistical inference on the traits.
-Figure~\ref{fig-ITCJ_dag} illustrates an example of a general DAG
-structure.
+\citep{Morgan_et_al_2014, Gross_et_al_2018, Neal_2020}.
+
+On the basis of this causal representation, the approach then derives
+one or more \emph{probabilistic} and \emph{statistical} models tailored
+to the system under study. These models are subsequently used to
+estimate, summarize, or conduct statistical inference on the traits of
+interest. Figure~\ref{fig-ITCJ_dag} illustrates a DAG representing a
+plausible data-generating process for a CJ-based speech quality study.
 
 \begin{figure}[H]
 
@@ -500,59 +499,39 @@ structure.
 
 }
 
-\caption{\label{fig-ITCJ_dag}ITCJ analysis: DAG}
+\caption{\label{fig-ITCJ_dag}ITCJ analysis, DAG}
 
 \end{figure}%
 
-In this representation, \(O_{R}\) denotes the observed judgment outcome
-vector, and \(D_{R}\) represents the discriminal difference vector.
-\(T_{IA}\) captures the vector of stimulus traits, and \(T_{I}\)
-represents the vector of individual traits. The vector of judgment
-biases is represented by \(B_{JK}\), while the vector of judges' biases
-by \(B_J\). Covariates at the stimulus and individual levels appear as
-\(X_{IA}\) and \(X_{I}\), respectively; while \(Z_{JK}\) and \(Z_{J}\)
-represent covariates at the judgment and judge levels. The error terms
-(\(e_{IA}\), \(e_{I}\), \(e_{JK}\), \(e_{J}\)) capture residual
-variation at each level.
+In this representation, \(X_{I}\) denotes the set of variables believed
+to influence the individual traits \(T_{I}\), i.e., the individuals'
+ability to produce high-quality speech. Examples of such
+individual-level variables include hearing status and age
+\citep{Boonen_et_al_2020}, the latter serving as a proxy for language
+development. Similarly, \(X_{IA}\) denotes the set of variables assumed
+to influence the stimulus traits \(T_{IA}\), which represent the latent
+quality of the stimulus under comparison. Examples of such
+stimulus-level variables include the length of the speech sample and
+whether the sample originates from spontaneous speech or imitation.
 
-For example, \citet{Rivera_et_al_2025} exemplified a CJ assessment
-designed to evaluate the impact of different teaching methods on
-students' writing ability. In this case, the observed outcome was
-binary, so the model assumed \(O_{R}\) followed a Bernoulli
-distribution. The discriminal difference \((D_{R})\) was determined by
-the texts' discriminal processes \((T_{IA})\) and the judgment biases
-\((B_{JK})\). Student-level variables \(X_{I}\), such as teaching
-method, were included, whereas text-level variables \(X_{IA}\) (e.g.,
-text length) were not gathered. Similarly, judge-level variables
-\(Z_{J}\), like judgment expertise, were incorporated, while
-judgment-level variables \(Z_{JK}\) (e.g., number of judgments per
-judge) were absent. Finally, the probabilistic assumptions for the
-idiosyncratic errors (\(e_{I}\), \(e_{IA}\), \(e_{J}\), \(e_{JK}\)) were
-specifically made to resolve indeterminacies in \emph{location},
-\emph{orientation}, and \emph{scale} for the variables \(T_{I}\),
-\(T_{IA}\), \(B_{J}\), \(B_{JK}\), as required in latent variable models
-\citep{Depaoli_2021, deAyala_2009}.
+Notably, in the CJ literature, these stimulus traits correspond to
+Thurstone's \emph{discriminal process}, which is though to capture the
+psychological effect a stimulus exerts on the judge, or more simply, the
+judge's perception of the stimulus quality
+\citep{Thurstone_1927a, Thurstone_1927b}.
 
-The DAG also represents the sampling and comparison mechanisms as the
-vectors \(S\) and \(C\), two conditioned variables that determine how
-population outcomes become ``observed'' (sampled) outcomes. Importantly,
-the DAG depicts \(S\) and \(C\) as independent from all other variables
-by showing no arrows pointing into them. Regarding \(S\), this indicates
-that the DAG applies to \emph{Simple Random Sampling (SRSg)} designs,
-where each repeated judgment, judge, stimulus, and individual has an
-equal probability of inclusion within their respective groups
-\citep{Lawson_2015}. Regarding \(C\), the DAG applies to \emph{Random
-Allocation Comparative Designs} \citep{Bramley_2015} or \emph{Incomplete
-Block Designs} \citep{Lawson_2015}, where every repeated judgment has an
-equal chance of being included in the sample.
-
-Researchers can then translate this DAG and SCM representations into
-probabilistic forms that express the joint distribution of a complex CJ
-system as a product of simpler \emph{conditional probability
-distributions (CPDs)}
-\citetext{\citealp{Pearl_et_al_2016}; \citealp{Neal_2020}; \citealp[see
-also][section 5]{Rivera_et_al_2025}}, as illustrated in
-Figure~\ref{fig-ITCJ}.
+In a similar fashion, \(Z_{J}\) denotes the set of variables believed to
+influence the judges' bias \(B_{J}\), that is, the systematic deviation
+of a judge's perception of a stimulus from the consensus. Examples of
+such judges-level variables include speech-judgment expertise and prior
+training in the task. Similarly, \(Z_{JK}\) denotes the set of variables
+assumed to influence the judgment-level biases \(B_{JK}\), which
+represent systematic deviations of an individual judgment from the
+judge-specific bias. Examples of such judgment-level variables include
+the number of comparisons completed by a judge, used as a proxy for
+learning or fatigue effects, and the time of day at which the comparison
+was made. The error terms \(e_{I}\), \(e_{IA}\), \(e_{J}\), and
+\(e_{JK}\) capture residual variation at each level.
 
 \begin{figure}
 
@@ -606,22 +585,6 @@ Figure~\ref{fig-ITCJ}.
 (right) representations for DAG in Figure~\ref{fig-ITCJ_dag}.}
 
 \end{figure}%
-
-Critically, the approach allows tailoring this general structure to a
-specific CJ context, enabling development of parsimonious models that
-match the assumed data-generating process without imposing unnecessary
-constraints.
-
-Lastly, researchers can derive one or more \emph{bespoke} statistical
-models tailored to the CJ system of interest, as demonstrated in
-\citet{Rivera_et_al_2025}. At this stage, the ITCJ analysis differs
-fundamentally from the CBTL approach in how it handles parameter
-estimation and inference. Rather than fitting multiple separate models,
-the approach simultaneously estimates all parameters within a single
-coherent framework using \emph{Bayesian inference}. This joint
-estimation accounts for uncertainty at all levels and enables direct
-inference about quantities of interest without relying on post-hoc
-procedures \citep{McElreath_2020}.
 
 \section{Methods}\label{sec-methods}
 
