@@ -472,9 +472,6 @@ from the CCJ analysis.
 
 \subsection{The ITCJ analysis}\label{sec-theory_ITCJ}
 
-\newcommand{\dsep}{\:\bot\:}
-\newcommand{\ndsep}{\:\not\bot\:}
-
 In contrast to the CCJ approach, the ITCJ analysis does not begin with a
 predefined statistical model applied to the CJ data, from which primary
 outputs are extracted for subsequent analysis. Instead, it starts by
@@ -483,18 +480,19 @@ variables that are thought to characterize the data-generating process
 of the CJ system under study. This structure is represented using a
 \emph{Directed Acyclic Graph (DAG)} and an associated \emph{Structural
 Causal Model (SCM)}
-\citep{Morgan_et_al_2014, Gross_et_al_2018, Neal_2020}.
+\citep{Morgan_et_al_2014, Gross_et_al_2018, Neal_2020}. On the basis of
+this causal representation, the approach then derives a
+\emph{probabilistic} model, and one or more \emph{statistical} models
+tailored to the system under study. These models are subsequently used
+to estimate, summarize, or conduct statistical inference on the traits
+of interest.
 
-On the basis of this causal representation, the approach then derives
-one or more \emph{probabilistic} and \emph{statistical} models tailored
-to the system under study. These models are subsequently used to
-estimate, summarize, or conduct statistical inference on the traits of
-interest. Figure~\ref{fig-ITCJ} shows a DAG and SCM representing a
-plausible data-generating process for a CJ-based speech quality study.
+\newcommand{\dsep}{\:\bot\:}
+\newcommand{\ndsep}{\:\not\bot\:}
 
 \begin{figure}[H]
 
-\begin{minipage}[t]{0.90\linewidth}
+\begin{minipage}[t]{0.71\linewidth}
 
 \centering{
 
@@ -502,11 +500,11 @@ plausible data-generating process for a CJ-based speech quality study.
 
 }
 
-\subcaption{\label{fig-ITCJ_dag}ITCJ analysis, DAG}
+\subcaption{\label{fig-ITCJ_dag}DAG}
 
 \end{minipage}%
 %
-\begin{minipage}[t]{0.10\linewidth}
+\begin{minipage}[t]{0.29\linewidth}
 
 \centering{
 
@@ -530,14 +528,29 @@ plausible data-generating process for a CJ-based speech quality study.
 
 \end{minipage}%
 
-\caption{\label{fig-ITCJ}Plausible data-generating process for a
-CJ-based speech quality study}
+\caption{\label{fig-ITCJ}ITCJ analysis, plausible data-generating
+process for a CJ-based speech quality study}
 
 \end{figure}%
 
-In this representation, observed variables are depicted as closed
-circles, while latent (unobserved) variables are depicted as open
-circles. Building on this structure, \(X_{I}\) denotes the set of
+Figure~\ref{fig-ITCJ} shows a DAG and SCM representing a plausible
+data-generating process for a CJ-based speech quality study. In the DAG
+\ref{fig-ITCJ_dag}, observed variables are represented by closed
+circles, whereas latent (unobserved) variables are represented by open
+circles. Arrows indicate the direction of the assumed influences between
+variables, while dashed boxes denote the assumed hierarchical structure
+of the data, such as stimuli nested within individuals. In contrast, the
+SCM \ref{fig-ITCJ_scm} represents the same structure using a more formal
+mathematical notation, in which \emph{structural equations}
+\(f_{(\cdot)}\) represent variables as non-parametric functions of other
+observed or latent variables. These equations use the symbol `\(:=\)' to
+denote the asymmetric direction of the assumed influences, and the
+symbol `\(\:\bot\:\)' to represent \emph{d-separation}, a concept
+closely related to statistical (conditional) independence. A more
+detailed explanation of these concepts is provided in
+\citet{Rivera_et_al_2025}.
+
+Moreover, in Figure~\ref{fig-ITCJ}, \(X_{I}\) denotes the set of
 variables believed to influence the individual traits \(T_{I}\), i.e.,
 the individuals' ability to produce high-quality speech. Examples of
 such individual-level variables include hearing status and age, the
@@ -547,10 +560,10 @@ variables assumed to influence the stimulus traits \(T_{IA}\), which
 represent the latent quality of the stimulus under comparison. Examples
 of such stimulus-level variables include the length of the speech sample
 and whether the sample originates from spontaneous speech or imitation.
-Notably, these stimulus traits correspond to what the CJ literature
-refers to as \emph{discriminal processes}, which are though to capture
-the psychological effect a stimulus exerts on the judge, or more simply,
-the judge's perception of the stimulus quality
+Notably, the stimulus traits \(T_{IA}\) correspond to what the CJ
+literature refers to as \emph{discriminal processes}, which are though
+to capture the psychological effect a stimulus exerts on the judge, or
+more simply, the judge's perception of the stimulus quality
 \citep{Thurstone_1927a, Thurstone_1927b}.
 
 In a similar fashion, \(Z_{J}\) denotes the set of variables believed to
@@ -587,24 +600,25 @@ representation, these relationships are captured by the arrows from the
 \(T_{IA}\) and \(B_{JK}\) vectors to the \emph{discriminal difference}
 \(D_{R}\) vector.
 
-Figure~\ref{fig-ITCJ_dag} also represents the sampling and comparison
+The DAG \ref{fig-ITCJ_dag} also represents the sampling and comparison
 mechanisms as two conditioned variables that determine how population
 outcomes become the ``observed'' sample outcomes (\(S\) and \(C\),
-respectively shown with surrounding squares to denote conditioning).
-These variables are depicted without incoming arrows, indicating that
-they are assumed to be independent of all other variables in the DAG.
-This, in turn, implies that \(S\) corresponds to a \emph{simple random
-sampling (SRSg)} design, in which each repeated judgment, judge,
-stimulus, and individual has an equal probability of inclusion within
-their respective groups \citep{Lawson_2015}, while \(C\) corresponds to
-a \emph{random allocation comparative design} \citep{Bramley_2015}, also
-known as an \emph{incomplete block design} \citep{Lawson_2015}, in which
-each repeated judgment has an equal probability of being included in the
+respectively shown with surrounding squares to denote conditioning). In
+this particular representation, these variables are depicted without
+incoming arrows, indicating that they are assumed to be independent of
+all other variables in the DAG. This, in turn, implies that \(S\)
+corresponds to a \emph{simple random sampling (SRSg)} design, in which
+each repeated judgment, judge, stimulus, and individual has an equal
+probability of inclusion within their respective groups
+\citep{Lawson_2015}, while \(C\) corresponds to a \emph{random
+allocation comparative design} \citep{Bramley_2015}, also known as an
+\emph{incomplete block design} \citep{Lawson_2015}, in which each
+repeated judgment has an equal probability of being included in the
 sample.
 
-Finally, the DAG in Figure~\ref{fig-ITCJ_dag} shows that the observed CJ
-outcome \(O_{R}\) is jointly influenced by the discriminal difference
-\(D_{R}\) and the sampling and comparison mechanisms (\(S\) and \(C\),
+Finally, the DAG \ref{fig-ITCJ_dag} shows that the observed CJ outcome
+\(O_{R}\) is jointly influenced by the discriminal difference \(D_{R}\)
+and the sampling and comparison mechanisms (\(S\) and \(C\),
 respectively). In typical CJ applications, \(O_{R}\) is often modeled as
 following a Bernoulli distribution
 \citep[see][]{Pollitt_2012b, Bramley_2008, Boonen_et_al_2020, Seymour_et_al_2025}.
@@ -623,47 +637,51 @@ recently in \citet{Pritikin_2020} and \citet{Burkner_et_al_2024b}.
 
 \[
 \begin{aligned}
-  & P( O_{R} \mid D_{R}, S, C ) \\
-  & P( D_{R} \mid T_{IA}, B_{JK} ) \\
-  & P( T_{IA} \mid T_{I}, X_{IA}, e_{IA} ) \\
-  & P( T_{I} \mid X_{I}, e_{I} ) \\
-  & P( B_{JK} \mid B_{J}, Z_{JK}, e_{JK} ) \\
-  & P( B_{J} \mid Z_{J}, e_{J} ) \\ \\
-  & P( e_{I} ) P( e_{IA} ) P( e_{J} ) P( e_{JK} ) \\ \\ \\
+P(O_{R}, D_{R} &, S, C, T_{IA}, X_{IA}, e_{IA}, T_{I}, X_{I}, e_{I}, B_{JK}, Z_{JK}, e_{JK}, B_{J}, Z_{J}, e_{J} ) & \\
+  =& \; P( O_{R} \mid D_{R}, S, C ) \cdot P(S) \cdot P(C) \\
+  & \cdot P( D_{R} \mid T_{IA}, B_{JK} ) \\
+  & \cdot P( T_{IA} \mid T_{I}, X_{IA}, e_{IA} ) \cdot P(X_{IA}) \\
+  & \cdot P( T_{I} \mid X_{I}, e_{I} ) \cdot P(X_{I}) \\
+  & \cdot P( B_{JK} \mid B_{J}, Z_{JK}, e_{JK} ) \cdot P(Z_{JK}) \\
+  & \cdot P( B_{J} \mid Z_{J}, e_{J} ) \cdot P(Z_{J}) \\
+  & \cdot P( e_{I} ) P( e_{IA} ) P( e_{J} ) P( e_{JK} )
 \end{aligned}
 \]
 
 }
 
-\caption{\label{fig-ITCJ_prob}Probabilistic model}
+\caption{\label{fig-ITCJ_prob}Probabilistic model, joint distribution
+(left hand side) factorized into conditional probability distributions
+(CPDs, right hand side).}
 
 \end{figure}%
 
-With the DAG and SCM characterizing the data-generating process of the
-CJ system under study, researchers can translate these representations
-into a probabilistic model that factorizes the joint distribution of the
-system's variables into a product of simpler \emph{conditional
-probability distributions (CPDs)} \citep{Pearl_et_al_2016, Neal_2020},
-as illustrated in Figure~\ref{fig-ITCJ_prob}. Finally, one or more
-statistical models tailored to this CJ system can be derived from this
-formulation see~\ref{sec-methods_step5_2}.
+Once the SCM \ref{fig-ITCJ_scm} characterizing the assumed
+data-generating process of the CJ system is specified, researchers can
+translate it into a probabilistic model that factorizes the joint
+distribution of the variables into a product of simpler
+\emph{conditional probability distributions (CPDs)}
+\citep{Pearl_et_al_2016, Neal_2020}, as illustrated in
+Figure~\ref{fig-ITCJ_prob}. From this formulation, one or more
+statistical models tailored to the CJ system can then be derived (see
+Section~\ref{sec-methods_step5_2}).
 
 At this stage, it becomes clear that the ITCJ approach differs
-fundamentally from the CCJ approach in its treatment of parameter
-estimation and inference, ultimately addressing the three main
-limitations of the CCJ analysis. First, although the ITCJ still relies
-on Thurstone-based models for trait estimation, these models are no
-longer treated as restrictive simplifying abstractions; instead, they
+fundamentally from the CCJ approach in its treatment of trait
+estimation, summaries, and inference. First, although the ITCJ still
+relies on Thurstone-based models for trait estimation, these models are
+no longer treated as restrictive simplifying abstractions; instead, they
 are adapted to the specific data-generating process of the CJ system
 under study, allowing researchers to explicitly model the processes of
 substantive interest. Second, the approach explicitly incorporates
 relevant features of CJ assessment design, including the sampling and
-comparison mechanisms as well as judge biases. Third, the ITCJ no longer
-separates trait estimation from follow-up analyses, but rather embeds
-the full analysis workflow within a unified and systematic framework
+comparison mechanisms as well as judge and judgment biases. Third, the
+ITCJ no longer separates trait estimation from follow-up analyses, but
+rather integrates both within a unified and systematic framework
 \citep{Rivera_et_al_2025}. This integration enables the propagation of
 uncertainty across all levels of the assumed hierarchical structure of
-the data.
+the data. In this way, the ITCJ approach addresses the three main
+limitations of CCJ analysis.
 
 \section{Methods}\label{sec-methods}
 
