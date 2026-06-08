@@ -719,7 +719,7 @@ Say that the approach is fully explained in @Rivera_et_al_2025. Here we just pro
 <!-- Sven and Tine 2025.09.04, time: 00:07:00 - 00:09:40 -->
 <!-- Sven and Tine p2 2026.02.02, time: 00:00:00 - 00:01:48 -->
 <!-- Sven and Tine 2026.03.09, time: 00:52:55 - 00:54:40, about coherent theoretical foundation: "I developed this theoretical foundation to be able to have a solution to the three main problems we discussed before" -->
-<p>In contrast to the CCJ approach, the ITCJ analysis does not begin with a predefined statistical model applied to the CJ data, from which primary outputs are extracted for subsequent analysis. Instead, it starts by explicitly representing the relationships among observed and latent variables that are thought to characterize the data-generating process of the CJ system under study. This structure is represented using a <em>Directed Acyclic Graph (DAG)</em> and an associated <em>Structural Causal Model (SCM)</em> <span class="citation" data-cites="Morgan_et_al_2014 Gross_et_al_2018 Neal_2020">(<a href="#ref-Morgan_et_al_2014" role="doc-biblioref">Morgan and Winship 2014</a>; <a href="#ref-Gross_et_al_2018" role="doc-biblioref">Gross et al. 2018</a>; <a href="#ref-Neal_2020" role="doc-biblioref">Neal 2020</a>)</span>. On the basis of this causal representation, the approach then derives a <em>probabilistic</em> model, and one or more <em>statistical</em> models tailored to the system under study. These models are subsequently used to estimate, summarize, or conduct statistical inference on the traits of interest.</p>
+<p>In contrast to the CCJ approach, the ITCJ analysis does not begin with a predefined statistical model applied to the CJ data, from which primary outputs are extracted for subsequent analysis. Instead, it starts by explicitly representing the relationships among observed and latent variables that are thought to characterize the data-generating process of the CJ system under study. This structure is represented using a <em>Directed Acyclic Graph (DAG)</em> and an associated <em>Structural Causal Model (SCM)</em> <span class="citation" data-cites="Morgan_et_al_2014 Gross_et_al_2018 Neal_2020">(<a href="#ref-Morgan_et_al_2014" role="doc-biblioref">Morgan and Winship 2014</a>; <a href="#ref-Gross_et_al_2018" role="doc-biblioref">Gross et al. 2018</a>; <a href="#ref-Neal_2020" role="doc-biblioref">Neal 2020</a>)</span>. On the basis of this causal representation, a <em>probabilistic</em> model is derived, followed by one or more <em>statistical</em> models tailored to the system under study. These models are then used to estimate, summarize, or conduct statistical inference on the traits of interest.</p>
 <!-- Importantly, evaluating these assumptions requires models with more flexible assumptions than what the BTL model can provide [@Wu_et_al_2022; @Rivera_et_al_2025]. -->
 <!-- commands for d-separation -->
 <div id="fig-ITCJ" class="quarto-layout-panel">
@@ -800,16 +800,31 @@ P(O_{R}, D_{R} &amp;, S, C, T_{IA}, X_{IA}, e_{IA}, T_{I}, X_{I}, e_{I}, B_{JK},
 </figure>
 </div>
 <p>Once the SCM <a href="#fig-ITCJ_scm" class="quarto-xref">1 (b)</a> characterizing the assumed data-generating process of the CJ system is specified, researchers can translate it into a probabilistic model that factorizes the joint distribution of the variables into a product of simpler <em>conditional probability distributions (CPDs)</em> <span class="citation" data-cites="Pearl_et_al_2016 Neal_2020">(<a href="#ref-Pearl_et_al_2016" role="doc-biblioref">Pearl et al. 2016</a>; <a href="#ref-Neal_2020" role="doc-biblioref">Neal 2020</a>)</span>, as illustrated in <a href="#fig-ITCJ_prob" class="quarto-xref">Figure&nbsp;2</a>. From this formulation, one or more statistical models tailored to the CJ system can then be derived (see <a href="#sec-methods_step5_2" class="quarto-xref">Section&nbsp;3.3.2</a>).</p>
-<p>At this stage, it becomes clear that the ITCJ approach differs fundamentally from the CCJ approach in its treatment of trait estimation, summaries, and inference. First, although the ITCJ still relies on Thurstone-based models for trait estimation, these models are no longer treated as restrictive simplifying abstractions; instead, they are adapted to the specific data-generating process of the CJ system under study, allowing researchers to explicitly model the processes of substantive interest. Second, the approach explicitly incorporates relevant features of CJ assessment design, including the sampling and comparison mechanisms as well as judge and judgment biases. Third, the ITCJ no longer separates trait estimation from follow-up analyses, but rather integrates both within a unified and systematic framework <span class="citation" data-cites="Rivera_et_al_2025">(<a href="#ref-Rivera_et_al_2025" role="doc-biblioref"><span class="nocase">Rivera et al.</span> 2025</a>)</span>. This integration enables the propagation of uncertainty across all levels of the assumed hierarchical structure of the data. In this way, the ITCJ approach addresses the three main limitations of CCJ analysis.</p>
+<p>At this stage, it becomes clear that the ITCJ approach differs fundamentally from the CCJ approach in its treatment of trait estimation, summaries, and inference. First, although the ITCJ still relies on Thurstone-based models for trait estimation, these models are no longer treated as restrictive simplifying abstractions; instead, they are adapted to the specific data-generating process of the CJ system under study, allowing researchers to explicitly model the processes of substantive interest. Second, the approach explicitly incorporates relevant features of CJ assessment design, including the sampling and comparison mechanisms as well as judge and judgment biases. Third, the ITCJ no longer separates trait estimation from follow-up analyses, but rather integrates both within a unified and systematic approach <span class="citation" data-cites="Rivera_et_al_2025">(<a href="#ref-Rivera_et_al_2025" role="doc-biblioref"><span class="nocase">Rivera et al.</span> 2025</a>)</span>. This integration enables the propagation of uncertainty across all levels of the assumed hierarchical structure of the data. In this way, the ITCJ approach addresses the three main limitations of CCJ analysis.</p>
 <!-- ######################################### -->
 </section>
 </section>
 <section id="sec-methods" class="level1" data-number="3">
 <h1 data-number="3"><span class="header-section-number">3</span> Methods</h1>
 <!-- Sven and Tine 2025.09.04, time: 00:09:40 - 00:12:25 -->
-<!-- Sven and Tine 2025.09.04, time: 00:22:10 - 00:23:05 -->
+<!-- Sven and Tine 2025.09.04, time: 00:22:10 - 00:25:30 -->
+<!-- Sven and Tine 2025.09.04, time: 00:33:30 - 00:37:15 -->
 <!-- Sven and Tine 2025.09.15, time: 00:04:25 - 00:11:45 -->
-<!-- Sven and Tine 2025.09.04, time: 00:33:00 - 00:37:15 -->
+<p>To address its two research objectives, this study follows the <em>Bayesian research workflow</em> <span class="citation" data-cites="Depaoli_et_al_2017 Pearl_et_al_2018 Neal_2020 Gelman_et_al_2020 Schad_et_al_2020 Betancourt_2020 McElreath_2024b McElreath_2024c">(<a href="#ref-Depaoli_et_al_2017" role="doc-biblioref"><span class="nocase">Depaoli and van de Schoot</span> 2017</a>; <a href="#ref-Pearl_et_al_2018" role="doc-biblioref">Pearl and Mackenzie 2018</a>; <a href="#ref-Neal_2020" role="doc-biblioref">Neal 2020</a>; <a href="#ref-Gelman_et_al_2020" role="doc-biblioref">Gelman et al. 2020</a>; <a href="#ref-Schad_et_al_2020" role="doc-biblioref">Schad et al. 2020</a>; <a href="#ref-Betancourt_2020" role="doc-biblioref">Betancourt 2020</a>; <a href="#ref-McElreath_2024b" role="doc-biblioref">McElreath 2024a</a>, <a href="#ref-McElreath_2024c" role="doc-biblioref">2024b</a>)</span>, as depicted in <a href="#fig-worflow" class="quarto-xref">Figure&nbsp;3</a>. The workflow consists of iterative stages that move from theoretical assumptions to empirical estimation, while supporting the study’s dual focus on <em>empirical validation of the ITCJ approach</em> and its tutorial-style <em>implementation</em>.</p>
+<div id="fig-worflow" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-pos="H" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-fig" id="fig-worflow-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;3: Bayesian research workflow.
+</figcaption>
+<div aria-describedby="fig-worflow-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="3_results/theory/figures/png/workflow.png" class="lightbox" data-gallery="quarto-lightbox-gallery-2" title="Figure&nbsp;3: Bayesian research workflow."><img src="3_results/theory/figures/png/workflow.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:100.0%" data-fig-pos="H"></a>
+</div>
+</figure>
+</div>
+<!-- The workflow begins with translating theoretical understanding into formal estimands—the specific quantities we aim to estimate. Next, we design a data-generating process that reflects our theoretical assumptions and implement it through simulation [@gelman2006; @kruschke2014; @mcelreath2020]. We then develop statistical models (estimators) appropriate for our estimands and design, specify prior distributions that encode our knowledge before observing data, and evaluate these priors through prior predictive checks. -->
+<!-- After establishing appropriate priors, we fit models to simulated data and conduct comprehensive diagnostics to assess stationarity, convergence, and mixing of Markov chains [@vehtari2021]. We evaluate parameter recovery to determine whether models can accurately estimate known parameter values, assess in-sample predictive accuracy, and estimate approximate out-of-sample fit. This evaluation informs iterative model refinement until we obtain sufficiently trustworthy results. -->
+<!-- Specifically, the study follows the workflow below, with overarching goals indicated in parentheses. The process begins by moving from theory to estimands and then to design (*tutorial and model validation*). First, a CJ structure of interest is defined and its assumptions are made explicit based on the relevant literature. Next, the estimands of interest are specified and formally defined as target parameters. Finally, a synthetic conceptual population is simulated to reflect the defined structure and assumptions. -->
+<!-- The workflow then proceeds from design to data (*tutorial and model validation*) by generating synthetic random samples and comparison datasets from the conceptual population. Based on this setup, models for analysing the synthetic data are specified for both the CBTL and ITCJ approaches (*tutorial and model validation*). Prior predictive checks are then conducted (*tutorial*), followed by model fitting to obtain estimates using both approaches. These estimates are evaluated through diagnostic and post-predictive assessments, including stationarity, convergence, mixing, parameter recovery, and predictive performance. Where necessary, models are iteratively refined until they meet predefined criteria for adequacy. Finally, the resulting estimates are used to recover target effects and generate predictions under both CBTL and ITCJ analyses, which are then compared in terms of interpretability and predictive accuracy (*model validation*). -->
 <section id="sec-methods_step1" class="level2" data-number="3.1">
 <h2 data-number="3.1" class="anchored" data-anchor-id="sec-methods_step1"><span class="header-section-number">3.1</span> Step 1, from Theory to Design: Data-generating assumptions</h2>
 <!-- Sven and Tine 2025.09.04, time: 00:12:25 - 00:22:10 -->
@@ -1108,6 +1123,9 @@ Andrich, D. 1978. <span>“Relationships Between the Thurstone and Rasch Approac
 <div id="ref-Bartholomew_et_al_2018" class="csl-entry" role="listitem">
 Bartholomew, S., L. Nadelson, W. Goodridge, and E. Reeve. 2018. <span>“Adaptive Comparative Judgment as a Tool for Assessing Open-Ended Design Problems and Model Eliciting Activities.”</span> <em>Educational Assessment</em> 23 (2): 85–101. <a href="https://doi.org/10.1080/10627197.2018.1444986">https://doi.org/10.1080/10627197.2018.1444986</a>.
 </div>
+<div id="ref-Betancourt_2020" class="csl-entry" role="listitem">
+Betancourt, M. 2020. <em>Toward a Principled Bayesian Workflow</em>. <a href="https://betanalpha.github.io/assets/case_studies/principled_bayesian_workflow.html">https://betanalpha.github.io/assets/case_studies/principled_bayesian_workflow.html</a>.
+</div>
 <div id="ref-Boonen_et_al_2020" class="csl-entry" role="listitem">
 Boonen, N., H. Kloots, and S. Gillis. 2020. <span>“Rating the Overall Speech Quality of Hearing-Impaired Children by Means of Comparative Judgements.”</span> <em>Journal of Communication Disorders</em> 83: 1675–87. <a href="https://doi.org/10.1016/j.jcomdis.2019.105969">https://doi.org/10.1016/j.jcomdis.2019.105969</a>.
 </div>
@@ -1132,11 +1150,17 @@ Bürkner, Paul-Christian. 2018. <span>“Advanced <span>Bayesian</span> Multilev
 <div id="ref-Chambers_et_al_2022" class="csl-entry" role="listitem">
 Chambers, L., and E. Cunningham. 2022. <span>“Exploring the Validity of Comparative Judgement: Do Judges Attend to Construct-Irrelevant Features?”</span> <em>Frontiers in Education</em>, ahead of print. <a href="https://doi.org/10.3389/feduc.2022.802392">https://doi.org/10.3389/feduc.2022.802392</a>.
 </div>
+<div id="ref-Depaoli_et_al_2017" class="csl-entry" role="listitem">
+<span class="nocase">Depaoli, S., and R. van de Schoot</span>. 2017. <span>“Improving Transparency and Replication in Bayesian Statistics: The WAMBS-Checklist.”</span> <em>Psychological Methods</em> 22 (2): 240–61. <a href="https://doi.org/10.1037/met0000065">https://doi.org/10.1037/met0000065</a>.
+</div>
 <div id="ref-Everitt_et_al_2010" class="csl-entry" role="listitem">
 Everitt, B., and A. Skrondal. 2010. <em><a href="">The Cambridge Dictionary of Statistics</a></em>. Cambridge University Press.
 </div>
 <div id="ref-Gabry_et_al_2025b" class="csl-entry" role="listitem">
 Gabry, J., R. C̆es̆novar, A. Johnson, and S. Bronder. 2025. <em>Cmdstanr: R Interface to ’CmdStan’</em>. <a href="https://mc-stan.org/cmdstanr/">https://mc-stan.org/cmdstanr/</a>.
+</div>
+<div id="ref-Gelman_et_al_2020" class="csl-entry" role="listitem">
+Gelman, Andrew, Aki Vehtari, Daniel Simpson, et al. 2020. <em>Bayesian Workflow</em>. <a href="https://arxiv.org/abs/2011.01808">https://arxiv.org/abs/2011.01808</a>.
 </div>
 <div id="ref-Gray_et_al_2024" class="csl-entry" role="listitem">
 Gray, A., A Rahat, T. Crick, and S. Lindsay. 2024. <span>“A Bayesian Active Learning Approach to Comparative Judgement Within Education Assessment.”</span> <em>Computers and Education: Artificial Intelligence</em> 6: 100–245. <a href="https://doi.org/10.1016/j.caeai.2024.100245">https://doi.org/10.1016/j.caeai.2024.100245</a>.
@@ -1180,6 +1204,12 @@ Maydeu-Olivares, A., and U. Böckenholt. 2005. <span>“Structural Equation Mode
 <div id="ref-McElreath_2020" class="csl-entry" role="listitem">
 McElreath, R. 2020. <em>Statistical Rethinking: A Bayesian Course with Examples in r and STAN</em>. Chapman; Hall/CRC. https://doi.org/<a href="https://doi.org/10.1201/9780429029608">https://doi.org/10.1201/9780429029608</a>.
 </div>
+<div id="ref-McElreath_2024b" class="csl-entry" role="listitem">
+McElreath, R. 2024a. <span>“The Third Edition, the Dotted Half Note of Editions.”</span> January 2. <a href="https://elevanth.org/2024_01_02_third_edition.html">https://elevanth.org/2024_01_02_third_edition.html</a>.
+</div>
+<div id="ref-McElreath_2024c" class="csl-entry" role="listitem">
+McElreath, R. 2024b. <span>“Understanding Bayesian Statistics Without Frequentist Language.”</span> March 27. <a href="http://talmo.uk/2024/slides/mcelreath.pdf">http://talmo.uk/2024/slides/mcelreath.pdf</a>.
+</div>
 <div id="ref-Morgan_et_al_2014" class="csl-entry" role="listitem">
 Morgan, S., and C. Winship. 2014. <em><a href="">Counterfactuals and Causal Inference: Methods and Principles for Social Research</a></em>. 2nd ed. Analytical Methods for Social Research. Cambridge University Press.
 </div>
@@ -1188,6 +1218,9 @@ Neal, B. 2020. <em>Introduction to Causal Inference from a Machine Learning Pers
 </div>
 <div id="ref-Pearl_et_al_2016" class="csl-entry" role="listitem">
 Pearl, J., M. Glymour, and N. Jewell. 2016. <em><a href="">Causal Inference in Statistics: A Primer</a></em>. John Wiley &amp; Sons, Inc.
+</div>
+<div id="ref-Pearl_et_al_2018" class="csl-entry" role="listitem">
+Pearl, J., and D. Mackenzie. 2018. <em><a href="">The Book of Why: The New Science of Cause and Effect</a></em>. 1st ed. Basic Books, Inc.
 </div>
 <div id="ref-Perron_et_al_2015" class="csl-entry" role="listitem">
 Perron, B., and D. Gillespie. 2015. <span>“<span class="nocase">Reliability and Measurement Error</span>.”</span> Chap. 4 in <em><span class="nocase">Key Concepts in Measurement</span></em>. Pocket Guides to Social Work Research Methods. Oxford University Press. <a href="https://doi.org/10.1093/acprof:oso/9780199855483.003.0004">https://doi.org/10.1093/acprof:oso/9780199855483.003.0004</a>.
@@ -1209,6 +1242,9 @@ R Core Team. 2015. <em>R: A Language and Environment for Statistical Computing</
 </div>
 <div id="ref-Rivera_et_al_2025" class="csl-entry" role="listitem">
 <span class="nocase">Rivera, J. M., T. van Daal, S. De Maeyer, and S Gillis</span>. 2025. <span>“Let’s Talk about Thurstone &amp; <span>Co.:</span> An Information-Theoretical Model for Comparative Judgments, and Its Statistical Translation.”</span> August 13. <a href="https://jriveraespejo.github.io/paper2_manuscript/">https://jriveraespejo.github.io/paper2_manuscript/</a>.
+</div>
+<div id="ref-Schad_et_al_2020" class="csl-entry" role="listitem">
+Schad, Daniel J., Michael Betancourt, and Shravan Vasishth. 2020. <em>Toward a Principled Bayesian Workflow in Cognitive Science</em>. <a href="https://arxiv.org/abs/1904.12765">https://arxiv.org/abs/1904.12765</a>.
 </div>
 <div id="ref-Schramm_et_al_2021" class="csl-entry" role="listitem">
 Schramm, Pele, and William H. Batchelder. 2021. <span>“Hierarchical Paired Comparison Modeling, a Cultural Consensus Theory Approach.”</span> <em>Journal of Mathematical Psychology</em> 100: 102465. https://doi.org/<a href="https://doi.org/10.1016/j.jmp.2020.102465">https://doi.org/10.1016/j.jmp.2020.102465</a>.

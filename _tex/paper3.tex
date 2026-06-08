@@ -481,11 +481,10 @@ of the CJ system under study. This structure is represented using a
 \emph{Directed Acyclic Graph (DAG)} and an associated \emph{Structural
 Causal Model (SCM)}
 \citep{Morgan_et_al_2014, Gross_et_al_2018, Neal_2020}. On the basis of
-this causal representation, the approach then derives a
-\emph{probabilistic} model, and one or more \emph{statistical} models
-tailored to the system under study. These models are subsequently used
-to estimate, summarize, or conduct statistical inference on the traits
-of interest.
+this causal representation, a \emph{probabilistic} model is derived,
+followed by one or more \emph{statistical} models tailored to the system
+under study. These models are then used to estimate, summarize, or
+conduct statistical inference on the traits of interest.
 
 \newcommand{\dsep}{\:\bot\:}
 \newcommand{\ndsep}{\:\not\bot\:}
@@ -677,13 +676,34 @@ substantive interest. Second, the approach explicitly incorporates
 relevant features of CJ assessment design, including the sampling and
 comparison mechanisms as well as judge and judgment biases. Third, the
 ITCJ no longer separates trait estimation from follow-up analyses, but
-rather integrates both within a unified and systematic framework
+rather integrates both within a unified and systematic approach
 \citep{Rivera_et_al_2025}. This integration enables the propagation of
 uncertainty across all levels of the assumed hierarchical structure of
 the data. In this way, the ITCJ approach addresses the three main
 limitations of CCJ analysis.
 
 \section{Methods}\label{sec-methods}
+
+To address its two research objectives, this study follows the
+\emph{Bayesian research workflow}
+\citep{Depaoli_et_al_2017, Pearl_et_al_2018, Neal_2020, Gelman_et_al_2020, Schad_et_al_2020, Betancourt_2020, McElreath_2024b, McElreath_2024c},
+as depicted in Figure~\ref{fig-worflow}. The workflow consists of
+iterative stages that move from theoretical assumptions to empirical
+estimation, while supporting the study's dual focus on \emph{empirical
+validation of the ITCJ approach} and its tutorial-style
+\emph{implementation}.
+
+\begin{figure}[H]
+
+\centering{
+
+\includegraphics[width=1\linewidth,height=\textheight,keepaspectratio]{3_results/theory/figures/png/workflow.png}
+
+}
+
+\caption{\label{fig-worflow}Bayesian research workflow.}
+
+\end{figure}%
 
 \subsection{Step 1, from Theory to Design: Data-generating
 assumptions}\label{sec-methods_step1}
