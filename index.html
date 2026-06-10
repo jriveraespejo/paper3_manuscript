@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.10.8">
+<meta name="generator" content="quarto-1.10.9">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -10,7 +10,7 @@
 <meta name="author" content="Tine van Daal">
 <meta name="author" content="Sven De Maeyer">
 <meta name="author" content="Steven Gillis">
-<meta name="dcterms.date" content="2026-06-09">
+<meta name="dcterms.date" content="2026-06-10">
 <meta name="keywords" content="tutorial, causal inference, bayesian inference, thustone, comparative judgement">
 
 <title>Finding Thurstone: modeling Comparative Judgment data with R (and Stan)</title>
@@ -58,7 +58,7 @@ div.csl-indent {
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-b856dee10e21950d696b022d144bb914.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-5198e99e68e02f6ba92128fbf88417ab.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="site_libs/bootstrap/bootstrap-32a2c5ce4c97ca25239b6ff0eaadf90f.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
@@ -114,10 +114,10 @@ Therefore, this study evaluates the ITCJ analysis using a simulated speech-quali
 <meta name="citation_author" content="Tine van Daal">
 <meta name="citation_author" content="Sven De Maeyer">
 <meta name="citation_author" content="Steven Gillis">
-<meta name="citation_publication_date" content="2026-06-09">
-<meta name="citation_cover_date" content="2026-06-09">
+<meta name="citation_publication_date" content="2026-06-10">
+<meta name="citation_cover_date" content="2026-06-10">
 <meta name="citation_year" content="2026">
-<meta name="citation_online_date" content="2026-06-09">
+<meta name="citation_online_date" content="2026-06-10">
 <meta name="citation_language" content="en">
 <meta name="citation_reference" content="citation_title=Correlation and causation;,citation_author=S. Wright;,citation_publication_date=1927;,citation_cover_date=1927;,citation_year=1927;,citation_fulltext_html_url=https://books.google.co.ao/books/about/Journal_of_Agricultural_Research.html?hl=pt-PT&amp;amp;amp;id=lNNdIV_qpwIC;,citation_issue=7;,citation_volume=20;,citation_journal_title=Correlation and causation;">
 <meta name="citation_reference" content="citation_title=On the interpretation of χ2 from contingency tables, and the calculation of p;,citation_author=R. Fisher;,citation_publication_date=1922;,citation_cover_date=1922;,citation_year=1922;,citation_fulltext_html_url=http://www.jstor.org/stable/2340521;,citation_issue=1;,citation_doi=10.2307/2340521;,citation_volume=85;,citation_journal_title=Journal of the Royal Statistical Society;,citation_publisher=[Wiley, Royal Statistical Society];">
@@ -496,7 +496,7 @@ Therefore, this study evaluates the ITCJ analysis using a simulated speech-quali
                 <div>
             <div class="quarto-title-meta-heading">Published</div>
             <div class="quarto-title-meta-contents">
-              <p class="date">June 9, 2026</p>
+              <p class="date">June 10, 2026</p>
             </div>
           </div>
           
@@ -542,22 +542,23 @@ Therefore, this study evaluates the ITCJ analysis using a simulated speech-quali
   </ul></li>
   <li><a href="#sec-methods" id="toc-sec-methods" class="nav-link" data-scroll-target="#sec-methods"><span class="header-section-number">3</span> Methods</a>
   <ul>
-  <li><a href="#sec-methods_step1" id="toc-sec-methods_step1" class="nav-link" data-scroll-target="#sec-methods_step1"><span class="header-section-number">3.1</span> Step 1, from Theory to Design: Data-generating assumptions</a></li>
-  <li><a href="#sec-methods_step2" id="toc-sec-methods_step2" class="nav-link" data-scroll-target="#sec-methods_step2"><span class="header-section-number">3.2</span> Step 2, from Design to Data: Data simulation</a></li>
-  <li><a href="#sec-methods_step5" id="toc-sec-methods_step5" class="nav-link" data-scroll-target="#sec-methods_step5"><span class="header-section-number">3.3</span> Step 5, from Estimator and Sample to Estimate(s): The analysis aproaches</a>
+  <li><a href="#sec-methods_step1" id="toc-sec-methods_step1" class="nav-link" data-scroll-target="#sec-methods_step1"><span class="header-section-number">3.1</span> From Theory to Design: Data-generating assumptions</a></li>
+  <li><a href="#sec-methods_step2" id="toc-sec-methods_step2" class="nav-link" data-scroll-target="#sec-methods_step2"><span class="header-section-number">3.2</span> From Theory to Estimands: Data-generating assumptions</a></li>
+  <li><a href="#sec-methods_step3" id="toc-sec-methods_step3" class="nav-link" data-scroll-target="#sec-methods_step3"><span class="header-section-number">3.3</span> From Design to Data: Data simulation</a></li>
+  <li><a href="#sec-methods_step5" id="toc-sec-methods_step5" class="nav-link" data-scroll-target="#sec-methods_step5"><span class="header-section-number">3.4</span> From Estimator to Estimate(s): The models</a>
   <ul class="collapse">
-  <li><a href="#sec-methods_step5_1" id="toc-sec-methods_step5_1" class="nav-link" data-scroll-target="#sec-methods_step5_1"><span class="header-section-number">3.3.1</span> The CCJ analysis</a></li>
-  <li><a href="#sec-methods_step5_2" id="toc-sec-methods_step5_2" class="nav-link" data-scroll-target="#sec-methods_step5_2"><span class="header-section-number">3.3.2</span> The ITCJ analysis</a>
+  <li><a href="#sec-methods_step5_1" id="toc-sec-methods_step5_1" class="nav-link" data-scroll-target="#sec-methods_step5_1"><span class="header-section-number">3.4.1</span> The CCJ analysis</a></li>
+  <li><a href="#sec-methods_step5_2" id="toc-sec-methods_step5_2" class="nav-link" data-scroll-target="#sec-methods_step5_2"><span class="header-section-number">3.4.2</span> The ITCJ analysis</a>
   <ul class="collapse">
-  <li><a href="#sec-sec-methods_step5_2_itcj_1" id="toc-sec-sec-methods_step5_2_itcj_1" class="nav-link" data-scroll-target="#sec-sec-methods_step5_2_itcj_1"><span class="header-section-number">3.3.2.1</span> Model 1</a></li>
-  <li><a href="#sec-sec-methods_step5_2_itcj_2" id="toc-sec-sec-methods_step5_2_itcj_2" class="nav-link" data-scroll-target="#sec-sec-methods_step5_2_itcj_2"><span class="header-section-number">3.3.2.2</span> Model 2</a></li>
-  <li><a href="#sec-sec-methods_step5_2_itcj_3" id="toc-sec-sec-methods_step5_2_itcj_3" class="nav-link" data-scroll-target="#sec-sec-methods_step5_2_itcj_3"><span class="header-section-number">3.3.2.3</span> Model 3</a></li>
-  <li><a href="#sec-sec-methods_step5_2_itcj_4" id="toc-sec-sec-methods_step5_2_itcj_4" class="nav-link" data-scroll-target="#sec-sec-methods_step5_2_itcj_4"><span class="header-section-number">3.3.2.4</span> Model 4</a></li>
-  <li><a href="#sec-sec-methods_step5_2_itcj_5" id="toc-sec-sec-methods_step5_2_itcj_5" class="nav-link" data-scroll-target="#sec-sec-methods_step5_2_itcj_5"><span class="header-section-number">3.3.2.5</span> Model 5</a></li>
-  <li><a href="#sec-sec-methods_step5_2_itcj_6" id="toc-sec-sec-methods_step5_2_itcj_6" class="nav-link" data-scroll-target="#sec-sec-methods_step5_2_itcj_6"><span class="header-section-number">3.3.2.6</span> Model 6</a></li>
+  <li><a href="#sec-sec-methods_step5_2_itcj_1" id="toc-sec-sec-methods_step5_2_itcj_1" class="nav-link" data-scroll-target="#sec-sec-methods_step5_2_itcj_1"><span class="header-section-number">3.4.2.1</span> Model 1</a></li>
+  <li><a href="#sec-sec-methods_step5_2_itcj_2" id="toc-sec-sec-methods_step5_2_itcj_2" class="nav-link" data-scroll-target="#sec-sec-methods_step5_2_itcj_2"><span class="header-section-number">3.4.2.2</span> Model 2</a></li>
+  <li><a href="#sec-sec-methods_step5_2_itcj_3" id="toc-sec-sec-methods_step5_2_itcj_3" class="nav-link" data-scroll-target="#sec-sec-methods_step5_2_itcj_3"><span class="header-section-number">3.4.2.3</span> Model 3</a></li>
+  <li><a href="#sec-sec-methods_step5_2_itcj_4" id="toc-sec-sec-methods_step5_2_itcj_4" class="nav-link" data-scroll-target="#sec-sec-methods_step5_2_itcj_4"><span class="header-section-number">3.4.2.4</span> Model 4</a></li>
+  <li><a href="#sec-sec-methods_step5_2_itcj_5" id="toc-sec-sec-methods_step5_2_itcj_5" class="nav-link" data-scroll-target="#sec-sec-methods_step5_2_itcj_5"><span class="header-section-number">3.4.2.5</span> Model 5</a></li>
+  <li><a href="#sec-sec-methods_step5_2_itcj_6" id="toc-sec-sec-methods_step5_2_itcj_6" class="nav-link" data-scroll-target="#sec-sec-methods_step5_2_itcj_6"><span class="header-section-number">3.4.2.6</span> Model 6</a></li>
   </ul></li>
   </ul></li>
-  <li><a href="#sec-methods_step6" id="toc-sec-methods_step6" class="nav-link" data-scroll-target="#sec-methods_step6"><span class="header-section-number">3.4</span> Step 6, from Estimate(s) to Diagnostics and Posterior predictives: The evaluation criteria</a></li>
+  <li><a href="#sec-methods_step6" id="toc-sec-methods_step6" class="nav-link" data-scroll-target="#sec-methods_step6"><span class="header-section-number">3.5</span> From Estimate(s) to Diagnostics and Posterior predictives: The evaluation criteria</a></li>
   </ul></li>
   <li><a href="#sec-results" id="toc-sec-results" class="nav-link" data-scroll-target="#sec-results"><span class="header-section-number">4</span> Results</a>
   <ul>
@@ -776,8 +777,8 @@ Explain with one or two sentences what is discriminal differences, traits, biase
 <p>Moreover, <a href="#fig-ITCJ" class="quarto-xref">Figure&nbsp;1</a> uses <span class="math inline">\(X_{I}\)</span> to denote the set of variables believed to influence the individual traits <span class="math inline">\(T_{I}\)</span>, i.e., the individuals’ ability to produce high-quality speech. Examples of such individual-level variables include hearing status and age–the latter serving as a proxy for language development <span class="citation" data-cites="Boonen_et_al_2020">(<a href="#ref-Boonen_et_al_2020" role="doc-biblioref">Boonen et al. 2020</a>)</span>. Similarly, <span class="math inline">\(X_{IA}\)</span> denotes the set of variables assumed to influence the stimulus traits <span class="math inline">\(T_{IA}\)</span>, which represent the latent quality of the stimulus under comparison. Examples of such stimulus-level variables include the length of the speech sample and whether the sample originates from spontaneous speech or imitation. Notably, the stimulus traits <span class="math inline">\(T_{IA}\)</span> correspond to what the CJ literature refers to as <em>discriminal processes</em>, which are though to capture the psychological effect a stimulus exerts on the judge, or more simply, the judge’s perception of the stimulus quality <span class="citation" data-cites="Thurstone_1927a Thurstone_1927b">(<a href="#ref-Thurstone_1927a" role="doc-biblioref">Thurstone 1927b</a>, <a href="#ref-Thurstone_1927b" role="doc-biblioref">1927a</a>)</span>.</p>
 <p>In a similar fashion, <span class="math inline">\(Z_{J}\)</span> denotes the set of variables believed to influence the judges’ bias <span class="math inline">\(B_{J}\)</span>, that is, the systematic deviation of a judge’s perception of a stimulus from the consensus. Examples of such judges-level variables include speech-judgment expertise and prior training in the CJ task. Similarly, <span class="math inline">\(Z_{JK}\)</span> denotes the set of variables assumed to influence the judgment-level biases <span class="math inline">\(B_{JK}\)</span>, which represent systematic deviations of an individual judgment from the judge-specific bias. Examples of such judgment-level variables include the time of day or day of the week at which the comparison was made, as well as the number of comparisons completed by a judge, used as a proxy for learning or fatigue effects during the CJ task. The error terms <span class="math inline">\(e_{I}\)</span>, <span class="math inline">\(e_{IA}\)</span>, <span class="math inline">\(e_{J}\)</span>, and <span class="math inline">\(e_{JK}\)</span> capture residual variation at each level.</p>
 <p>Notably, because individual and stimulus traits are, in essence, not directly observable, Thurstone <span class="citation" data-cites="Thurstone_1927a Thurstone_1927b">(<a href="#ref-Thurstone_1927a" role="doc-biblioref">1927b</a>, <a href="#ref-Thurstone_1927b" role="doc-biblioref">1927a</a>)</span> introduced the <em>Law of Comparative Judgment</em>. This law posits that, in pairwise comparisons, a judge perceives the stimulus with a <em>discriminal process</em> positioned further along the trait continuum as possessing more of the trait <span class="citation" data-cites="Bramley_2008">(<a href="#ref-Bramley_2008" role="doc-biblioref">Bramley 2008</a>)</span>. This suggests that pairwise comparison outcomes depend on relative, rather than absolute, positions on the continuum, implying that the observed CJ outcome is determined by the difference between the underlying discriminal processes (traits) of the stimuli <span class="citation" data-cites="Rivera_et_al_2025">(<a href="#ref-Rivera_et_al_2025" role="doc-biblioref"><span class="nocase">Rivera et al.</span> 2025</a>)</span>. Moreover, because discriminal processes become observable only through judges’ perceptions–and these perceptions may involve bias or systematic deviations from consensus <span class="citation" data-cites="Pollitt_et_al_2003 vanDaal_et_al_2016">(see <a href="#ref-Pollitt_et_al_2003" role="doc-biblioref">Pollitt and Elliott 2003</a>; <a href="#ref-vanDaal_et_al_2016" role="doc-biblioref"><span class="nocase">van Daal et al.</span> 2016</a>)</span>–judge- and judgment-level biases are appropriately treated as integral components of the CJ system from the outset <span class="citation" data-cites="Rivera_et_al_2025">(<a href="#ref-Rivera_et_al_2025" role="doc-biblioref"><span class="nocase">Rivera et al.</span> 2025</a>)</span>. In this representation, these relationships are captured by the arrows from the <span class="math inline">\(T_{IA}\)</span> and <span class="math inline">\(B_{JK}\)</span> vectors to the <em>discriminal difference</em> <span class="math inline">\(D_{R}\)</span> vector, and the corresponding structural equation <span class="math inline">\(D_{R} := f_{D}(T_{IA}, B_{JK})\)</span>.</p>
-<p>Furthermore, DAG <a href="#fig-ITCJ_dag" class="quarto-xref">1 (a)</a> also represents the sampling and comparison mechanisms as two conditioned variables that determine how population outcomes become the “observed” sample outcomes (<span class="math inline">\(S\)</span> and <span class="math inline">\(C\)</span>, respectively shown with surrounding squares to denote conditioning). In this particular representation, these variables are depicted without incoming arrows, indicating that they are assumed to be independent of all other variables in the DAG. This, in turn, implies that <span class="math inline">\(S\)</span> corresponds to a <em>simple random sampling (SRSg)</em> design, in which each repeated judgment, judge, stimulus, and individual has an equal probability of inclusion within their respective groups <span class="citation" data-cites="Lawson_2015">(<a href="#ref-Lawson_2015" role="doc-biblioref">Lawson 2015</a>)</span>, while <span class="math inline">\(C\)</span> corresponds to a <em>random allocation comparative design</em> <span class="citation" data-cites="Bramley_2015">(<a href="#ref-Bramley_2015" role="doc-biblioref">Bramley 2015</a>)</span>, also known as an <em>incomplete block design</em> <span class="citation" data-cites="Lawson_2015">(<a href="#ref-Lawson_2015" role="doc-biblioref">Lawson 2015</a>)</span>, in which each repeated judgment has an equal probability of being included in the sample.</p>
-<p>Finally, DAG <a href="#fig-ITCJ_dag" class="quarto-xref">1 (a)</a> shows that the observed CJ outcome <span class="math inline">\(O_{R}\)</span> is jointly influenced by the discriminal difference <span class="math inline">\(D_{R}\)</span> and the sampling and comparison mechanisms (<span class="math inline">\(S\)</span> and <span class="math inline">\(C\)</span>, respectively). In typical CJ applications, <span class="math inline">\(O_{R}\)</span> is often modeled as following a Bernoulli distribution <span class="citation" data-cites="Pollitt_2012b Bramley_2008 Boonen_et_al_2020 Seymour_et_al_2025">(see <a href="#ref-Pollitt_2012b" role="doc-biblioref">Pollitt 2012b</a>; <a href="#ref-Bramley_2008" role="doc-biblioref">Bramley 2008</a>; <a href="#ref-Boonen_et_al_2020" role="doc-biblioref">Boonen et al. 2020</a>; <a href="#ref-Seymour_et_al_2025" role="doc-biblioref">Seymour and Hernandez 2025</a>)</span>. However, the current DAG is intentionally agnostic to this specific distributional choice, thereby accommodating alternative outcome distributions as special cases within the ITCJ approach. This flexibility is particularly relevant in settings where the comparison task yields non-binary outcomes, for which extensions beyond the Bernoulli model may be more appropriate <span class="citation" data-cites="Rivera_et_al_2025">(<a href="#ref-Rivera_et_al_2025" role="doc-biblioref"><span class="nocase">Rivera et al.</span> 2025</a>)</span>. Examples of such outcomes can be found in <span class="citation" data-cites="Agresti_1992">Agresti (<a href="#ref-Agresti_1992" role="doc-biblioref">1992</a>)</span>, and more recently in <span class="citation" data-cites="Pritikin_2020">Pritikin (<a href="#ref-Pritikin_2020" role="doc-biblioref">2020</a>)</span> and <span class="citation" data-cites="Burkner_et_al_2024b">Lingel et al. (<a href="#ref-Burkner_et_al_2024b" role="doc-biblioref">2024</a>)</span>.</p>
+<p>Furthermore, <a href="#fig-ITCJ_dag" class="quarto-xref">Figure&nbsp;1 (a)</a> represents the sampling and comparison mechanisms as two conditioned variables that determine how population outcomes become the “observed” sample outcomes (<span class="math inline">\(S\)</span> and <span class="math inline">\(C\)</span>, respectively shown with surrounding squares to denote conditioning). In this particular representation, these variables are depicted without incoming arrows, indicating that they are assumed to be independent of all other variables in the DAG. This, in turn, implies that <span class="math inline">\(S\)</span> corresponds to a <em>simple random sampling (SRSg)</em> design, in which each repeated judgment, judge, stimulus, and individual has an equal probability of inclusion within their respective groups <span class="citation" data-cites="Lawson_2015">(<a href="#ref-Lawson_2015" role="doc-biblioref">Lawson 2015</a>)</span>, while <span class="math inline">\(C\)</span> corresponds to a <em>random allocation comparative design</em> <span class="citation" data-cites="Bramley_2015">(<a href="#ref-Bramley_2015" role="doc-biblioref">Bramley 2015</a>)</span>, also known as an <em>incomplete block design</em> <span class="citation" data-cites="Lawson_2015">(<a href="#ref-Lawson_2015" role="doc-biblioref">Lawson 2015</a>)</span>, in which each repeated judgment has an equal probability of being included in the sample.</p>
+<p>Finally, <a href="#fig-ITCJ_dag" class="quarto-xref">Figure&nbsp;1 (a)</a> shows that the observed CJ outcome <span class="math inline">\(O_{R}\)</span> is jointly influenced by the discriminal difference <span class="math inline">\(D_{R}\)</span> and the sampling and comparison mechanisms (<span class="math inline">\(S\)</span> and <span class="math inline">\(C\)</span>, respectively). In typical CJ applications, <span class="math inline">\(O_{R}\)</span> is often modeled as following a Bernoulli distribution <span class="citation" data-cites="Pollitt_2012b Bramley_2008 Boonen_et_al_2020 Seymour_et_al_2025">(see <a href="#ref-Pollitt_2012b" role="doc-biblioref">Pollitt 2012b</a>; <a href="#ref-Bramley_2008" role="doc-biblioref">Bramley 2008</a>; <a href="#ref-Boonen_et_al_2020" role="doc-biblioref">Boonen et al. 2020</a>; <a href="#ref-Seymour_et_al_2025" role="doc-biblioref">Seymour and Hernandez 2025</a>)</span>. However, the current DAG is intentionally agnostic to this specific distributional choice, thereby accommodating alternative outcome distributions as special cases within the ITCJ approach. This flexibility is particularly relevant in settings where the comparison task yields non-binary outcomes, for which extensions beyond the Bernoulli model may be more appropriate <span class="citation" data-cites="Rivera_et_al_2025">(<a href="#ref-Rivera_et_al_2025" role="doc-biblioref"><span class="nocase">Rivera et al.</span> 2025</a>)</span>. Examples of such outcomes can be found in <span class="citation" data-cites="Agresti_1992">Agresti (<a href="#ref-Agresti_1992" role="doc-biblioref">1992</a>)</span>, and more recently in <span class="citation" data-cites="Pritikin_2020">Pritikin (<a href="#ref-Pritikin_2020" role="doc-biblioref">2020</a>)</span> and <span class="citation" data-cites="Burkner_et_al_2024b">Lingel et al. (<a href="#ref-Burkner_et_al_2024b" role="doc-biblioref">2024</a>)</span>.</p>
 <div id="fig-ITCJ_prob" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-fig" id="fig-ITCJ_prob-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -799,7 +800,7 @@ P(O_{R}, D_{R} &amp;, S, C, T_{IA}, X_{IA}, e_{IA}, T_{I}, X_{I}, e_{I}, B_{JK},
 </div>
 </figure>
 </div>
-<p>Once researchers specify SCM <a href="#fig-ITCJ_scm" class="quarto-xref">1 (b)</a>, characterizing the assumed data-generating process of the CJ system, they can translate it into a probabilistic model that factorizes the joint distribution of the variables into a product of simpler <em>conditional probability distributions (CPDs)</em> <span class="citation" data-cites="Pearl_et_al_2016 Neal_2020">(<a href="#ref-Pearl_et_al_2016" role="doc-biblioref">Pearl et al. 2016</a>; <a href="#ref-Neal_2020" role="doc-biblioref">Neal 2020</a>)</span>, as illustrated in <a href="#fig-ITCJ_prob" class="quarto-xref">Figure&nbsp;2</a>. From this formulation, they can then derive one or more statistical models tailored to the CJ system under study (see <a href="#sec-methods_step5_2" class="quarto-xref">Section&nbsp;3.3.2</a>).</p>
+<p>Once researchers specify the SCM characterizing the assumed data-generating process of the CJ system, as in <a href="#fig-ITCJ_scm" class="quarto-xref">Figure&nbsp;1 (b)</a>, they can translate it into a probabilistic model that factorizes the joint distribution of the variables into a product of simpler <em>conditional probability distributions (CPDs)</em> <span class="citation" data-cites="Pearl_et_al_2016 Neal_2020">(<a href="#ref-Pearl_et_al_2016" role="doc-biblioref">Pearl et al. 2016</a>; <a href="#ref-Neal_2020" role="doc-biblioref">Neal 2020</a>)</span>, as illustrated in <a href="#fig-ITCJ_prob" class="quarto-xref">Figure&nbsp;2</a>. From this formulation, they can then derive one or more statistical models tailored to the CJ system under study (see <a href="#sec-methods_step5_2" class="quarto-xref">Section&nbsp;3.4.2</a>).</p>
 <p>At this stage, it becomes clear that the ITCJ approach differs fundamentally from the CCJ approach in its treatment of trait estimation, summaries, and inference, ultimately enabling it to address the three main limitations of the latter. First, although the ITCJ analysis still relies on Thurstone-based models for trait estimation, these models are no longer treated as pre-specified simplifying abstractions; instead, they are adapted to the specific data-generating process of the CJ system under study, allowing researchers to explicitly model the processes of substantive interest. Second, the approach explicitly incorporates relevant features of CJ assessment design, including the sampling and comparison mechanisms as well as judge and judgment biases. Third, the ITCJ analysis no longer separates trait estimation from follow-up analyses, but rather integrates both within a unified and systematic approach <span class="citation" data-cites="Rivera_et_al_2025">(<a href="#ref-Rivera_et_al_2025" role="doc-biblioref"><span class="nocase">Rivera et al.</span> 2025</a>)</span>. This integration enables the propagation of uncertainty across all levels of the assumed hierarchical structure of the data.</p>
 <p>Building on this framework, the following section details the methods used to implement and evaluate the ITCJ analysis against the CCJ approach.</p>
 <!-- ######################################### -->
@@ -811,8 +812,8 @@ P(O_{R}, D_{R} &amp;, S, C, T_{IA}, X_{IA}, e_{IA}, T_{I}, X_{I}, e_{I}, B_{JK},
 <!-- Sven and Tine 2025.09.04, time: 00:22:10 - 00:25:30 -->
 <!-- Sven and Tine 2025.09.04, time: 00:33:30 - 00:37:15 -->
 <!-- Sven and Tine 2025.09.15, time: 00:04:25 - 00:11:45 -->
-<p>To address its two research objectives, this study follows the <em>Bayesian research workflow</em> <span class="citation" data-cites="Depaoli_et_al_2017 Pearl_et_al_2018 Neal_2020 Gelman_et_al_2020 Schad_et_al_2020 Betancourt_2020 McElreath_2024b McElreath_2024c">(<a href="#ref-Depaoli_et_al_2017" role="doc-biblioref"><span class="nocase">Depaoli and van de Schoot</span> 2017</a>; <a href="#ref-Pearl_et_al_2018" role="doc-biblioref">Pearl and Mackenzie 2018</a>; <a href="#ref-Neal_2020" role="doc-biblioref">Neal 2020</a>; <a href="#ref-Gelman_et_al_2020" role="doc-biblioref">Gelman et al. 2020</a>; <a href="#ref-Schad_et_al_2020" role="doc-biblioref">Schad et al. 2020</a>; <a href="#ref-Betancourt_2020" role="doc-biblioref">Betancourt 2020</a>; <a href="#ref-McElreath_2024b" role="doc-biblioref">McElreath 2024a</a>, <a href="#ref-McElreath_2024c" role="doc-biblioref">2024b</a>)</span>, as depicted in <a href="#fig-worflow" class="quarto-xref">Figure&nbsp;3</a>. The workflow consists of iterative stages progressing from theoretical assumptions through parameter estimation and data prediction, while supporting the study’s dual focus on <em>empirical validation</em> and tutorial-style <em>implementation</em>. Crucially, given the emphasis on empirical validation, this study employs a synthetic dataset derived from a CJ data-generating process grounded in the speech-quality literature.</p>
-<div id="fig-worflow" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-pos="H" data-fig-align="center">
+<p>To address its two research objectives, this study follows the <em>Bayesian research workflow</em> <span class="citation" data-cites="Depaoli_et_al_2017 Pearl_et_al_2018 Neal_2020 Gelman_et_al_2020 Schad_et_al_2020 Betancourt_2020 McElreath_2024b McElreath_2024c">(<a href="#ref-Depaoli_et_al_2017" role="doc-biblioref"><span class="nocase">Depaoli and van de Schoot</span> 2017</a>; <a href="#ref-Pearl_et_al_2018" role="doc-biblioref">Pearl and Mackenzie 2018</a>; <a href="#ref-Neal_2020" role="doc-biblioref">Neal 2020</a>; <a href="#ref-Gelman_et_al_2020" role="doc-biblioref">Gelman et al. 2020</a>; <a href="#ref-Schad_et_al_2020" role="doc-biblioref">Schad et al. 2020</a>; <a href="#ref-Betancourt_2020" role="doc-biblioref">Betancourt 2020</a>; <a href="#ref-McElreath_2024b" role="doc-biblioref">McElreath 2024a</a>, <a href="#ref-McElreath_2024c" role="doc-biblioref">2024b</a>)</span>, as depicted in <a href="#fig-worflow" class="quarto-xref">Figure&nbsp;3</a>. The workflow consists of iterative stages progressing from theoretical assumptions through parameter estimation and data prediction, thereby supporting the study’s dual focus on empirical model validation and tutorial-style implementation. Crucially, given the emphasis on validation, the study employs a synthetic dataset derived from a CJ data-generating process grounded in the speech-quality literature, enabling model validation under controlled conditions.</p>
+<div id="fig-worflow" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center" data-fig-pos="H">
 <figure class="quarto-float quarto-float-fig figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-fig" id="fig-worflow-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;3: Bayesian research workflow.
@@ -822,28 +823,147 @@ Figure&nbsp;3: Bayesian research workflow.
 </div>
 </figure>
 </div>
-<p>The workflow begins by translating the theoretical understanding of the synthetic CJ system into formal <em>estimands</em>–the targets of inference <span class="citation" data-cites="Everitt_et_al_2010">(<a href="#ref-Everitt_et_al_2010" role="doc-biblioref">Everitt and Skrondal 2010</a>)</span>. Specifically, drawing on the relevant literature, the study makes explicit the assumptions underlying the CJ structure of interest using a DAG and SCM. It then identifies and formally defines the estimands as target parameters.</p>
-<p>The workflow then proceeds from theory through the design phase to the data-generation phase. First, it simulates a synthetic conceptual population that reflects the specified theoretical assumptions. From this population, it draws a synthetic sample and corresponding comparison datasets (the latter constituting the <em>analysis dataset</em>).</p>
-<p>Next, building on the theoretical assumptions formalized as a DAG and an SCM, the ITCJ analysis specifies a probabilistic model. From this formulation, the approach derives one or more statistical models (<em>estimators</em>) tailored to the CJ system under study. For the CCJ analysis, the study adopts the BTL model <span class="citation" data-cites="Bradley_et_al_1952 Luce_1959">(<a href="#ref-Bradley_et_al_1952" role="doc-biblioref">Bradley and Terry 1952</a>; <a href="#ref-Luce_1959" role="doc-biblioref">Luce 1959</a>)</span> as the estimator, given its extensive use in the CJ literature. From this model, it extracts trait estimates and residuals, which are then used in subsequent follow-up analyses with appropriate models (see <a href="#sec-methods_step5_1" class="quarto-xref">Section&nbsp;3.3.1</a>). In this phase, the study conducts prior predictive checks to establish meaningful priors and to assess their implications within the model context before incorporating any empirical information <span class="citation" data-cites="McElreath_2020">(<a href="#ref-McElreath_2020" role="doc-biblioref">McElreath 2020</a>)</span>.</p>
-<p>After specifying the estimators and their corresponding priors, the study fits the statistical models to obtain <em>estimates</em> of the target parameters under both approaches. Crucially, it evaluates these estimates using diagnostic and post-predictive assessments, including checks for stationarity, convergence, and mixing, as well as assessments of parameter recovery and predictive performance.</p>
+<p>The workflow begins by translating the theoretical understanding of the synthetic CJ system into formal <em>estimands</em>–the targets of inference <span class="citation" data-cites="Everitt_et_al_2010">(<a href="#ref-Everitt_et_al_2010" role="doc-biblioref">Everitt and Skrondal 2010</a>)</span>, and uses these to guide the design of a data-generating process that reflects the stated assumptions. Specifically, drawing on the relevant literature, the study makes explicit the assumptions underlying the CJ structure of interest using a DAG and SCM, and then identifies and formally defines the estimands as target parameters.</p>
+<p>The workflow then proceeds from theory through the design phase and into the data-generation phase. First, it simulates a synthetic conceptual population that reflects the specified theoretical assumptions. From this population, it draws a synthetic sample and corresponding comparison datasets (the latter constituting the <em>analysis dataset</em>).</p>
+<p>Next, building on the theory and design stages, the ITCJ analysis translates the SCM into a probabilistic model. From this formulation, it derives one or more statistical models (<em>estimators</em>) tailored to the CJ system under study. For the CCJ analysis, the study adopts the BTL model <span class="citation" data-cites="Bradley_et_al_1952 Luce_1959">(<a href="#ref-Bradley_et_al_1952" role="doc-biblioref">Bradley and Terry 1952</a>; <a href="#ref-Luce_1959" role="doc-biblioref">Luce 1959</a>)</span> as the estimator, given its extensive use in the CJ literature <span class="citation" data-cites="Wu_2025 Thwaites_et_al_2024 Maydeu-Olivares_et_al_2005">(recent examples include <a href="#ref-Wu_2025" role="doc-biblioref">Wu 2025</a>; <a href="#ref-Thwaites_et_al_2024" role="doc-biblioref">Thwaites and Paquot 2024</a>; <a href="#ref-Maydeu-Olivares_et_al_2005" role="doc-biblioref">Maydeu-Olivares and Böckenholt 2005</a>)</span>. The study then extracts trait estimates and residuals from the BTL model for use in subsequent follow-up analyses (see <a href="#sec-methods_step5_1" class="quarto-xref">Section&nbsp;3.4.1</a>). At this phase, the study also conducts prior predictive checks to establish meaningful priors and to evaluate their implications within the model context before incorporating any empirical information <span class="citation" data-cites="McElreath_2020">(<a href="#ref-McElreath_2020" role="doc-biblioref">McElreath 2020</a>)</span>.</p>
+<p>After specifying the estimators and their corresponding priors, the study fits the statistical models to obtain <em>estimates</em> of the target parameters under both approaches. Crucially, at this stage, the workflow evaluates these estimates using diagnostic and post-predictive assessments, including checks for stationarity, convergence, and mixing, as well as assessments of parameter recovery and predictive performance.</p>
 <p>The following sections expand on specific methodological stages of the workflow.</p>
 <section id="sec-methods_step1" class="level2" data-number="3.1">
-<h2 data-number="3.1" class="anchored" data-anchor-id="sec-methods_step1"><span class="header-section-number">3.1</span> Step 1, from Theory to Design: Data-generating assumptions</h2>
+<h2 data-number="3.1" class="anchored" data-anchor-id="sec-methods_step1"><span class="header-section-number">3.1</span> From Theory to Design: Data-generating assumptions</h2>
 <!-- Sven and Tine 2025.09.04, time: 00:12:25 - 00:22:10 -->
 <!-- Sven and Tine 2025.09.04, time: 00:39:00 - 00:48:45 -->
 <!-- Sven 2025.09.29, time: 00:02:10 - 00:08:00, estimands -->
+<p>The data-generating assumptions of this study draw on key features and findings from <span class="citation" data-cites="Boonen_et_al_2020">Boonen et al. (<a href="#ref-Boonen_et_al_2020" role="doc-biblioref">2020</a>)</span>. In particular, the study also examines whether children’s age and hearing status influence overall speech quality, assuming a CJ task with the same core design features and empirical findings reported by the aforementioned authors.</p>
+<div id="fig-CP_dag" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center" data-fig-pos="H">
+<figure class="quarto-float quarto-float-fig figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-fig" id="fig-CP_dag-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;4: DAG of the “True” Data-Generating Process Underlying the Synthetic Conceptual Population
+</figcaption>
+<div aria-describedby="fig-CP_dag-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="3_results/theory/figures/png/CJ_population_DAG.png" class="lightbox" data-gallery="quarto-lightbox-gallery-3" title="Figure&nbsp;4: DAG of the “True” Data-Generating Process Underlying the Synthetic Conceptual Population"><img src="3_results/theory/figures/png/CJ_population_DAG.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:70.0%" data-fig-pos="H"></a>
+</div>
+</figure>
+</div>
+<p><a href="#fig-CP_dag" class="quarto-xref">Figure&nbsp;4</a> presents a DAG with the incorporated design features. The DAG represents the “true” data-generating process underlying the synthetic datasets. It depicts stimuli nested within individuals who differ in characteristics <span class="math inline">\(X_{I}\)</span>, such as age and hearing status. It also includes judges who vary in speech-judgment expertise <span class="math inline">\(Z_{J}\)</span> and who provide a single judgment per stimulus pair, reflected in the absence of variables <span class="math inline">\(Z_{JK}\)</span> and <span class="math inline">\(e_{JK}\)</span> previously shown in <a href="#fig-ITCJ_dag" class="quarto-xref">Figure&nbsp;1 (a)</a>.</p>
+<p>Finally, similar to <a href="#fig-ITCJ_dag" class="quarto-xref">Figure&nbsp;1 (a)</a>, the DAG represents the sampling and comparison mechanisms (<span class="math inline">\(S\)</span> and <span class="math inline">\(C\)</span>, respectively) without incoming arrows, indicating their independence from all other variables in the DAG. This structure implies that the study samples both stimuli and individuals using SRSg algorithms <span class="citation" data-cites="Lawson_2015">(<a href="#ref-Lawson_2015" role="doc-biblioref">Lawson 2015</a>)</span> and assigns judges to comparisons using random allocation comparative designs <span class="citation" data-cites="Bramley_2015">(<a href="#ref-Bramley_2015" role="doc-biblioref">Bramley 2015</a>)</span> to generate the synthetic sampling and comparison datasets, respectively.</p>
+<div id="fig-CP" class="quarto-layout-panel">
+<figure class="quarto-float quarto-float-fig figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-fig" id="fig-CP-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;5: SCM, Probabilistic and Statistical model of the “True” Data-Generating Process Underlying the Synthetic Conceptual Population
+</figcaption>
+<div aria-describedby="fig-CP-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="quarto-layout-row">
+<div class="quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-CP" style="flex-basis: 33.3%;justify-content: flex-start;">
+<div id="fig-CP_scm" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
+<figure class="quarto-float quarto-subfloat-fig figure">
+<figcaption class="quarto-float-caption-top quarto-subfloat-caption quarto-subfloat-fig" id="fig-CP_scm-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(a) SCM
+</figcaption>
+<div aria-describedby="fig-CP_scm-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<p><span class="math display">\[
+\begin{aligned}
+  O_{R} &amp; := f_{O}(D_{R}, S, C) \\
+  D_{R} &amp; := f_{D}(T_{IA}, B_{JK}) \\
+  T_{IA} &amp; := f_{T}(T_{I}, e_{IA}) \\
+  T_{I} &amp; := f_{T}(X_{I}, e_{I}) \\
+  B_{J} &amp; := f_{B}(Z_{J}, e_{J}) \\ \\
+  e_{IA} &amp; \:\bot\:\{ e_{I}, e_{J} \} \\
+  e_{I} &amp; \:\bot\:\{ e_{J} \}
+\end{aligned}
+\]</span></p>
+</div>
+</figure>
+</div>
+</div>
+<div class="quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-CP" style="flex-basis: 33.3%;justify-content: flex-start;">
+<div id="fig-CP_prob" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
+<figure class="quarto-float quarto-subfloat-fig figure">
+<figcaption class="quarto-float-caption-top quarto-subfloat-caption quarto-subfloat-fig" id="fig-CP_prob-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(b) Probabilistic model
+</figcaption>
+<div aria-describedby="fig-CP_prob-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<p><span class="math display">\[
+\begin{aligned}
+  &amp; P( O_{R} \mid D_{R}, S, C ) \\
+  &amp; P( D_{R} \mid T_{IA}, B_{JK} ) \\
+  &amp; P( T_{IA} \mid T_{I}, e_{IA} ) \\
+  &amp; P( T_{I} \mid X_{I}, e_{I} ) \\
+  &amp; P( B_{J} \mid Z_{J}, e_{J} ) \\ \\
+  &amp; P( e_{IA} ) P( e_{I} ) P( e_{J} )
+\end{aligned}
+\]</span></p>
+</div>
+</figure>
+</div>
+</div>
+<div class="quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-CP" style="flex-basis: 33.3%;justify-content: flex-start;">
+<div id="fig-CP_stat" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
+<figure class="quarto-float quarto-subfloat-fig figure">
+<figcaption class="quarto-float-caption-top quarto-subfloat-caption quarto-subfloat-fig" id="fig-CP_stat-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(c) Statistical model
+</figcaption>
+<div aria-describedby="fig-CP_stat-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<p><span class="math display">\[
+\begin{aligned}
+  O_{R} &amp; \overset{iid}{\sim} \text{Bernoulli} \left[ \text{inv\_logit}( D_{R} ) \right] \\
+  D_{R} &amp; = \left( T_{IA}[i,a] - T_{IA}[h,b] \right) + B_{JK}[j,k] \\
+  T_{IA} &amp; = T_{I} + e_{IA} \\
+  T_{I} &amp; = \beta_{XI} X_{I} + e_{I} \\
+  B_{J} &amp; = \beta_{ZJ} Z_{J} + e_{J} \\ \\
+  \boldsymbol{e} &amp; \sim \text{Multi-Normal}( \boldsymbol{\mu}, \boldsymbol{\Sigma} )
+  \\
+  \boldsymbol{\Sigma} &amp;= \boldsymbol{V} \boldsymbol{Q} \boldsymbol{V}
+\end{aligned}
+\]</span></p>
+</div>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</figure>
+</div>
+<p>Next, the study incorporates Boonen and colleagues’ empirical findings through a statistical model derived from the probabilistic model implied by the system’s SCM, as depicted in <a href="#fig-CP" class="quarto-xref">Figure&nbsp;5</a>. The model conditions on the individual-level variable vector <span class="math inline">\(X_{I} = \{ X_{Ic}, X_{Id}[g=1], X_{Id}[g=2], X_{Id}[g=3] \}\)</span> with corresponding effect vector <span class="math inline">\(\beta_{XI} = \{ \beta_{XIc}, \beta_{XId[g=1]}, \beta_{XId[g=2]}, \beta_{XId[g=3]} \}\)</span>, as well as the judge-level variable vector <span class="math inline">\(Z_{J} = \{ Z_{Jd}[g=1], Z_{Jd}[g=2], Z_{Jd}[g=3] \}\)</span> with corresponding effect vector <span class="math inline">\(\beta_{ZJ} = \{ \beta_{ZJd[g=1]}, \beta_{ZJd[g=2]}, \beta_{ZJd[g=3]} \}\)</span>.</p>
+<p>Specifically, the study assumes that each one-unit increase in age <span class="math inline">\(X_{Ic}\)</span> leads to a <span class="math inline">\(0.1\)</span>-logit increase in speech quality for children aged five to nine, as captured by <span class="math inline">\(\beta_{XIc} = 0.1\)</span>. In addition, the model assumes a strict ordering in hearing-status effects, such that normal-hearing (NH) children (<span class="math inline">\(X_{Id}[g=1]\)</span>) exhibit higher speech quality than hearing-impaired children with hearing aids (HI-HA, <span class="math inline">\(X_{Id}[g=2]\)</span>), who in turn outperform hearing-impaired children with cochlear implants (HI-CI, <span class="math inline">\(X_{Id}[g=3]\)</span>). This ordering is reflected in the parameters <span class="math inline">\(\beta_{XId[g=1]} = 1\)</span>, <span class="math inline">\(\beta_{XId[g=2]} = 0\)</span>, and <span class="math inline">\(\beta_{XId[g=3]} = -1\)</span>.</p>
+<p>Moreover, the study assumes that judges do not introduce systematic bias on average: audiologists (AU, <span class="math inline">\(Z_{Jd}[g=1]\)</span>), primary teachers (PT, <span class="math inline">\(Z_{Jd}[g=2]\)</span>), and inexperienced listeners (IL, <span class="math inline">\(Z_{Jd}[g=3]\)</span>) all have zero mean effects, such that <span class="math inline">\(\beta_{ZJd[g=1]} = \beta_{ZJd[g=2]} = \beta_{ZJd[g=3]} = 0\)</span>.</p>
+<p>Furthermore, consistent with <span class="citation" data-cites="Boonen_et_al_2020">Boonen et al. (<a href="#ref-Boonen_et_al_2020" role="doc-biblioref">2020</a>)</span>, the study assumes that trait variability differs across hearing-status groups. In particular, NH children exhibit higher variability (<span class="math inline">\(s_{XId[g=1]} = 1.5\)</span>) than HI-HA and HI-CI children, both of whom are assumed to show lower and equal variability <span class="math inline">\((s_{XId[g=2]} = s_{XId[g=3]} = 0.75)\)</span>.</p>
+<p>In addition, the study assumes greater unexplained variability between individuals than within individuals, i.e., the stimulus level. Formally, the model specifies <span class="math inline">\(s_I = \big(s_{XId[g=1]} + s_{XId[g=2]} + s_{XId[g=3]}\big)/3 = 1\)</span>, which exceeds stimulus-level variability <span class="math inline">\(s_A = 0.2\)</span>.</p>
+<p><span style="color:red;">TO DO</span></p>
+<!-- Notably, although the original study found no evidence of systematic judge bias, this study does assume ; accordingly, the present simulation treats the absence of judge bias as a modeling assumption. Finally, while judges’ experience levels did not explain differences in mean latent trait levels between stimuli, the original study did not assess whether experience influenced variability in those traits. -->
+<!-- ::: {#fig-cj18b layout-ncol=2 } -->
+<!-- $$ -->
+<!-- \begin{split} -->
+<!-- s_{ZJ} &= \{ s_{ZJd[g=1]}, s_{ZJd[g=2]}, s_{ZJd[g=3]} \} = \{ 0.5, 1, 1.5\} \\ -->
+<!-- \boldsymbol{\mu} &= [0, 0, 0]^{T}; \quad  -->
+<!-- \boldsymbol{Q} = \begin{bmatrix} -->
+<!--     1 & 0 & 0 \\ -->
+<!--     0 & 1 & 0 \\ -->
+<!--     0 & 0 & 1 -->
+<!-- \end{bmatrix} ; -->
+<!-- \boldsymbol{V} = \begin{bmatrix} -->
+<!--     s_{XI} & 0 & 0 \\ -->
+<!--     0 & s_{A} & 0 \\ -->
+<!--     0 & 0 & s_{ZJ}  -->
+<!-- \end{bmatrix} -->
+<!-- \end{split} -->
+<!-- $$ -->
+<!-- Simulating parameter assumptions. -->
+<!-- ::: -->
 </section>
 <section id="sec-methods_step2" class="level2" data-number="3.2">
-<h2 data-number="3.2" class="anchored" data-anchor-id="sec-methods_step2"><span class="header-section-number">3.2</span> Step 2, from Design to Data: Data simulation</h2>
+<h2 data-number="3.2" class="anchored" data-anchor-id="sec-methods_step2"><span class="header-section-number">3.2</span> From Theory to Estimands: Data-generating assumptions</h2>
+</section>
+<section id="sec-methods_step3" class="level2" data-number="3.3">
+<h2 data-number="3.3" class="anchored" data-anchor-id="sec-methods_step3"><span class="header-section-number">3.3</span> From Design to Data: Data simulation</h2>
 <!-- Sven 2025.10.31, time: 00:00:00 - 00:06:15, decision on why one data set -->
 <!-- Express the whole simulation procedure with an algorithm snippet -->
 </section>
-<section id="sec-methods_step5" class="level2" data-number="3.3">
-<h2 data-number="3.3" class="anchored" data-anchor-id="sec-methods_step5"><span class="header-section-number">3.3</span> Step 5, from Estimator and Sample to Estimate(s): The analysis aproaches</h2>
+<section id="sec-methods_step5" class="level2" data-number="3.4">
+<h2 data-number="3.4" class="anchored" data-anchor-id="sec-methods_step5"><span class="header-section-number">3.4</span> From Estimator to Estimate(s): The models</h2>
 <!-- Sven 2025.09.29, time: 00:13:25 - 00:16:55, software -->
 <!-- Tine 2025.10.24, time: 00:02:40 - 00:03:45 -->
-<section id="sec-methods_step5_1" class="level3" data-number="3.3.1">
-<h3 data-number="3.3.1" class="anchored" data-anchor-id="sec-methods_step5_1"><span class="header-section-number">3.3.1</span> The CCJ analysis</h3>
+<section id="sec-methods_step5_1" class="level3" data-number="3.4.1">
+<h3 data-number="3.4.1" class="anchored" data-anchor-id="sec-methods_step5_1"><span class="header-section-number">3.4.1</span> The CCJ analysis</h3>
 <!-- Sven and Tine 2025.09.15, time: 00:11:45 - 00:17:55, make it Bayesian -->
 <!-- Sven and Tine 2025.09.15, time: 00:20:45 - 00:30:30, make it Bayesian -->
 <!-- Sven and Tine 2025.09.15, time: 00:32:30 - 00:32:55 -->
@@ -852,36 +972,36 @@ Figure&nbsp;3: Bayesian research workflow.
 <!-- Tine 2025.10.24, time: 00:03:45 - 00:06:00 -->
 <!-- Sven 2025.10.31, time: 00:06:15 - 00:09:15, same explanation as with Tine 2025.10.24 -->
 </section>
-<section id="sec-methods_step5_2" class="level3" data-number="3.3.2">
-<h3 data-number="3.3.2" class="anchored" data-anchor-id="sec-methods_step5_2"><span class="header-section-number">3.3.2</span> The ITCJ analysis</h3>
+<section id="sec-methods_step5_2" class="level3" data-number="3.4.2">
+<h3 data-number="3.4.2" class="anchored" data-anchor-id="sec-methods_step5_2"><span class="header-section-number">3.4.2</span> The ITCJ analysis</h3>
 <!-- Sven and Tine 2025.09.15, time: 00:17:55 - 00:20:45 -->
 <!-- Sven and Tine 2025.09.15, time: 00:30:30 - 00:32:30 -->
 <!-- Tine 2025.10.24, time: 00:06:00 - 00:10:40 -->
 <!-- Sven 2025.10.31, time: 00:09:15 - 00:11:20, same explanation as with Tine 2025.10.24 -->
 <!-- Sven 2025.10.31, time: 00:14:15 - 00:17:25, same explanation as with Tine 2025.10.24 -->
 <!-- Finally, the probabilistic assumptions for the idiosyncratic errors ($e_{I}$, $e_{IA}$, $e_{J}$, $e_{JK}$) were specifically made to resolve indeterminacies in *location*, *orientation*, and *scale* for the variables $T_{I}$, $T_{IA}$, $B_{J}$, $B_{JK}$, as required in latent variable models [@Depaoli_2021; @deAyala_2009]. -->
-<section id="sec-sec-methods_step5_2_itcj_1" class="level4" data-number="3.3.2.1">
-<h4 data-number="3.3.2.1" class="anchored" data-anchor-id="sec-sec-methods_step5_2_itcj_1"><span class="header-section-number">3.3.2.1</span> Model 1</h4>
+<section id="sec-sec-methods_step5_2_itcj_1" class="level4" data-number="3.4.2.1">
+<h4 data-number="3.4.2.1" class="anchored" data-anchor-id="sec-sec-methods_step5_2_itcj_1"><span class="header-section-number">3.4.2.1</span> Model 1</h4>
 </section>
-<section id="sec-sec-methods_step5_2_itcj_2" class="level4" data-number="3.3.2.2">
-<h4 data-number="3.3.2.2" class="anchored" data-anchor-id="sec-sec-methods_step5_2_itcj_2"><span class="header-section-number">3.3.2.2</span> Model 2</h4>
+<section id="sec-sec-methods_step5_2_itcj_2" class="level4" data-number="3.4.2.2">
+<h4 data-number="3.4.2.2" class="anchored" data-anchor-id="sec-sec-methods_step5_2_itcj_2"><span class="header-section-number">3.4.2.2</span> Model 2</h4>
 </section>
-<section id="sec-sec-methods_step5_2_itcj_3" class="level4" data-number="3.3.2.3">
-<h4 data-number="3.3.2.3" class="anchored" data-anchor-id="sec-sec-methods_step5_2_itcj_3"><span class="header-section-number">3.3.2.3</span> Model 3</h4>
+<section id="sec-sec-methods_step5_2_itcj_3" class="level4" data-number="3.4.2.3">
+<h4 data-number="3.4.2.3" class="anchored" data-anchor-id="sec-sec-methods_step5_2_itcj_3"><span class="header-section-number">3.4.2.3</span> Model 3</h4>
 </section>
-<section id="sec-sec-methods_step5_2_itcj_4" class="level4" data-number="3.3.2.4">
-<h4 data-number="3.3.2.4" class="anchored" data-anchor-id="sec-sec-methods_step5_2_itcj_4"><span class="header-section-number">3.3.2.4</span> Model 4</h4>
+<section id="sec-sec-methods_step5_2_itcj_4" class="level4" data-number="3.4.2.4">
+<h4 data-number="3.4.2.4" class="anchored" data-anchor-id="sec-sec-methods_step5_2_itcj_4"><span class="header-section-number">3.4.2.4</span> Model 4</h4>
 </section>
-<section id="sec-sec-methods_step5_2_itcj_5" class="level4" data-number="3.3.2.5">
-<h4 data-number="3.3.2.5" class="anchored" data-anchor-id="sec-sec-methods_step5_2_itcj_5"><span class="header-section-number">3.3.2.5</span> Model 5</h4>
+<section id="sec-sec-methods_step5_2_itcj_5" class="level4" data-number="3.4.2.5">
+<h4 data-number="3.4.2.5" class="anchored" data-anchor-id="sec-sec-methods_step5_2_itcj_5"><span class="header-section-number">3.4.2.5</span> Model 5</h4>
 </section>
-<section id="sec-sec-methods_step5_2_itcj_6" class="level4" data-number="3.3.2.6">
-<h4 data-number="3.3.2.6" class="anchored" data-anchor-id="sec-sec-methods_step5_2_itcj_6"><span class="header-section-number">3.3.2.6</span> Model 6</h4>
+<section id="sec-sec-methods_step5_2_itcj_6" class="level4" data-number="3.4.2.6">
+<h4 data-number="3.4.2.6" class="anchored" data-anchor-id="sec-sec-methods_step5_2_itcj_6"><span class="header-section-number">3.4.2.6</span> Model 6</h4>
 </section>
 </section>
 </section>
-<section id="sec-methods_step6" class="level2" data-number="3.4">
-<h2 data-number="3.4" class="anchored" data-anchor-id="sec-methods_step6"><span class="header-section-number">3.4</span> Step 6, from Estimate(s) to Diagnostics and Posterior predictives: The evaluation criteria</h2>
+<section id="sec-methods_step6" class="level2" data-number="3.5">
+<h2 data-number="3.5" class="anchored" data-anchor-id="sec-methods_step6"><span class="header-section-number">3.5</span> From Estimate(s) to Diagnostics and Posterior predictives: The evaluation criteria</h2>
 <!-- Sven and Tine 2025.09.04, time: 00:23:40 - 00:26:55, with two datas -->
 <!-- Sven 2025.09.29, time: 00:16:55 - 00:23:40, still with two datas -->
 <!-- Comment2 2025.10.17, posterior confusion matrix, with confidence intervals -->
@@ -1299,7 +1419,7 @@ ZuccoJr., Cesar, Mariana Batista, and Timothy J. Power. 2019. <span>“Measuring
     Sven and Gillis, Steven},
   title = {Finding {Thurstone:} Modeling {Comparative} {Judgment} Data
     with {`R`} (and {`Stan`)}},
-  date = {2026-06-09},
+  date = {2026-06-10},
   langid = {en},
   abstract = {The Classical Comparative Judgment (CCJ) analysis has
     become the standard approach for analyzing CJ data across multiple
@@ -1335,7 +1455,7 @@ ZuccoJr., Cesar, Mariana Batista, and Timothy J. Power. 2019. <span>“Measuring
 </code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre><div class="quarto-appendix-secondary-label">For attribution, please cite this work as:</div><div id="ref-rivera_espejo2026" class="csl-entry quarto-appendix-citeas" role="listitem">
 Rivera Espejo, Jose Manuel, Tine van Daal, Sven De Maeyer, and Steven
 Gillis. 2026. <span>“Finding Thurstone: Modeling Comparative Judgment
-Data with `R` (and `Stan`).”</span> June 9.
+Data with `R` (and `Stan`).”</span> June 10.
 </div></div></section></div></main>
 <!-- /main column -->
 <script id="quarto-html-after-body" type="application/javascript">

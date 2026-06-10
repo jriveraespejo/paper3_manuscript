@@ -602,7 +602,7 @@ representation, these relationships are captured by the arrows from the
 \(D_{R}\) vector, and the corresponding structural equation
 \(D_{R} := f_{D}(T_{IA}, B_{JK})\).
 
-Furthermore, DAG \ref{fig-ITCJ_dag} also represents the sampling and
+Furthermore, Figure~\ref{fig-ITCJ_dag} represents the sampling and
 comparison mechanisms as two conditioned variables that determine how
 population outcomes become the ``observed'' sample outcomes (\(S\) and
 \(C\), respectively shown with surrounding squares to denote
@@ -618,7 +618,7 @@ allocation comparative design} \citep{Bramley_2015}, also known as an
 repeated judgment has an equal probability of being included in the
 sample.
 
-Finally, DAG \ref{fig-ITCJ_dag} shows that the observed CJ outcome
+Finally, Figure~\ref{fig-ITCJ_dag} shows that the observed CJ outcome
 \(O_{R}\) is jointly influenced by the discriminal difference \(D_{R}\)
 and the sampling and comparison mechanisms (\(S\) and \(C\),
 respectively). In typical CJ applications, \(O_{R}\) is often modeled as
@@ -658,14 +658,15 @@ P(O_{R}, D_{R} &, S, C, T_{IA}, X_{IA}, e_{IA}, T_{I}, X_{I}, e_{I}, B_{JK}, Z_{
 
 \end{figure}%
 
-Once researchers specify SCM \ref{fig-ITCJ_scm}, characterizing the
-assumed data-generating process of the CJ system, they can translate it
-into a probabilistic model that factorizes the joint distribution of the
-variables into a product of simpler \emph{conditional probability
-distributions (CPDs)} \citep{Pearl_et_al_2016, Neal_2020}, as
-illustrated in Figure~\ref{fig-ITCJ_prob}. From this formulation, they
-can then derive one or more statistical models tailored to the CJ system
-under study (see Section~\ref{sec-methods_step5_2}).
+Once researchers specify the SCM characterizing the assumed
+data-generating process of the CJ system, as in
+Figure~\ref{fig-ITCJ_scm}, they can translate it into a probabilistic
+model that factorizes the joint distribution of the variables into a
+product of simpler \emph{conditional probability distributions (CPDs)}
+\citep{Pearl_et_al_2016, Neal_2020}, as illustrated in
+Figure~\ref{fig-ITCJ_prob}. From this formulation, they can then derive
+one or more statistical models tailored to the CJ system under study
+(see Section~\ref{sec-methods_step5_2}).
 
 At this stage, it becomes clear that the ITCJ approach differs
 fundamentally from the CCJ approach in its treatment of trait
@@ -695,11 +696,12 @@ To address its two research objectives, this study follows the
 \citep{Depaoli_et_al_2017, Pearl_et_al_2018, Neal_2020, Gelman_et_al_2020, Schad_et_al_2020, Betancourt_2020, McElreath_2024b, McElreath_2024c},
 as depicted in Figure~\ref{fig-worflow}. The workflow consists of
 iterative stages progressing from theoretical assumptions through
-parameter estimation and data prediction, while supporting the study's
-dual focus on \emph{empirical validation} and tutorial-style
-\emph{implementation}. Crucially, given the emphasis on empirical
-validation, this study employs a synthetic dataset derived from a CJ
-data-generating process grounded in the speech-quality literature.
+parameter estimation and data prediction, thereby supporting the study's
+dual focus on empirical model validation and tutorial-style
+implementation. Crucially, given the emphasis on validation, the study
+employs a synthetic dataset derived from a CJ data-generating process
+grounded in the speech-quality literature, enabling model validation
+under controlled conditions.
 
 \begin{figure}[H]
 
@@ -715,50 +717,210 @@ data-generating process grounded in the speech-quality literature.
 
 The workflow begins by translating the theoretical understanding of the
 synthetic CJ system into formal \emph{estimands}--the targets of
-inference \citep{Everitt_et_al_2010}. Specifically, drawing on the
-relevant literature, the study makes explicit the assumptions underlying
-the CJ structure of interest using a DAG and SCM. It then identifies and
-formally defines the estimands as target parameters.
+inference \citep{Everitt_et_al_2010}, and uses these to guide the design
+of a data-generating process that reflects the stated assumptions.
+Specifically, drawing on the relevant literature, the study makes
+explicit the assumptions underlying the CJ structure of interest using a
+DAG and SCM, and then identifies and formally defines the estimands as
+target parameters.
 
-The workflow then proceeds from theory through the design phase to the
-data-generation phase. First, it simulates a synthetic conceptual
+The workflow then proceeds from theory through the design phase and into
+the data-generation phase. First, it simulates a synthetic conceptual
 population that reflects the specified theoretical assumptions. From
 this population, it draws a synthetic sample and corresponding
 comparison datasets (the latter constituting the \emph{analysis
 dataset}).
 
-Next, building on the theoretical assumptions formalized as a DAG and an
-SCM, the ITCJ analysis specifies a probabilistic model. From this
-formulation, the approach derives one or more statistical models
-(\emph{estimators}) tailored to the CJ system under study. For the CCJ
-analysis, the study adopts the BTL model
-\citep{Bradley_et_al_1952, Luce_1959} as the estimator, given its
-extensive use in the CJ literature. From this model, it extracts trait
-estimates and residuals, which are then used in subsequent follow-up
-analyses with appropriate models (see
-Section~\ref{sec-methods_step5_1}). In this phase, the study conducts
-prior predictive checks to establish meaningful priors and to assess
-their implications within the model context before incorporating any
-empirical information \citep{McElreath_2020}.
+Next, building on the theory and design stages, the ITCJ analysis
+translates the SCM into a probabilistic model. From this formulation, it
+derives one or more statistical models (\emph{estimators}) tailored to
+the CJ system under study. For the CCJ analysis, the study adopts the
+BTL model \citep{Bradley_et_al_1952, Luce_1959} as the estimator, given
+its extensive use in the CJ literature \citep[recent examples
+include][]{Wu_2025, Thwaites_et_al_2024, Maydeu-Olivares_et_al_2005}.
+The study then extracts trait estimates and residuals from the BTL model
+for use in subsequent follow-up analyses (see
+Section~\ref{sec-methods_step5_1}). At this phase, the study also
+conducts prior predictive checks to establish meaningful priors and to
+evaluate their implications within the model context before
+incorporating any empirical information \citep{McElreath_2020}.
 
 After specifying the estimators and their corresponding priors, the
 study fits the statistical models to obtain \emph{estimates} of the
-target parameters under both approaches. Crucially, it evaluates these
-estimates using diagnostic and post-predictive assessments, including
-checks for stationarity, convergence, and mixing, as well as assessments
-of parameter recovery and predictive performance.
+target parameters under both approaches. Crucially, at this stage, the
+workflow evaluates these estimates using diagnostic and post-predictive
+assessments, including checks for stationarity, convergence, and mixing,
+as well as assessments of parameter recovery and predictive performance.
 
 The following sections expand on specific methodological stages of the
 workflow.
 
-\subsection{Step 1, from Theory to Design: Data-generating
+\subsection{From Theory to Design: Data-generating
 assumptions}\label{sec-methods_step1}
 
-\subsection{Step 2, from Design to Data: Data
-simulation}\label{sec-methods_step2}
+The data-generating assumptions of this study draw on key features and
+findings from \citet{Boonen_et_al_2020}. In particular, the study also
+examines whether children's age and hearing status influence overall
+speech quality, assuming a CJ task with the same core design features
+and empirical findings reported by the aforementioned authors.
 
-\subsection{Step 5, from Estimator and Sample to Estimate(s): The
-analysis aproaches}\label{sec-methods_step5}
+\begin{figure}[H]
+
+\centering{
+
+\includegraphics[width=0.7\linewidth,height=\textheight,keepaspectratio]{3_results/theory/figures/png/CJ_population_DAG.png}
+
+}
+
+\caption{\label{fig-CP_dag}DAG of the ``True'' Data-Generating Process
+Underlying the Synthetic Conceptual Population}
+
+\end{figure}%
+
+Figure~\ref{fig-CP_dag} presents a DAG with the incorporated design
+features. The DAG represents the ``true'' data-generating process
+underlying the synthetic datasets. It depicts stimuli nested within
+individuals who differ in characteristics \(X_{I}\), such as age and
+hearing status. It also includes judges who vary in speech-judgment
+expertise \(Z_{J}\) and who provide a single judgment per stimulus pair,
+reflected in the absence of variables \(Z_{JK}\) and \(e_{JK}\)
+previously shown in Figure~\ref{fig-ITCJ_dag}.
+
+Finally, similar to Figure~\ref{fig-ITCJ_dag}, the DAG represents the
+sampling and comparison mechanisms (\(S\) and \(C\), respectively)
+without incoming arrows, indicating their independence from all other
+variables in the DAG. This structure implies that the study samples both
+stimuli and individuals using SRSg algorithms \citep{Lawson_2015} and
+assigns judges to comparisons using random allocation comparative
+designs \citep{Bramley_2015} to generate the synthetic sampling and
+comparison datasets, respectively.
+
+\begin{figure}[H]
+
+\begin{minipage}[t]{0.33\linewidth}
+
+\centering{
+
+\[
+\begin{aligned}
+  O_{R} & := f_{O}(D_{R}, S, C) \\
+  D_{R} & := f_{D}(T_{IA}, B_{JK}) \\
+  T_{IA} & := f_{T}(T_{I}, e_{IA}) \\
+  T_{I} & := f_{T}(X_{I}, e_{I}) \\
+  B_{J} & := f_{B}(Z_{J}, e_{J}) \\ \\
+  e_{IA} & \:\bot\:\{ e_{I}, e_{J} \} \\
+  e_{I} & \:\bot\:\{ e_{J} \}
+\end{aligned}
+\]
+
+}
+
+\subcaption{\label{fig-CP_scm}SCM}
+
+\end{minipage}%
+%
+\begin{minipage}[t]{0.33\linewidth}
+
+\centering{
+
+\[
+\begin{aligned}
+  & P( O_{R} \mid D_{R}, S, C ) \\
+  & P( D_{R} \mid T_{IA}, B_{JK} ) \\
+  & P( T_{IA} \mid T_{I}, e_{IA} ) \\
+  & P( T_{I} \mid X_{I}, e_{I} ) \\
+  & P( B_{J} \mid Z_{J}, e_{J} ) \\ \\
+  & P( e_{IA} ) P( e_{I} ) P( e_{J} )
+\end{aligned}
+\]
+
+}
+
+\subcaption{\label{fig-CP_prob}Probabilistic model}
+
+\end{minipage}%
+%
+\begin{minipage}[t]{0.33\linewidth}
+
+\centering{
+
+\[
+\begin{aligned}
+  O_{R} & \overset{iid}{\sim} \text{Bernoulli} \left[ \text{inv\_logit}( D_{R} ) \right] \\
+  D_{R} & = \left( T_{IA}[i,a] - T_{IA}[h,b] \right) + B_{JK}[j,k] \\
+  T_{IA} & = T_{I} + e_{IA} \\
+  T_{I} & = \beta_{XI} X_{I} + e_{I} \\
+  B_{J} & = \beta_{ZJ} Z_{J} + e_{J} \\ \\
+  \boldsymbol{e} & \sim \text{Multi-Normal}( \boldsymbol{\mu}, \boldsymbol{\Sigma} )
+  \\
+  \boldsymbol{\Sigma} &= \boldsymbol{V} \boldsymbol{Q} \boldsymbol{V}
+\end{aligned}
+\]
+
+}
+
+\subcaption{\label{fig-CP_stat}Statistical model}
+
+\end{minipage}%
+
+\caption{\label{fig-CP}SCM, Probabilistic and Statistical model of the
+``True'' Data-Generating Process Underlying the Synthetic Conceptual
+Population}
+
+\end{figure}%
+
+Next, the study incorporates Boonen and colleagues' empirical findings
+through a statistical model derived from the probabilistic model implied
+by the system's SCM, as depicted in Figure~\ref{fig-CP}. The model
+conditions on the individual-level variable vector
+\(X_{I} = \{ X_{Ic}, X_{Id}[g=1], X_{Id}[g=2], X_{Id}[g=3] \}\) with
+corresponding effect vector
+\(\beta_{XI} = \{ \beta_{XIc}, \beta_{XId[g=1]}, \beta_{XId[g=2]}, \beta_{XId[g=3]} \}\),
+as well as the judge-level variable vector
+\(Z_{J} = \{ Z_{Jd}[g=1], Z_{Jd}[g=2], Z_{Jd}[g=3] \}\) with
+corresponding effect vector
+\(\beta_{ZJ} = \{ \beta_{ZJd[g=1]}, \beta_{ZJd[g=2]}, \beta_{ZJd[g=3]} \}\).
+
+Specifically, the study assumes that each one-unit increase in age
+\(X_{Ic}\) leads to a \(0.1\)-logit increase in speech quality for
+children aged five to nine, as captured by \(\beta_{XIc} = 0.1\). In
+addition, the model assumes a strict ordering in hearing-status effects,
+such that normal-hearing (NH) children (\(X_{Id}[g=1]\)) exhibit higher
+speech quality than hearing-impaired children with hearing aids (HI-HA,
+\(X_{Id}[g=2]\)), who in turn outperform hearing-impaired children with
+cochlear implants (HI-CI, \(X_{Id}[g=3]\)). This ordering is reflected
+in the parameters \(\beta_{XId[g=1]} = 1\), \(\beta_{XId[g=2]} = 0\),
+and \(\beta_{XId[g=3]} = -1\).
+
+Moreover, the study assumes that judges do not introduce systematic bias
+on average: audiologists (AU, \(Z_{Jd}[g=1]\)), primary teachers (PT,
+\(Z_{Jd}[g=2]\)), and inexperienced listeners (IL, \(Z_{Jd}[g=3]\)) all
+have zero mean effects, such that
+\(\beta_{ZJd[g=1]} = \beta_{ZJd[g=2]} = \beta_{ZJd[g=3]} = 0\).
+
+Furthermore, consistent with \citet{Boonen_et_al_2020}, the study
+assumes that trait variability differs across hearing-status groups. In
+particular, NH children exhibit higher variability
+(\(s_{XId[g=1]} = 1.5\)) than HI-HA and HI-CI children, both of whom are
+assumed to show lower and equal variability
+\((s_{XId[g=2]} = s_{XId[g=3]} = 0.75)\).
+
+In addition, the study assumes greater unexplained variability between
+individuals than within individuals, i.e., the stimulus level. Formally,
+the model specifies
+\(s_I = \big(s_{XId[g=1]} + s_{XId[g=2]} + s_{XId[g=3]}\big)/3 = 1\),
+which exceeds stimulus-level variability \(s_A = 0.2\).
+
+{TO DO}
+
+\subsection{From Theory to Estimands: Data-generating
+assumptions}\label{sec-methods_step2}
+
+\subsection{From Design to Data: Data
+simulation}\label{sec-methods_step3}
+
+\subsection{From Estimator to Estimate(s): The
+models}\label{sec-methods_step5}
 
 \subsubsection{The CCJ analysis}\label{sec-methods_step5_1}
 
@@ -776,8 +938,8 @@ analysis aproaches}\label{sec-methods_step5}
 
 \paragraph{Model 6}\label{sec-sec-methods_step5_2_itcj_6}
 
-\subsection{Step 6, from Estimate(s) to Diagnostics and Posterior
-predictives: The evaluation criteria}\label{sec-methods_step6}
+\subsection{From Estimate(s) to Diagnostics and Posterior predictives:
+The evaluation criteria}\label{sec-methods_step6}
 
 \section{Results}\label{sec-results}
 
