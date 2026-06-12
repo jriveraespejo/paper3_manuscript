@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.10.9">
+<meta name="generator" content="quarto-1.10.11">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -10,7 +10,7 @@
 <meta name="author" content="Tine van Daal">
 <meta name="author" content="Sven De Maeyer">
 <meta name="author" content="Steven Gillis">
-<meta name="dcterms.date" content="2026-06-10">
+<meta name="dcterms.date" content="2026-06-12">
 <meta name="keywords" content="tutorial, causal inference, bayesian inference, thustone, comparative judgement">
 
 <title>Finding Thurstone: modeling Comparative Judgment data with R (and Stan)</title>
@@ -58,10 +58,10 @@ div.csl-indent {
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-5198e99e68e02f6ba92128fbf88417ab.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-5947b73a06bce04bf1d622ae23e1ec5b.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-32a2c5ce4c97ca25239b6ff0eaadf90f.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-18219f2dfae9996c7e390f89dd8d601f.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script src="site_libs/quarto-contrib/glightbox/glightbox.min.js"></script>
 <link href="site_libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
 <link href="site_libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet">
@@ -114,10 +114,10 @@ Therefore, this study evaluates the ITCJ analysis using a simulated speech-quali
 <meta name="citation_author" content="Tine van Daal">
 <meta name="citation_author" content="Sven De Maeyer">
 <meta name="citation_author" content="Steven Gillis">
-<meta name="citation_publication_date" content="2026-06-10">
-<meta name="citation_cover_date" content="2026-06-10">
+<meta name="citation_publication_date" content="2026-06-12">
+<meta name="citation_cover_date" content="2026-06-12">
 <meta name="citation_year" content="2026">
-<meta name="citation_online_date" content="2026-06-10">
+<meta name="citation_online_date" content="2026-06-12">
 <meta name="citation_language" content="en">
 <meta name="citation_reference" content="citation_title=Correlation and causation;,citation_author=S. Wright;,citation_publication_date=1927;,citation_cover_date=1927;,citation_year=1927;,citation_fulltext_html_url=https://books.google.co.ao/books/about/Journal_of_Agricultural_Research.html?hl=pt-PT&amp;amp;amp;id=lNNdIV_qpwIC;,citation_issue=7;,citation_volume=20;,citation_journal_title=Correlation and causation;">
 <meta name="citation_reference" content="citation_title=On the interpretation of χ2 from contingency tables, and the calculation of p;,citation_author=R. Fisher;,citation_publication_date=1922;,citation_cover_date=1922;,citation_year=1922;,citation_fulltext_html_url=http://www.jstor.org/stable/2340521;,citation_issue=1;,citation_doi=10.2307/2340521;,citation_volume=85;,citation_journal_title=Journal of the Royal Statistical Society;,citation_publisher=[Wiley, Royal Statistical Society];">
@@ -496,7 +496,7 @@ Therefore, this study evaluates the ITCJ analysis using a simulated speech-quali
                 <div>
             <div class="quarto-title-meta-heading">Published</div>
             <div class="quarto-title-meta-contents">
-              <p class="date">June 10, 2026</p>
+              <p class="date">June 12, 2026</p>
             </div>
           </div>
           
@@ -543,7 +543,7 @@ Therefore, this study evaluates the ITCJ analysis using a simulated speech-quali
   <li><a href="#sec-methods" id="toc-sec-methods" class="nav-link" data-scroll-target="#sec-methods"><span class="header-section-number">3</span> Methods</a>
   <ul>
   <li><a href="#sec-methods_step1" id="toc-sec-methods_step1" class="nav-link" data-scroll-target="#sec-methods_step1"><span class="header-section-number">3.1</span> From Theory to Design: Data-generating assumptions</a></li>
-  <li><a href="#sec-methods_step2" id="toc-sec-methods_step2" class="nav-link" data-scroll-target="#sec-methods_step2"><span class="header-section-number">3.2</span> From Theory to Estimands: Data-generating assumptions</a></li>
+  <li><a href="#sec-methods_step2" id="toc-sec-methods_step2" class="nav-link" data-scroll-target="#sec-methods_step2"><span class="header-section-number">3.2</span> From Theory to Estimands: Target parameters</a></li>
   <li><a href="#sec-methods_step3" id="toc-sec-methods_step3" class="nav-link" data-scroll-target="#sec-methods_step3"><span class="header-section-number">3.3</span> From Design to Data: Data simulation</a></li>
   <li><a href="#sec-methods_step5" id="toc-sec-methods_step5" class="nav-link" data-scroll-target="#sec-methods_step5"><span class="header-section-number">3.4</span> From Estimator to Estimate(s): The models</a>
   <ul class="collapse">
@@ -812,7 +812,7 @@ P(O_{R}, D_{R} &amp;, S, C, T_{IA}, X_{IA}, e_{IA}, T_{I}, X_{I}, e_{I}, B_{JK},
 <!-- Sven and Tine 2025.09.04, time: 00:22:10 - 00:25:30 -->
 <!-- Sven and Tine 2025.09.04, time: 00:33:30 - 00:37:15 -->
 <!-- Sven and Tine 2025.09.15, time: 00:04:25 - 00:11:45 -->
-<p>To address its two research objectives, this study follows the <em>Bayesian research workflow</em> <span class="citation" data-cites="Depaoli_et_al_2017 Pearl_et_al_2018 Neal_2020 Gelman_et_al_2020 Schad_et_al_2020 Betancourt_2020 McElreath_2024b McElreath_2024c">(<a href="#ref-Depaoli_et_al_2017" role="doc-biblioref"><span class="nocase">Depaoli and van de Schoot</span> 2017</a>; <a href="#ref-Pearl_et_al_2018" role="doc-biblioref">Pearl and Mackenzie 2018</a>; <a href="#ref-Neal_2020" role="doc-biblioref">Neal 2020</a>; <a href="#ref-Gelman_et_al_2020" role="doc-biblioref">Gelman et al. 2020</a>; <a href="#ref-Schad_et_al_2020" role="doc-biblioref">Schad et al. 2020</a>; <a href="#ref-Betancourt_2020" role="doc-biblioref">Betancourt 2020</a>; <a href="#ref-McElreath_2024b" role="doc-biblioref">McElreath 2024a</a>, <a href="#ref-McElreath_2024c" role="doc-biblioref">2024b</a>)</span>, as depicted in <a href="#fig-worflow" class="quarto-xref">Figure&nbsp;3</a>. The workflow consists of iterative stages progressing from theoretical assumptions through parameter estimation and data prediction, thereby supporting the study’s dual focus on empirical model validation and tutorial-style implementation. Crucially, given the emphasis on validation, the study employs a synthetic dataset derived from a CJ data-generating process grounded in the speech-quality literature, enabling model validation under controlled conditions.</p>
+<p>To address its goals of empirical model validation and tutorial-style implementation, this study follows the <em>Bayesian research workflow</em> <span class="citation" data-cites="Depaoli_et_al_2017 Pearl_et_al_2018 Neal_2020 Gelman_et_al_2020 Schad_et_al_2020 Betancourt_2020 McElreath_2024b McElreath_2024c">(<a href="#ref-Depaoli_et_al_2017" role="doc-biblioref"><span class="nocase">Depaoli and van de Schoot</span> 2017</a>; <a href="#ref-Pearl_et_al_2018" role="doc-biblioref">Pearl and Mackenzie 2018</a>; <a href="#ref-Neal_2020" role="doc-biblioref">Neal 2020</a>; <a href="#ref-Gelman_et_al_2020" role="doc-biblioref">Gelman et al. 2020</a>; <a href="#ref-Schad_et_al_2020" role="doc-biblioref">Schad et al. 2020</a>; <a href="#ref-Betancourt_2020" role="doc-biblioref">Betancourt 2020</a>; <a href="#ref-McElreath_2024b" role="doc-biblioref">McElreath 2024a</a>, <a href="#ref-McElreath_2024c" role="doc-biblioref">2024b</a>)</span>, depicted in <a href="#fig-worflow" class="quarto-xref">Figure&nbsp;3</a>. Crucially, because the study emphasizes empirical validation, it employs a synthetic dataset generated from a CJ data-generating process grounded in the speech-quality literature. Synthetic data enables rigorous evaluation of model performance under controlled conditions, where both the underlying data-generating mechanisms and the target parameters are known by design. The workflow thus serves a dual role: it guides the construction of the synthetic dataset and the specification, estimation, and evaluation of the resulting models.</p>
 <div id="fig-worflow" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center" data-fig-pos="H">
 <figure class="quarto-float quarto-float-fig figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-fig" id="fig-worflow-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -823,17 +823,17 @@ Figure&nbsp;3: Bayesian research workflow.
 </div>
 </figure>
 </div>
-<p>The workflow begins by translating the theoretical understanding of the synthetic CJ system into formal <em>estimands</em>–the targets of inference <span class="citation" data-cites="Everitt_et_al_2010">(<a href="#ref-Everitt_et_al_2010" role="doc-biblioref">Everitt and Skrondal 2010</a>)</span>, and uses these to guide the design of a data-generating process that reflects the stated assumptions. Specifically, drawing on the relevant literature, the study makes explicit the assumptions underlying the CJ structure of interest using a DAG and SCM, and then identifies and formally defines the estimands as target parameters.</p>
-<p>The workflow then proceeds from theory through the design phase and into the data-generation phase. First, it simulates a synthetic conceptual population that reflects the specified theoretical assumptions. From this population, it draws a synthetic sample and corresponding comparison datasets (the latter constituting the <em>analysis dataset</em>).</p>
-<p>Next, building on the theory and design stages, the ITCJ analysis translates the SCM into a probabilistic model. From this formulation, it derives one or more statistical models (<em>estimators</em>) tailored to the CJ system under study. For the CCJ analysis, the study adopts the BTL model <span class="citation" data-cites="Bradley_et_al_1952 Luce_1959">(<a href="#ref-Bradley_et_al_1952" role="doc-biblioref">Bradley and Terry 1952</a>; <a href="#ref-Luce_1959" role="doc-biblioref">Luce 1959</a>)</span> as the estimator, given its extensive use in the CJ literature <span class="citation" data-cites="Wu_2025 Thwaites_et_al_2024 Maydeu-Olivares_et_al_2005">(recent examples include <a href="#ref-Wu_2025" role="doc-biblioref">Wu 2025</a>; <a href="#ref-Thwaites_et_al_2024" role="doc-biblioref">Thwaites and Paquot 2024</a>; <a href="#ref-Maydeu-Olivares_et_al_2005" role="doc-biblioref">Maydeu-Olivares and Böckenholt 2005</a>)</span>. The study then extracts trait estimates and residuals from the BTL model for use in subsequent follow-up analyses (see <a href="#sec-methods_step5_1" class="quarto-xref">Section&nbsp;3.4.1</a>). At this phase, the study also conducts prior predictive checks to establish meaningful priors and to evaluate their implications within the model context before incorporating any empirical information <span class="citation" data-cites="McElreath_2020">(<a href="#ref-McElreath_2020" role="doc-biblioref">McElreath 2020</a>)</span>.</p>
-<p>After specifying the estimators and their corresponding priors, the study fits the statistical models to obtain <em>estimates</em> of the target parameters under both approaches. Crucially, at this stage, the workflow evaluates these estimates using diagnostic and post-predictive assessments, including checks for stationarity, convergence, and mixing, as well as assessments of parameter recovery and predictive performance.</p>
+<p>The workflow begins by translating the theoretical understanding of the synthetic CJ system into formal targets of inference or <em>Estimands</em> <span class="citation" data-cites="Everitt_et_al_2010">(<a href="#ref-Everitt_et_al_2010" role="doc-biblioref">Everitt and Skrondal 2010</a>)</span>, which then guide the design of a data-generating process consistent with the stated assumptions. Specifically, drawing on the relevant literature, the study makes explicit the assumptions underlying the CJ structure of interest using a DAG and SCM, and then formally defines and identifies the estimands as target parameters.</p>
+<p>The workflow then proceeds from theory through the design and into the data-generation phase. First, it simulates a synthetic conceptual population that reflects the specified theoretical assumptions. From this population, it draws a synthetic sample and corresponding comparison datasets (the latter constituting the <em>analysis dataset</em>).</p>
+<p>Next, building on the theory and design phases, the ITCJ analysis translates the SCM into a probabilistic model and derives one or more statistical models (<em>Estimators</em>) tailored to the CJ system under study. Notably, under the CCJ analysis, this step is comparatively more straightforward: the study adopts the BTL model as the estimator, due to its extensive use in the CJ literature <span class="citation" data-cites="Wu_2025 Thwaites_et_al_2024 Maydeu-Olivares_et_al_2005">(recent examples include <a href="#ref-Wu_2025" role="doc-biblioref">Wu 2025</a>; <a href="#ref-Thwaites_et_al_2024" role="doc-biblioref">Thwaites and Paquot 2024</a>; <a href="#ref-Maydeu-Olivares_et_al_2005" role="doc-biblioref">Maydeu-Olivares and Böckenholt 2005</a>)</span>. It then extracts trait estimates and residuals for use in subsequent follow-up analyses (see <a href="#sec-methods_step5_1" class="quarto-xref">Section&nbsp;3.4.1</a>). At this stage, the study also conducts prior predictive checks for both approaches to evaluate their implications before incorporating any empirical information <span class="citation" data-cites="McElreath_2020">(<a href="#ref-McElreath_2020" role="doc-biblioref">McElreath 2020</a>)</span>, thereby establishing meaningful priors.</p>
+<p>After specifying the estimators and their priors, the study fits the statistical models to obtain <em>Estimates</em> of the target parameters under both approaches. Crucially, at this stage, the workflow evaluates these estimates using diagnostic and post-predictive assessments, including checks for stationarity, convergence, and mixing, as well as assessments of parameter recovery and predictive performance.</p>
 <p>The following sections expand on specific methodological stages of the workflow.</p>
 <section id="sec-methods_step1" class="level2" data-number="3.1">
 <h2 data-number="3.1" class="anchored" data-anchor-id="sec-methods_step1"><span class="header-section-number">3.1</span> From Theory to Design: Data-generating assumptions</h2>
 <!-- Sven and Tine 2025.09.04, time: 00:12:25 - 00:22:10 -->
 <!-- Sven and Tine 2025.09.04, time: 00:39:00 - 00:48:45 -->
 <!-- Sven 2025.09.29, time: 00:02:10 - 00:08:00, estimands -->
-<p>The data-generating assumptions of this study draw on key features and findings from <span class="citation" data-cites="Boonen_et_al_2020">Boonen et al. (<a href="#ref-Boonen_et_al_2020" role="doc-biblioref">2020</a>)</span>. In particular, the study also examines whether children’s age and hearing status influence overall speech quality, assuming a CJ task with the same core design features and empirical findings reported by the aforementioned authors.</p>
+<p>The data-generating assumptions of this study draw on key features and findings reported in <span class="citation" data-cites="Boonen_et_al_2020">Boonen et al. (<a href="#ref-Boonen_et_al_2020" role="doc-biblioref">2020</a>)</span>. In particular, the present study adopts Boonen and colleagues’ original objective, namely, to examine whether children’s age and hearing status influence overall speech quality. It implements this objective within a CJ task that preserves the core design features and empirical findings reported in the original study.</p>
 <div id="fig-CP_dag" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center" data-fig-pos="H">
 <figure class="quarto-float quarto-float-fig figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-fig" id="fig-CP_dag-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -844,8 +844,8 @@ Figure&nbsp;4: DAG of the “True” Data-Generating Process Underlying the Synt
 </div>
 </figure>
 </div>
-<p><a href="#fig-CP_dag" class="quarto-xref">Figure&nbsp;4</a> presents a DAG with the incorporated design features. The DAG represents the “true” data-generating process underlying the synthetic datasets. It depicts stimuli nested within individuals who differ in characteristics <span class="math inline">\(X_{I}\)</span>, such as age and hearing status. It also includes judges who vary in speech-judgment expertise <span class="math inline">\(Z_{J}\)</span> and who provide a single judgment per stimulus pair, reflected in the absence of variables <span class="math inline">\(Z_{JK}\)</span> and <span class="math inline">\(e_{JK}\)</span> previously shown in <a href="#fig-ITCJ_dag" class="quarto-xref">Figure&nbsp;1 (a)</a>.</p>
-<p>Finally, similar to <a href="#fig-ITCJ_dag" class="quarto-xref">Figure&nbsp;1 (a)</a>, the DAG represents the sampling and comparison mechanisms (<span class="math inline">\(S\)</span> and <span class="math inline">\(C\)</span>, respectively) without incoming arrows, indicating their independence from all other variables in the DAG. This structure implies that the study samples both stimuli and individuals using SRSg algorithms <span class="citation" data-cites="Lawson_2015">(<a href="#ref-Lawson_2015" role="doc-biblioref">Lawson 2015</a>)</span> and assigns judges to comparisons using random allocation comparative designs <span class="citation" data-cites="Bramley_2015">(<a href="#ref-Bramley_2015" role="doc-biblioref">Bramley 2015</a>)</span> to generate the synthetic sampling and comparison datasets, respectively.</p>
+<p><a href="#fig-CP_dag" class="quarto-xref">Figure&nbsp;4</a> presents the DAG incorporating the design features of the original study. This DAG represents the assumed data-generating process underlying the synthetic datasets used in this study. It depicts stimuli nested within individuals who vary in characteristics <span class="math inline">\(X_{I}\)</span>, such as age and hearing status. In contrast to <a href="#fig-ITCJ_dag" class="quarto-xref">Figure&nbsp;1 (a)</a>, the model does not assign additional attributes to stimuli, as reflected in the absence of the variable <span class="math inline">\(X_{IA}\)</span>. The DAG further includes judges who differ in speech-judgment expertise <span class="math inline">\(Z_{J}\)</span> and who provide a single judgment per stimulus pair, as indicated by the absence of variables <span class="math inline">\(Z_{JK}\)</span> and <span class="math inline">\(e_{JK}\)</span> previously shown in <a href="#fig-ITCJ_dag" class="quarto-xref">Figure&nbsp;1 (a)</a>.</p>
+<p>Lastly, similar to <a href="#fig-ITCJ_dag" class="quarto-xref">Figure&nbsp;1 (a)</a>, the DAG represents the sampling and comparison mechanisms (<span class="math inline">\(S\)</span> and <span class="math inline">\(C\)</span>, respectively) without incoming arrows, indicating their independence from all other variables in the model. This structure implies that the model draws stimuli, individuals, and judges from a conceptual population using SRSg algorithms <span class="citation" data-cites="Lawson_2015">(<a href="#ref-Lawson_2015" role="doc-biblioref">Lawson 2015</a>)</span> and assigns judges to comparisons using random allocation comparative designs <span class="citation" data-cites="Bramley_2015">(<a href="#ref-Bramley_2015" role="doc-biblioref">Bramley 2015</a>)</span>, thereby generating the synthetic sampling and comparison datasets, respectively.</p>
 <div id="fig-CP" class="quarto-layout-panel">
 <figure class="quarto-float quarto-float-fig figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-fig" id="fig-CP-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -923,35 +923,38 @@ Figure&nbsp;5: SCM, Probabilistic and Statistical model of the “True” Data-G
 </div>
 </figure>
 </div>
-<p>Next, the study incorporates Boonen and colleagues’ empirical findings through a statistical model derived from the probabilistic model implied by the system’s SCM, as depicted in <a href="#fig-CP" class="quarto-xref">Figure&nbsp;5</a>. The model conditions on the individual-level variable vector <span class="math inline">\(X_{I} = \{ X_{Ic}, X_{Id}[g=1], X_{Id}[g=2], X_{Id}[g=3] \}\)</span> with corresponding effect vector <span class="math inline">\(\beta_{XI} = \{ \beta_{XIc}, \beta_{XId[g=1]}, \beta_{XId[g=2]}, \beta_{XId[g=3]} \}\)</span>, as well as the judge-level variable vector <span class="math inline">\(Z_{J} = \{ Z_{Jd}[g=1], Z_{Jd}[g=2], Z_{Jd}[g=3] \}\)</span> with corresponding effect vector <span class="math inline">\(\beta_{ZJ} = \{ \beta_{ZJd[g=1]}, \beta_{ZJd[g=2]}, \beta_{ZJd[g=3]} \}\)</span>.</p>
-<p>Specifically, the study assumes that each one-unit increase in age <span class="math inline">\(X_{Ic}\)</span> leads to a <span class="math inline">\(0.1\)</span>-logit increase in speech quality for children aged five to nine, as captured by <span class="math inline">\(\beta_{XIc} = 0.1\)</span>. In addition, the model assumes a strict ordering in hearing-status effects, such that normal-hearing (NH) children (<span class="math inline">\(X_{Id}[g=1]\)</span>) exhibit higher speech quality than hearing-impaired children with hearing aids (HI-HA, <span class="math inline">\(X_{Id}[g=2]\)</span>), who in turn outperform hearing-impaired children with cochlear implants (HI-CI, <span class="math inline">\(X_{Id}[g=3]\)</span>). This ordering is reflected in the parameters <span class="math inline">\(\beta_{XId[g=1]} = 1\)</span>, <span class="math inline">\(\beta_{XId[g=2]} = 0\)</span>, and <span class="math inline">\(\beta_{XId[g=3]} = -1\)</span>.</p>
-<p>Moreover, the study assumes that judges do not introduce systematic bias on average: audiologists (AU, <span class="math inline">\(Z_{Jd}[g=1]\)</span>), primary teachers (PT, <span class="math inline">\(Z_{Jd}[g=2]\)</span>), and inexperienced listeners (IL, <span class="math inline">\(Z_{Jd}[g=3]\)</span>) all have zero mean effects, such that <span class="math inline">\(\beta_{ZJd[g=1]} = \beta_{ZJd[g=2]} = \beta_{ZJd[g=3]} = 0\)</span>.</p>
-<p>Furthermore, consistent with <span class="citation" data-cites="Boonen_et_al_2020">Boonen et al. (<a href="#ref-Boonen_et_al_2020" role="doc-biblioref">2020</a>)</span>, the study assumes that trait variability differs across hearing-status groups. In particular, NH children exhibit higher variability (<span class="math inline">\(s_{XId[g=1]} = 1.5\)</span>) than HI-HA and HI-CI children, both of whom are assumed to show lower and equal variability <span class="math inline">\((s_{XId[g=2]} = s_{XId[g=3]} = 0.75)\)</span>.</p>
-<p>In addition, the study assumes greater unexplained variability between individuals than within individuals, i.e., the stimulus level. Formally, the model specifies <span class="math inline">\(s_I = \big(s_{XId[g=1]} + s_{XId[g=2]} + s_{XId[g=3]}\big)/3 = 1\)</span>, which exceeds stimulus-level variability <span class="math inline">\(s_A = 0.2\)</span>.</p>
-<p><span style="color:red;">TO DO</span></p>
-<!-- Notably, although the original study found no evidence of systematic judge bias, this study does assume ; accordingly, the present simulation treats the absence of judge bias as a modeling assumption. Finally, while judges’ experience levels did not explain differences in mean latent trait levels between stimuli, the original study did not assess whether experience influenced variability in those traits. -->
-<!-- ::: {#fig-cj18b layout-ncol=2 } -->
-<!-- $$ -->
-<!-- \begin{split} -->
-<!-- s_{ZJ} &= \{ s_{ZJd[g=1]}, s_{ZJd[g=2]}, s_{ZJd[g=3]} \} = \{ 0.5, 1, 1.5\} \\ -->
-<!-- \boldsymbol{\mu} &= [0, 0, 0]^{T}; \quad  -->
-<!-- \boldsymbol{Q} = \begin{bmatrix} -->
-<!--     1 & 0 & 0 \\ -->
-<!--     0 & 1 & 0 \\ -->
-<!--     0 & 0 & 1 -->
-<!-- \end{bmatrix} ; -->
-<!-- \boldsymbol{V} = \begin{bmatrix} -->
-<!--     s_{XI} & 0 & 0 \\ -->
-<!--     0 & s_{A} & 0 \\ -->
-<!--     0 & 0 & s_{ZJ}  -->
-<!-- \end{bmatrix} -->
-<!-- \end{split} -->
-<!-- $$ -->
-<!-- Simulating parameter assumptions. -->
-<!-- ::: -->
+<p>Next, the study incorporates Boonen and colleagues’ empirical findings by specifying a statistical model derived from the probabilistic model implied by the system’s SCM, as depicted in <a href="#fig-CP" class="quarto-xref">Figure&nbsp;5</a>. With this purpose, the model first organizes individual-level predictors into the vector <span class="math inline">\(X_{I} = \{ XIc, XId[1], XId[2], XId[3] \}\)</span> with corresponding effect vector <span class="math inline">\(\beta_{XI} = \{ \beta_{XIc}, \beta_{XId[1]}, \beta_{XId[2]}, \beta_{XId[3]} \}\)</span>, and judge-level variables into the vector <span class="math inline">\(Z_{J} = \{ ZJd[1], ZJd[2], ZJd[3] \}\)</span> with corresponding effect vector <span class="math inline">\(\beta_{ZJ} = \{ \beta_{ZJd[1]}, \beta_{ZJd[2]}, \beta_{ZJd[3]} \}\)</span>.</p>
+<p>The model then assumes that each one-unit increase in age <span class="math inline">\(XIc\)</span> leads to a <span class="math inline">\(0.1\)</span>-logit increase in speech quality for children aged five to nine, as captured by <span class="math inline">\(\beta_{XIc} = 0.1\)</span>. It further encodes a strict ordering of hearing-status effects, such that normal-hearing children <span class="math inline">\((NH, XId[1])\)</span> exhibit higher speech quality than hearing-impaired children with hearing aids <span class="math inline">\((HI-HA, XId[2])\)</span>, who in turn outperform hearing-impaired children with cochlear implants <span class="math inline">\((HI-CI, XId[3])\)</span>. This ordering is represented by <span class="math inline">\(\beta_{XId[1]} &gt; \beta_{XId[2]} &gt; \beta_{XId[3]}\)</span>, where <span class="math inline">\(\beta_{XId[1]} = 1\)</span>, <span class="math inline">\(\beta_{XId[2]} = 0\)</span>, and <span class="math inline">\(\beta_{XId[3]} = -1\)</span>.</p>
+<p>Moreover, the model assumes that expertise with the judgment task does not systematically influence average judgment bias. Consequently, audiologists (<span class="math inline">\(AU, ZJd[1]\)</span>), primary teachers (<span class="math inline">\(PT, ZJd[2]\)</span>), and inexperienced listeners (<span class="math inline">\(IL, ZJd[3]\)</span>) all have zero mean effects, such that <span class="math inline">\(\beta_{ZJd[1]} = \beta_{ZJd[2]} = \beta_{ZJd[3]} = 0\)</span>.</p>
+<p>Similarly, to incorporate assumptions about the covariance structure of the error terms, the model collects them in the vector <span class="math inline">\(\boldsymbol{e} = \{ e_{I}, e_{IA}, e_{J} \}\)</span>. It then assumes that this vector follows a Multivariate Normal distribution with mean <span class="math inline">\(\boldsymbol{\mu} = [0, 0, 0]^{T}\)</span> and covariance matrix <span class="math inline">\(\boldsymbol{\Sigma}\)</span>. Moreover, it specifies the covariance matrix via a standard deviation–correlation decomposition <span class="citation" data-cites="McElreath_2020">(<a href="#ref-McElreath_2020" role="doc-biblioref">McElreath 2020</a>)</span>, such that <span class="math inline">\(\boldsymbol{\Sigma} = \boldsymbol{V}\boldsymbol{Q}\boldsymbol{V}\)</span>, where <span class="math inline">\(\boldsymbol{V}\)</span> is a diagonal matrix of standard deviations and <span class="math inline">\(\boldsymbol{Q}\)</span> is a correlation matrix. More specifically, the study defines the matrices <span class="math inline">\(\boldsymbol{Q}\)</span> and <span class="math inline">\(\boldsymbol{V}\)</span> as follows:</p>
+<div id="fig-CP_covariance" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-fig" id="fig-CP_covariance-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;6: Assumptions for the standard deviation-correlation decomposition of the covariance matrix <span class="math inline">\(\boldsymbol{\Sigma}\)</span>.
+</figcaption>
+<div aria-describedby="fig-CP_covariance-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<p><span class="math display">\[
+\begin{split}
+\boldsymbol{Q} = \begin{bmatrix}
+    1 &amp; 0 &amp; 0 \\
+    0 &amp; 1 &amp; 0 \\
+    0 &amp; 0 &amp; 1
+\end{bmatrix} ;
+\boldsymbol{V} = \begin{bmatrix}
+    s_{XI} &amp; 0 &amp; 0 \\
+    0 &amp; s_{A} &amp; 0 \\
+    0 &amp; 0 &amp; s_{ZJ}
+\end{bmatrix}
+\end{split}
+\]</span></p>
+</div>
+</figure>
+</div>
+<p>As seen in the <span class="math inline">\(\boldsymbol{Q}\)</span> matrix, the generating model assumes that the three types of error terms are mutually uncorrelated (independent). Furthermore, consistent with <span class="citation" data-cites="Boonen_et_al_2020">Boonen et al. (<a href="#ref-Boonen_et_al_2020" role="doc-biblioref">2020</a>)</span>, the model assumes that the speech-quality trait variability differs across hearing-status groups. In particular, <span class="math inline">\(NH\)</span> children exhibit higher variability <span class="math inline">\((s_{XId[1]} = 1.5)\)</span> than <span class="math inline">\(HI-HA\)</span> and <span class="math inline">\(HI-CI\)</span> children, both of whom are assumed to show lower and equal variability <span class="math inline">\((s_{XId[2]} = s_{XId[3]} = 0.75)\)</span>. Considering these specifications, and assuming an equal-probability SRSg design, the model implies an average between-individual variability of <span class="math inline">\(s_{XI} = \sum_{g=1}^{3} s_{XId[g]}/3 = 1\)</span>, which exceeds the assumed within-individual (stimulus-level) variability <span class="math inline">\(s_{A} = 0.2\)</span>.</p>
+<p>Finally, although the original study found no evidence that judges’ expertise influences the average systematic deviation in their speech-quality perceptions, it did not examine whether expertise affects the <em>variability</em> of those biases. To assess the ability of the ITCJ approach to investigate such a hypothesis, the generating model assumes that audiologists (<span class="math inline">\(AU\)</span>) exhibit less bias variability than primary teachers (<span class="math inline">\(PT\)</span>), who in turn exhibit less bias variability than inexperienced listeners (<span class="math inline">\(IL\)</span>). This ordering is represented by <span class="math inline">\(s_{ZJd[1]} &lt; s_{ZJd[2]} &lt; s_{ZJd[3]}\)</span>, where <span class="math inline">\(s_{ZJd[1]} = 0.5\)</span>, <span class="math inline">\(s_{ZJd[2]} = 1\)</span>, and <span class="math inline">\(s_{ZJd[3]} = 1.5\)</span>. Given these specifications, and an equal-probability SRSg design, the model implies an average between-judge bias variability of <span class="math inline">\(s_{ZJ} = \sum_{g=1}^{3} s_{ZJd[g]}/3 = 1\)</span>.</p>
 </section>
 <section id="sec-methods_step2" class="level2" data-number="3.2">
-<h2 data-number="3.2" class="anchored" data-anchor-id="sec-methods_step2"><span class="header-section-number">3.2</span> From Theory to Estimands: Data-generating assumptions</h2>
+<h2 data-number="3.2" class="anchored" data-anchor-id="sec-methods_step2"><span class="header-section-number">3.2</span> From Theory to Estimands: Target parameters</h2>
 </section>
 <section id="sec-methods_step3" class="level2" data-number="3.3">
 <h2 data-number="3.3" class="anchored" data-anchor-id="sec-methods_step3"><span class="header-section-number">3.3</span> From Design to Data: Data simulation</h2>
@@ -1419,7 +1422,7 @@ ZuccoJr., Cesar, Mariana Batista, and Timothy J. Power. 2019. <span>“Measuring
     Sven and Gillis, Steven},
   title = {Finding {Thurstone:} Modeling {Comparative} {Judgment} Data
     with {`R`} (and {`Stan`)}},
-  date = {2026-06-10},
+  date = {2026-06-12},
   langid = {en},
   abstract = {The Classical Comparative Judgment (CCJ) analysis has
     become the standard approach for analyzing CJ data across multiple
@@ -1455,7 +1458,7 @@ ZuccoJr., Cesar, Mariana Batista, and Timothy J. Power. 2019. <span>“Measuring
 </code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre><div class="quarto-appendix-secondary-label">For attribution, please cite this work as:</div><div id="ref-rivera_espejo2026" class="csl-entry quarto-appendix-citeas" role="listitem">
 Rivera Espejo, Jose Manuel, Tine van Daal, Sven De Maeyer, and Steven
 Gillis. 2026. <span>“Finding Thurstone: Modeling Comparative Judgment
-Data with `R` (and `Stan`).”</span> June 10.
+Data with `R` (and `Stan`).”</span> June 12.
 </div></div></section></div></main>
 <!-- /main column -->
 <script id="quarto-html-after-body" type="application/javascript">
