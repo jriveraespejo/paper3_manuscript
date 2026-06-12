@@ -315,17 +315,17 @@ Building on this framework, the following section details the methods used to im
 <!-- Sven and Tine 2025.09.04, time: 00:33:30 - 00:37:15 -->
 <!-- Sven and Tine 2025.09.15, time: 00:04:25 - 00:11:45 -->
 
-To address its two research objectives, this study follows the *Bayesian research workflow* [@Depaoli_et_al_2017; @Pearl_et_al_2018; @Neal_2020; @Gelman_et_al_2020; @Schad_et_al_2020; @Betancourt_2020; @McElreath_2024b; @McElreath_2024c], as depicted in @fig-worflow. The workflow consists of iterative stages progressing from theoretical assumptions through parameter estimation and data prediction, thereby supporting the study's dual focus on empirical model validation and tutorial-style implementation. Crucially, given the emphasis on validation, the study employs a synthetic dataset derived from a CJ data-generating process grounded in the speech-quality literature, enabling model validation under controlled conditions.
+To address its goals of empirical model validation and tutorial-style implementation, this study follows the *Bayesian research workflow* [@Depaoli_et_al_2017; @Pearl_et_al_2018; @Neal_2020; @Gelman_et_al_2020; @Schad_et_al_2020; @Betancourt_2020; @McElreath_2024b; @McElreath_2024c], depicted in @fig-worflow. Crucially, because the study emphasizes empirical validation, it employs a synthetic dataset generated from a CJ data-generating process grounded in the speech-quality literature. Synthetic data enables rigorous evaluation of model performance under controlled conditions, where both the underlying data-generating mechanisms and the target parameters are known by design. The workflow thus serves a dual role: it guides the construction of the synthetic dataset and the specification, estimation, and evaluation of the resulting models.
 
 ![Bayesian research workflow.](3_results/theory/figures/png/workflow.png){#fig-worflow fig-align="center" fig-pos="H" width=100%}
 
-The workflow begins by translating the theoretical understanding of the synthetic CJ system into formal *estimands*--the targets of inference [@Everitt_et_al_2010], and uses these to guide the design of a data-generating process that reflects the stated assumptions. Specifically, drawing on the relevant literature, the study makes explicit the assumptions underlying the CJ structure of interest using a DAG and SCM, and then identifies and formally defines the estimands as target parameters.
+The workflow begins by translating the theoretical understanding of the synthetic CJ system into formal *Estimands*--the targets of inference [@Everitt_et_al_2010], and uses these to guide the design of a data-generating process that reflects the stated assumptions. Specifically, drawing on the relevant literature, the study makes explicit the assumptions underlying the CJ structure of interest using a DAG and SCM, and then identifies and formally defines the estimands as target parameters.
 
 The workflow then proceeds from theory through the design phase and into the data-generation phase. First, it simulates a synthetic conceptual population that reflects the specified theoretical assumptions. From this population, it draws a synthetic sample and corresponding comparison datasets (the latter constituting the *analysis dataset*).
 
-Next, building on the theory and design stages, the ITCJ analysis translates the SCM into a probabilistic model. From this formulation, it derives one or more statistical models (*estimators*) tailored to the CJ system under study. For the CCJ analysis, the study adopts the BTL model [@Bradley_et_al_1952; @Luce_1959] as the estimator, given its extensive use in the CJ literature [recent examples include @Wu_2025; @Thwaites_et_al_2024; @Maydeu-Olivares_et_al_2005]. The study then extracts trait estimates and residuals from the BTL model for use in subsequent follow-up analyses (see @sec-methods_step5_1). At this phase, the study also conducts prior predictive checks to establish meaningful priors and to evaluate their implications within the model context before incorporating any empirical information [@McElreath_2020].
+Next, building on the theory and design stages, the ITCJ analysis translates the SCM into a probabilistic model and derives one or more statistical models statistical models (*Estimators*) tailored to the CJ system under study. Notably, under the CCJ analysis, this step is comparatively more straightforward: the study adopts the BTL model [@Bradley_et_al_1952; @Luce_1959] as the estimator, given its extensive use in the CJ literature [recent examples include @Wu_2025; @Thwaites_et_al_2024; @Maydeu-Olivares_et_al_2005]. It then extracts trait estimates and residuals for use in subsequent follow-up analyses (see @sec-methods_step5_1). At this stage, the study also conducts prior predictive checks for both approaches to evaluate their model implications before incorporating any empirical information [@McElreath_2020], thereby establishing meaningful priors.
 
-After specifying the estimators and their corresponding priors, the study fits the statistical models to obtain *estimates* of the target parameters under both approaches. Crucially, at this stage, the workflow evaluates these estimates using diagnostic and post-predictive assessments, including checks for stationarity, convergence, and mixing, as well as assessments of parameter recovery and predictive performance.
+After specifying the estimators and their priors, the study fits the statistical models to obtain *Estimates* of the target parameters under both approaches. Crucially, at this stage, the workflow evaluates these estimates using diagnostic and post-predictive assessments, including checks for stationarity, convergence, and mixing, as well as assessments of parameter recovery and predictive performance.
 
 The following sections expand on specific methodological stages of the workflow.
 
@@ -335,13 +335,13 @@ The following sections expand on specific methodological stages of the workflow.
 <!-- Sven and Tine 2025.09.04, time: 00:39:00 - 00:48:45 -->
 <!-- Sven 2025.09.29, time: 00:02:10 - 00:08:00, estimands -->
 
-The data-generating assumptions of this study draw on key features and findings from @Boonen_et_al_2020. In particular, the study also examines whether children's age and hearing status influence overall speech quality, assuming a CJ task with the same core design features and empirical findings reported by the aforementioned authors.
+The data-generating assumptions of this study draw on key features and findings reported in @Boonen_et_al_2020. In particular, the present study adopts Boonen and colleagues' original objective, namely, to examine whether children's age and hearing status influence overall speech quality. It implements this objective within a CJ task that preserves the core design features and empirical findings reported in their study.
 
 ![DAG of the "True" Data-Generating Process Underlying the Synthetic Conceptual Population](3_results/theory/figures/png/CJ_population_DAG.png){#fig-CP_dag fig-align="center" fig-pos="H" width=70%}
 
-@fig-CP_dag presents a DAG with the incorporated design features. The DAG represents the "true" data-generating process underlying the synthetic datasets. It depicts stimuli nested within individuals who differ in characteristics $X_{I}$, such as age and hearing status. It also includes judges who vary in speech-judgment expertise $Z_{J}$ and who provide a single judgment per stimulus pair, reflected in the absence of variables $Z_{JK}$ and $e_{JK}$ previously shown in @fig-ITCJ_dag.
+@fig-CP_dag presents a DAG incorporating the design features of the original study. This DAG represents the assumed data-generating process underlying the synthetic datasetsof used in this study. It depicts stimuli nested within individuals who vary in characteristics $X_{I}$, such as age and hearing status. In contrast to @fig-ITCJ_dag, the model does not assign additional attributes to stimuli, as reflected in the absence of the variable $X_{IA}$. The DAG further includes judges who differ in speech-judgment expertise $Z_{J}$ and who provide a single judgment per stimulus pair, as indicated by the absence of variables $Z_{JK}$ and $e_{JK}$ previously shown in @fig-ITCJ_dag.
 
-Finally, similar to @fig-ITCJ_dag, the DAG represents the sampling and comparison mechanisms ($S$ and $C$, respectively) without incoming arrows, indicating their independence from all other variables in the DAG. This structure implies that the study samples both stimuli and individuals using SRSg algorithms [@Lawson_2015] and assigns judges to comparisons using random allocation comparative designs [@Bramley_2015] to generate the synthetic sampling and comparison datasets, respectively.
+Lastly, similar to @fig-ITCJ_dag, the DAG represents the sampling and comparison mechanisms ($S$ and $C$, respectively) without incoming arrows, indicating their independence from all other variables in the model. This structure implies that the model samples both stimuli and individuals using SRSg algorithms [@Lawson_2015] and assigns judges to comparisons using random allocation comparative designs [@Bramley_2015] to generate the synthetic sampling and comparison datasets, respectively.
 
 ::: {#fig-CP layout-ncol=3}
 
@@ -396,45 +396,43 @@ Statistical model
 SCM, Probabilistic and Statistical model of the "True" Data-Generating Process Underlying the Synthetic Conceptual Population
 :::
 
+Next, the study incorporates Boonen and colleagues' empirical findings by specifying a statistical model derived from the probabilistic model implied by the system's SCM, as depicted in @fig-CP. With this purpose, the model first organizes individual-level predictors into the vector $X_{I} = \{ XIc, XId[1], XId[2], XId[3] \}$ with corresponding effect vector $\beta_{XI} = \{ \beta_{XIc}, \beta_{XId[1]}, \beta_{XId[2]}, \beta_{XId[3]} \}$, and judge-level variables into the vector $Z_{J} = \{ ZJd[1], ZJd[2], ZJd[3] \}$ with corresponding effect vector $\beta_{ZJ} = \{ \beta_{ZJd[1]}, \beta_{ZJd[2]}, \beta_{ZJd[3]} \}$.
 
-Next, the study incorporates Boonen and colleagues' empirical findings through a statistical model derived from the probabilistic model implied by the system's SCM, as depicted in @fig-CP. The model conditions on the individual-level variable vector $X_{I} = \{ X_{Ic}, X_{Id}[g=1], X_{Id}[g=2], X_{Id}[g=3] \}$ with corresponding effect vector $\beta_{XI} = \{ \beta_{XIc}, \beta_{XId[g=1]}, \beta_{XId[g=2]}, \beta_{XId[g=3]} \}$, as well as the judge-level variable vector $Z_{J} = \{ Z_{Jd}[g=1], Z_{Jd}[g=2], Z_{Jd}[g=3] \}$ with corresponding effect vector $\beta_{ZJ} = \{ \beta_{ZJd[g=1]}, \beta_{ZJd[g=2]}, \beta_{ZJd[g=3]} \}$.
+The model then assumes that each one-unit increase in age $XIc$ leads to a $0.1$-logit increase in speech quality for children aged five to nine, as captured by $\beta_{XIc} = 0.1$. It further encodes a strict ordering of hearing-status effects, such that normal-hearing children $(NH, XId[1])$ exhibit higher speech quality than hearing-impaired children with hearing aids $(HI-HA, XId[2])$, who in turn outperform hearing-impaired children with cochlear implants $(HI-CI, XId[3])$. This ordering is represented by $\beta_{XId[1]} > \beta_{XId[2]} > \beta_{XId[3]}$, where $\beta_{XId[1]} = 1$, $\beta_{XId[2]} = 0$, and $\beta_{XId[3]} = -1$. 
 
-Specifically, the study assumes that each one-unit increase in age $X_{Ic}$ leads to a $0.1$-logit increase in speech quality for children aged five to nine, as captured by $\beta_{XIc} = 0.1$. In addition, the model assumes a strict ordering in hearing-status effects, such that normal-hearing (NH) children ($X_{Id}[g=1]$) exhibit higher speech quality than hearing-impaired children with hearing aids (HI-HA, $X_{Id}[g=2]$), who in turn outperform hearing-impaired children with cochlear implants (HI-CI, $X_{Id}[g=3]$). This ordering is reflected in the parameters $\beta_{XId[g=1]} = 1$, $\beta_{XId[g=2]} = 0$, and $\beta_{XId[g=3]} = -1$. 
+Moreover, the model assumes that judges do not introduce systematic bias on average: audiologists $(AU, ZJd[1])$, primary teachers $(PT, ZJd[2])$, and inexperienced listeners $(IL, ZJd[3])$ all have zero mean effects, such that $\beta_{ZJd[1]} = \beta_{ZJd[2]} = \beta_{ZJd[3]} = 0$. 
 
-Moreover, the study assumes that judges do not introduce systematic bias on average: audiologists (AU, $Z_{Jd}[g=1]$), primary teachers (PT, $Z_{Jd}[g=2]$), and inexperienced listeners (IL, $Z_{Jd}[g=3]$) all have zero mean effects, such that $\beta_{ZJd[g=1]} = \beta_{ZJd[g=2]} = \beta_{ZJd[g=3]} = 0$.
+Similarly, to incorporate assumptions about the covariance structure of the error terms, the model collects them in the vector $\boldsymbol{e} = \{ e_{I}, e_{IA}, e_{J} \}$. It then assumes that this vector follows a Multivariate Normal distribution with mean $\boldsymbol{\mu} = [0, 0, 0]^{T}$ and covariance matrix $\boldsymbol{\Sigma}$. Moreover, it specifies the covariance matrix via a standard deviation--correlation decomposition [@McElreath_2020], such that $\boldsymbol{\Sigma} = \boldsymbol{V}\boldsymbol{Q}\boldsymbol{V}$, where $\boldsymbol{V}$ is a diagonal matrix of standard deviations and $\boldsymbol{Q}$ is a correlation matrix. More specifically, the study defines the matrices $\boldsymbol{Q}$ and $\boldsymbol{V}$ as follows:
 
-Furthermore, consistent with @Boonen_et_al_2020, the study assumes that trait variability differs across hearing-status groups. In particular, NH children exhibit higher variability ($s_{XId[g=1]} = 1.5$) than HI-HA and HI-CI children, both of whom are assumed to show lower and equal variability $(s_{XId[g=2]} = s_{XId[g=3]} = 0.75)$.
+::: {#fig-CP_covariance}
+$$
+\begin{split}
+\boldsymbol{Q} = \begin{bmatrix}
+    1 & 0 & 0 \\
+    0 & 1 & 0 \\
+    0 & 0 & 1
+\end{bmatrix} ;
+\boldsymbol{V} = \begin{bmatrix}
+    s_{XI} & 0 & 0 \\
+    0 & s_{A} & 0 \\
+    0 & 0 & s_{ZJ}
+\end{bmatrix}
+\end{split}
+$$
 
-In addition, the study assumes greater unexplained variability between individuals than within individuals, i.e., the stimulus level. Formally, the model specifies $s_I = \big(s_{XId[g=1]} + s_{XId[g=2]} + s_{XId[g=3]}\big)/3 = 1$, which exceeds stimulus-level variability $s_A = 0.2$.
+Assumptions for the standard deviation-correlation decomposition of the covariance matrix $\boldsymbol{\Sigma}$.
+:::
 
-[TO DO]{style="color:red;"}
+As seen in the $\boldsymbol{Q}$ matrix in @fig-CP_covariance, the generating model assumes that the three types of error terms are mutually uncorrelated. Furthermore, consistent with @Boonen_et_al_2020, the model assumes that the speech-quality trait variability differs across hearing-status groups. In particular, NH children exhibit higher variability $(s_{XId[1]} = 1.5)$ than HI-HA and HI-CI children, both of whom are assumed to show lower and equal variability $(s_{XId[2]} = s_{XId[3]} = 0.75)$. Given these specifications and an equal-probability SRSg design, the model implies an average between-individual variability of $s_{XI} = \sum_{g=1}^{3} s_{XId[g]}/3 = 1$, which exceeds the assumed within-individual (stimulus-level) variability $s_{A} = 0.2$.
 
-<!-- Notably, although the original study found no evidence of systematic judge bias, this study does assume ; accordingly, the present simulation treats the absence of judge bias as a modeling assumption. Finally, while judges’ experience levels did not explain differences in mean latent trait levels between stimuli, the original study did not assess whether experience influenced variability in those traits. -->
+[(TO DO)]{style="color:red;"}
 
-<!-- ::: {#fig-cj18b layout-ncol=2 } -->
+<!-- Finally, although the original study found no evidence of systematic judge bias, this study does assume ; accordingly, the present simulation treats the absence of judge bias as a modeling assumption. Finally, while judges’ experience levels did not explain differences in mean latent trait levels between stimuli, the original study did not assess whether experience influenced variability in those traits. -->
 
-<!-- $$ -->
-<!-- \begin{split} -->
-<!-- s_{ZJ} &= \{ s_{ZJd[g=1]}, s_{ZJd[g=2]}, s_{ZJd[g=3]} \} = \{ 0.5, 1, 1.5\} \\ -->
-<!-- \boldsymbol{\mu} &= [0, 0, 0]^{T}; \quad  -->
-<!-- \boldsymbol{Q} = \begin{bmatrix} -->
-<!--     1 & 0 & 0 \\ -->
-<!--     0 & 1 & 0 \\ -->
-<!--     0 & 0 & 1 -->
-<!-- \end{bmatrix} ; -->
-<!-- \boldsymbol{V} = \begin{bmatrix} -->
-<!--     s_{XI} & 0 & 0 \\ -->
-<!--     0 & s_{A} & 0 \\ -->
-<!--     0 & 0 & s_{ZJ}  -->
-<!-- \end{bmatrix} -->
-<!-- \end{split} -->
-<!-- $$ -->
-
-<!-- Simulating parameter assumptions. -->
-<!-- ::: -->
+<!-- $s_{ZJ} = \{ s_{ZJd[g=1]}, s_{ZJd[g=2]}, s_{ZJd[g=3]} \} = \{ 0.5, 1, 1.5\}$ -->
 
 
-## From Theory to Estimands: Data-generating assumptions {#sec-methods_step2}
+## From Theory to Estimands: Target parameters {#sec-methods_step2}
 
 
 
