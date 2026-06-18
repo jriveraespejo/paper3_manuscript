@@ -206,14 +206,14 @@ The Classical Comparative Judgment (CCJ) analysis has become the
 standard approach for analyzing comparative judgment (CJ) data across
 multiple fields. Researchers favor CCJ because it offers a relatively
 simple approach for trait measurement and follow-up analyses. This
-simplicity stems from three features: reliance on restricted
-Thurstone-based models to estimate latent traits, limited consideration
-of relevant assessment design features, and the separation of trait
-measurement from follow-up analysis. Recent studies, however, question
-whether these assumptions adequately reflect contemporary CJ
-applications and whether omitting relevant design features, together
-with the separation of measurement and analysis, may bias estimates and
-reduce inferential precision.
+simplicity stems from three features: its reliance on restricted
+Thurstone-based models to estimate latent traits, its limited
+consideration of relevant assessment design features, and its separation
+of trait measurement from follow-up analysis. Recent studies, however,
+question whether these modeling assumptions adequately reflect
+contemporary CJ applications and whether omitting relevant design
+features, together with the separation of measurement and analysis, may
+bias estimates and reduce inferential precision.
 
 To address these concerns, \citet{Rivera_et_al_2025} proposed the
 Information-Theoretical Comparative Judgment (ITCJ) analysis, an
@@ -265,8 +265,8 @@ The \emph{Classical Comparative Judgment} (CCJ) analysis has become the
 standard approach for analyzing CJ data across multiple fields,
 including education, linguistics, and psychology \citep[see, for
 example,][]{Wu_2025, Thwaites_et_al_2024, Maydeu-Olivares_et_al_2005}.
-Researchers favor this approach because it provides a convenient and
-simple method for measuring traits and conducting follow-up analyses
+Researchers favor CCJ because it provides a relatively simple method for
+measuring traits and conducting follow-up analyses
 \citep{Andrich_1978, Pollitt_2012b}. Three features underpin its
 simplicity. First, it relies on restricted Thurstone-based models to
 estimate latent traits. These models facilitate estimation by imposing
@@ -280,8 +280,8 @@ estimation from follow-up analysis \citep{Pollitt_2012b}, simplifying
 the latter by focusing only on mean trait estimates or residuals
 obtained from the former process \citep{Rivera_et_al_2025}.
 
-Recent studies, however, question whether the assumptions of these
-models hold in contemporary CJ applications, and whether the limited
+Recent studies, however, question whether these modeling assumptions
+hold in contemporary CJ applications, and whether the limited
 consideration of relevant assessment design features, together with the
 separation of trait estimation and analysis, may bias estimates and
 reduce the precision of inferences.
@@ -314,23 +314,25 @@ statistical models.
 \subsection{Research goals}\label{sec-introduction_goals}
 
 The ITCJ analysis holds theoretical promise for producing reliable trait
-estimates and accurate statistical inferences \citep{Rivera_et_al_2025}.
-However, as the authors acknowledge, this promise remains empirically
-untested. This study addresses this gap by \emph{empirically validating
-the ITCJ analysis} using a synthetic speech-quality dataset.
-Specifically, it evaluates the accuracy and reliability of the resulting
-trait estimates and inferential parameters relative to those obtained
-under the standard CCJ analysis.
+estimates and accurate statistical inferences. However, as Rivera and
+colleagues \citeyearpar{Rivera_et_al_2025} acknowledge, these potential
+advantages remain empirically untested. This study addresses this gap by
+\emph{empirically validating the ITCJ analysis} using a synthetic
+speech-quality dataset. Specifically, it evaluates the accuracy and
+reliability of the resulting trait estimates and inferential parameters
+obtained under the ITCJ approach relative to those produced by the
+standard CCJ analysis.
 
-Moreover, in line with principles of open and reproducible science, the
-study also provides step-by-step guidance on data simulation, prior
-specification, model estimation, and interpretation using \texttt{R}
-\citep{R_2015}, \texttt{Stan} \citep{Stan_2026a, Stan_2026b}, and the
-interface packages \texttt{cmdstanr} \citep{Gabry_et_al_2025b} and
-\texttt{brms} \citep{Burkner_2017, Burkner_2018}. Notably, by combining
-empirical validation with a fully reproducible implementation, the study
-equips researchers with practical tools needed to apply the the ITCJ
-approach to more complex CJ assessments.
+In addition, consistent with principles of open and reproducible
+science, the study also provides step-by-step guidance on data
+simulation, prior specification, model estimation, and interpretation
+using \texttt{R} \citep{R_2015}, \texttt{Stan}
+\citep{Stan_2026a, Stan_2026b}, and the interface packages
+\texttt{cmdstanr} \citep{Gabry_et_al_2025b} and \texttt{brms}
+\citep{Burkner_2017, Burkner_2018}. Notably, by combining empirical
+validation with a fully reproducible implementation, the study equips
+researchers with practical tools needed to apply the ITCJ approach to
+more complex CJ assessments.
 
 The remainder of this manuscript is organized into five sections.
 Section~\ref{sec-theory} reviews the standard analytical approach
@@ -357,12 +359,13 @@ The CCJ analysis typically proceeds through two sequential steps, each
 serving a distinct purpose: first, estimating traits, and second,
 conducting follow-up analyses
 \citep{Pollitt_2012a, Pollitt_2012b, Jones_et_al_2019, Boonen_et_al_2020, Chambers_et_al_2022, Bouwer_et_al_2023}.
-Trait estimation generally relies on Thurstone-based models, and yield
-two primary outputs: mean trait estimates and comparison-level
-residuals. For example, \citet{Boonen_et_al_2020} used the
-Bradley-Terry-Luce (BTL) model \citep{Bradley_et_al_1952, Luce_1959} to
-derive mean latent scores representing children's overall speech
-quality, together with the corresponding comparison-level residuals.
+Trait estimation generally relies on predefined Thurstone-based models,
+such as the Bradley-Terry-Luce (BTL) model
+\citep{Bradley_et_al_1952, Luce_1959}, to produce two primary outputs:
+mean trait estimates and comparison-level residuals. For example,
+\citet{Boonen_et_al_2020} applied the BTL model to derive mean latent
+scores representing children's overall speech quality, together with the
+corresponding comparison-level residuals.
 
 Researchers then use these mean trait estimates and comparison-level
 residuals to conduct follow-up analyses. On the one hand, analyses of
@@ -436,7 +439,7 @@ solely on mean trait estimates or residuals obtained from the estimation
 stage inadvertently treats these outputs as fixed values rather than as
 uncertain parameter estimates \citep{McElreath_2020, Rivera_et_al_2025}.
 This separation prevents the propagation of uncertainty from the
-estimation to the analysis stage \citep{Pritikin_2020}, which can bias
+estimation to the analysis phase \citep{Pritikin_2020}, which can bias
 parameter estimates and reduce their precision. The direction and
 magnitude of these biases are often difficult to predict. Effects may be
 attenuated, inflated, or remain unchanged depending on the level of
@@ -473,20 +476,19 @@ from the CCJ analysis.
 
 \subsection{The ITCJ analysis}\label{sec-theory_ITCJ}
 
-In contrast to the CCJ approach, the ITCJ analysis does not begin with
-the application of a predefined statistical model to the CJ data, from
-which primary outputs are extracted for subsequent analysis. Instead, it
-starts by explicitly representing the relationships among observed and
-latent variables that are thought to characterize the data-generating
-process of the CJ system under study. This structure is represented
-using a \emph{Directed Acyclic Graph (DAG)} and an associated
-\emph{Structural Causal Model (SCM)}
-\citep{Morgan_et_al_2014, Gross_et_al_2018, Neal_2020}. On the basis of
-this causal representation, a \emph{probabilistic model} tailored to the
-system under study is derived, from which one or more \emph{statistical
-models} are subsequently formulated. These models are then used to
-estimate, summarize, and conduct statistical inferences on the traits of
-interest.
+In contrast to the CCJ approach, the ITCJ analysis does not begin by
+applying a predefined statistical model to CJ data and then extracting
+outputs for subsequent analysis. Instead, it begins by explicitly
+representing the relationships among observed and latent variables that
+are thought to characterize the data-generating process of the CJ system
+under study. The analysis formalizes these relationships through a
+\emph{Directed Acyclic Graph (DAG)} and an associated \emph{Structural
+Causal Model (SCM)}
+\citep{Morgan_et_al_2014, Gross_et_al_2018, Neal_2020}. It then derives
+a \emph{probabilistic model} from this causal representation and
+formulates one or more \emph{statistical models} tailored to the system
+under study. Finally, the approach uses these models to estimate,
+summarize, and draw statistical inferences about the traits of interest.
 
 \newcommand{\dsep}{\:\bot\:}
 \newcommand{\ndsep}{\:\not\bot\:}
@@ -618,7 +620,7 @@ allocation comparative design} \citep{Bramley_2015}, also known as an
 \emph{incomplete block design} \citep{Lawson_2015}, in which each
 judgment has an equal probability of being included in the sample.
 
-Finally, Figure~\ref{fig-ITCJ_dag} shows that the observed CJ outcome
+Finally, Figure~\ref{fig-ITCJ_dag} shows that the observed outcome
 \(O_{R}\) is jointly influenced by the discriminal difference \(D_{R}\)
 and the sampling and comparison mechanisms (\(S\) and \(C\),
 respectively). In typical CJ applications, \(O_{R}\) is often modeled as
@@ -666,8 +668,9 @@ distribution of the variables into a product of simpler
 \citep{Pearl_et_al_2016, Neal_2020}, as illustrated in
 Figure~\ref{fig-ITCJ_prob}. From this formulation, they can then derive
 one or more statistical models tailored to the CJ system under study
-(see Section~\ref{sec-methods_step5_2}), enabling coherent trait
-estimation and inference within a unified framework.
+(see, for example, Section~\ref{sec-methods_step1} and
+Section~\ref{sec-methods_step5_2}), enabling coherent trait estimation
+and inference within a unified framework.
 
 At this point, it becomes clear that the ITCJ approach differs
 fundamentally from the CCJ approach in its treatment of trait
@@ -703,7 +706,7 @@ estimation, and evaluation of the analysis models.
 
 Notably, as shown in the figure, the workflow components form an
 interconnected and partly non-linear process, reflecting the inherent
-complexity of statistical modeling. To ensure clarity and
+complexity of (Bayesian) statistical modeling. To ensure clarity and
 reproducibility, the remainder of this article unpacks each stage
 step-by-step.
 
@@ -751,7 +754,7 @@ underlying the synthetic conceptual population}
 Figure~\ref{fig-CP_dag} presents the DAG incorporating the design
 features of \citet{Boonen_et_al_2020}. It depicts stimuli nested within
 individuals who vary in characteristics \(X_{I}\), such as age and
-hearing status. Notably, in contrast to Figure~\ref{fig-ITCJ_dag}, the
+hearing status. However, in contrast to Figure~\ref{fig-ITCJ_dag}, the
 model assumes no additional stimulus-level attributes, as reflected by
 the absence of the variable \(X_{IA}\). Moreover, the DAG includes
 judges who differ in speech-judgment expertise \(Z_{J}\) and who provide
@@ -880,7 +883,7 @@ the error terms, the model collects them in the vector
 this vector follows a Multivariate Normal distribution with mean
 \(\boldsymbol{\mu} = [0, 0, 0]^{T}\) and covariance matrix
 \(\boldsymbol{\Sigma}\). Moreover, it specifies the covariance matrix
-via a standard deviation--correlation decomposition
+via a \emph{standard deviation--correlation decomposition}
 \citep{McElreath_2020}, such that
 \(\boldsymbol{\Sigma} = \boldsymbol{V}\boldsymbol{Q}\boldsymbol{V}\),
 where \(\boldsymbol{V}\) is a diagonal matrix of standard deviations and
@@ -921,26 +924,26 @@ implies that residual variability in stimulus traits is uncorrelated
 with residual variability in individual traits, and that both are
 uncorrelated with residual variability in judges' biases.
 
-Moreover, the model incorporates additional assumptions through the
-\(\boldsymbol{V}\) matrix. Specifically, it assumes that the
-speech-quality trait variability differs across hearing-status groups.
-In particular, \(NH\) children exhibit higher variability
-\((s_{XId[1]} = 1.5)\) than \(HI-HA\) and \(HI-CI\) children, both of
-whom are assumed to show lower and equal variability
+Moreover, the model encodes additional assumptions through the
+\(\boldsymbol{V}\) matrix. Specifically, it assumes that variability in
+individuals' ability to produce high-quality speech differs across
+hearing-status groups. In particular, \(NH\) children exhibit higher
+variability \((s_{XId[1]} = 1.5)\) than \(HI-HA\) and \(HI-CI\)
+children, both of whom are assumed to show lower and equal variability
 \((s_{XId[2]} = s_{XId[3]} = 0.75)\). Considering these specifications,
 and assuming an equal-probability SRSg design, the model implies an
-average between-individual variability of
+average between-individual trait variability of
 \(s_{XI} = \sum_{g=1}^{3} s_{XId[g]}/3 = 1\), which exceeds the assumed
-within-individual (stimulus-level) variability \(s_{A} = 0.2\).
+within-individual (stimulus-level) trait variability \(s_{A} = 0.2\).
 
 Finally, although the original study found no evidence that judges'
 expertise influences biases in their speech-quality perceptions, it did
 not examine whether expertise affects the \emph{variability} of those
 biases. To assess the ability of the ITCJ approach to investigate such
-hypothesis, the generating model assumes that audiologists (\(AU\))
-exhibit less bias variability than primary teachers (\(PT\)), who in
+hypothesis, the generating model assumes that audiologists \((AU)\)
+exhibit less bias variability than primary teachers \((PT)\), who in
 turn exhibit less bias variability than inexperienced listeners
-(\(IL\)). This ordering is represented by
+\((IL)\). This ordering is represented by
 \(s_{ZJd[1]} < s_{ZJd[2]} < s_{ZJd[3]}\), where \(s_{ZJd[1]} = 0.5\),
 \(s_{ZJd[2]} = 1\), and \(s_{ZJd[3]} = 1.5\). Given these
 specifications, and an equal-probability SRSg design, the model implies
