@@ -27,11 +27,11 @@
 
     % sampling mechanism
     \node[rectangle,draw] at (-1,1.89) {$S$}; %,gray
-    \draw[{Circle}-{latex}](-1,1.59) to (1,-0.25); %,gray
+    \draw[{Circle}-](-1,1.59); %,gray
 
     % comparison mechanism 
     \node[rectangle,draw] at (-1,-2.2) {$C$}; %,gray
-    \draw[{Circle}-{latex}](-1,-1.9) to (1,-0.35); %,gray
+    \draw[{Circle}-](-1,-1.75); %,gray
     
     % observed outcome
     \node at (1.2,0) {$O_{R}$}; %[gray]
@@ -63,6 +63,7 @@
     % predictors for units
     \node at (-7.5,4) {$X_{I}$}; %[gray]
     \draw[{Circle}-{latex}](-7.5,3.7) to (-6,2.8); %,gray
+    \draw[-{latex}, gray](-7.4,3.67) to (-2.5,3.7) to (-2.5,1.53) to (-1.05,1.53); %,gray
 
     % units trait error
     \node at (-7.5,3.05) {$e_{I}$}; %[gray]
@@ -95,6 +96,7 @@
     % predictors for judges' bias
     \node at (-7.5,-4) {$Z_{J}$}; %[gray]
     \draw[{Circle}-{latex}](-7.5,-3.7) to (-6,-2.95); %,gray
+    \draw[-{latex}, gray](-7.4,-3.67) to (-2.5,-3.67) to (-2.5,1.53) to (-1.05,1.53); %,gray
     
     % judges' bias error
     \node at (-7.5,-3.2) {$e_{J}$}; %[gray]

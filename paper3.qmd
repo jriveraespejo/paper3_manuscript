@@ -1,5 +1,5 @@
 ---
-title: "Finding Thurstone: modeling Comparative Judgment data with `R` (and `Stan`)"
+title: "Finding Thurstone: modeling comparative judgment data with `R` (and `Stan`)"
 author:
   - name: 
       given: Jose Manuel
@@ -56,14 +56,18 @@ keywords:
   - thustone
   - comparative judgement
 abstract: |
-  The Classical Comparative Judgment (CCJ) analysis has become the standard approach for analyzing comparative judgment (CJ) data across multiple fields. Researchers favor CCJ because it offers a relatively simple approach for trait measurement and follow-up analyses. This simplicity stems from three features: its reliance on restricted Thurstone-based models to estimate latent traits, its limited consideration of relevant assessment design features, and its separation of trait measurement from follow-up analysis. Recent studies, however, question whether these modeling assumptions adequately reflect contemporary CJ applications and whether omitting relevant design features, together with the separation of measurement and analysis, may bias estimates and reduce inferential precision.
+  The Classical Comparative Judgment (CCJ) analysis has become the standard approach for analyzing comparative judgment (CJ) data across multiple fields. Researchers favor CCJ because it offers a relatively simple approach for trait measurement and follow-up analyses. This simplicity stems from three features: its reliance on restricted Thurstone-based models to estimate latent traits, its limited consideration of relevant assessment design features, and its separation of trait measurement from follow-up analysis. Recent studies, however, question whether these modeling assumptions adequately reflect contemporary CJ assessments and whether omitting relevant design features, together with the separation of measurement and analysis, may bias estimates and reduce inferential precision.
 
-  To address these concerns, @Rivera_et_al_2025 proposed the Information-Theoretical Comparative Judgment (ITCJ) analysis, an umbrella analytical workflow designed to accommodate the complexity observed in applied CJ settings. The approach enables researchers to specify models tailored to the assumed CJ data-generating process, thereby reducing reliance on simplifying assumptions. In addition, by integrating measurement, analysis, and relevant assessment design features within a single framework, the approach also supports coherent estimation and inference. However, these potential advantages require empirical validation.
+  To address these concerns, @Rivera_et_al_2025 proposed the Information-Theoretical Comparative Judgment (ITCJ) analysis, an umbrella analytical workflow designed to accommodate the complexity observed in contemporary CJ assessments. The approach enables researchers to specify models tailored to the assumed CJ data-generating process, thereby reducing reliance on simplifying assumptions. In addition, by integrating measurement, analysis, and relevant assessment design features within a single framework, the approach also supports coherent estimation and inference. However, these potential advantages require empirical validation.
   
   Therefore, this study evaluates the ITCJ analysis using a synthetic speech-quality dataset and benchmarks its performance against the CCJ approach. In line with principles of open and reproducible science, the study also provides step-by-step guidance on data simulation, prior specification, model estimation, and interpretation using `R`, `Stan`, `cmdstan`, and `brms`. Ultimately, by combining empirical validation with a fully reproducible implementation, the study equips researchers with practical tools for applying the ITCJ approach to complex CJ assessments.
 date: last-modified
 bibliography: references.bib
 ---
+
+<!-- commands for d-separation -->
+\newcommand{\dsep}{\:\bot\:}
+\newcommand{\ndsep}{\:\not\bot\:}
 
 <!-- Sven and Tine 2026.03.09, time: 00:00:00 - 00:16:05, abstract -->
 
@@ -142,7 +146,8 @@ The remainder of this manuscript is organized into five sections. @sec-theory re
 <!-- Sven and Tine 2025.09.04, time: 00:04:05 - 00:04:40 -->
 <!-- Sven and Tine 2025.09.15, time: 00:03:30 - 00:04:20 -->
 
-Pairwise comparison data are typically analyzed using the standard *CCJ analysis*. However, the *ITCJ analysis* proposed by Rivera and colleagues [-@Rivera_et_al_2025] offers an alternative approach. This section provides an overview of both.
+In education, linguistics, and psychology, researchers typically analyze pairwise comparison data using the standard *CCJ analysis*. However, Rivera and colleagues [-@Rivera_et_al_2025] propose an alternative approach, the *ITCJ analysis*. This section provides an overview of both methods.
+
 
 ## The CCJ analysis {#sec-theory_CCJ}
 <!-- Sven and Tine 2025.09.04, time: 00:04:40 - 00:07:00 -->
@@ -151,7 +156,7 @@ Pairwise comparison data are typically analyzed using the standard *CCJ analysis
 
 <!-- 1. How CCJ analysis is done -->
 <!-- Sven and Tine 2026.03.09, time: 00:40:25 - 00:41:45 -->
-The CCJ analysis typically proceeds through two sequential steps, each serving a distinct purpose: first, estimating traits, and second, conducting follow-up analyses [@Pollitt_2012a; @Pollitt_2012b; @Jones_et_al_2019; @Boonen_et_al_2020; @Chambers_et_al_2022; @Bouwer_et_al_2023]. Trait estimation generally relies on predefined Thurstone-based models, such as the Bradley-Terry-Luce (BTL) model [@Bradley_et_al_1952; @Luce_1959], to produce two primary outputs: mean trait estimates and comparison-level residuals. For example, @Boonen_et_al_2020 applied the BTL model to derive mean latent scores representing children's overall speech quality, together with the corresponding comparison-level residuals.
+The CCJ analysis typically proceeds through two sequential steps, each serving a distinct purpose: first, estimating traits, and second, conducting follow-up analyses [@Pollitt_2012a; @Pollitt_2012b; @Jones_et_al_2019; @Boonen_et_al_2020; @Chambers_et_al_2022; @Bouwer_et_al_2023]. Trait estimation generally relies on predefined Thurstone-based models, such as the Bradley-Terry-Luce (BTL) model [@Bradley_et_al_1952; @Luce_1959], to generate two primary outputs: mean trait estimates and comparison-level residuals. For example, @Boonen_et_al_2020 applied the BTL model to derive mean latent scores representing children's overall speech quality, together with the corresponding comparison-level residuals.
 
 <!-- 3. second: conducting follow-up analyses -->
 <!-- Sven and Tine p2 2026.02.02, time: 00:09:55 - 00:11:05 -->
@@ -161,17 +166,17 @@ Researchers then use these mean trait estimates and comparison-level residuals t
 On the other hand, analyzing the residuals typically seeks to aggregate the remaining variability at the judge level, partition residual variability between and within judges, test for systematic biases, and identify potential misfitting stimuli, individuals, or judges. For instance, @Wu_2025 fitted an analysis of variance (ANOVA) model to judges' infit statistics to examine whether judge expertise influences judgment behavior. The infit statistics--a weighted average of the squared Pearson residuals--indicate the extent to which judges' decisions deviate from expectations relative to those of other judges [@Wright_et_al_1982]. 
 
 <!-- 4. problems with the stepwise approach -->
-This two-step CCJ analysis has become a standard practice in many CJ applications across education, linguistics, and psychology [see, e.g., @Wu_2025; @Thwaites_et_al_2024; @Maydeu-Olivares_et_al_2005]. However, the approach has three key limitations: first, it relies on restricted Thurstone-based models to estimate traits; second, it often gives limited consideration to relevant CJ assessment design features; and third, it separates trait estimation from follow-up analysis.
+This two-step CCJ analysis has become a standard practice in many CJ applications across education, linguistics, and psychology [see, e.g., @Wu_2025; @Thwaites_et_al_2024; @Maydeu-Olivares_et_al_2005]. However, @Rivera_et_al_2025 argued that this approach has three key limitations: first, it relies on restrictive Thurstone-based models for trait estimation; second, it often overlooks relevant CJ design features; and third, it separates trait estimation from subsequent analyses.
 
 <!-- 5. first issue -->
 <!-- Sven and Tine 2026.03.09, time: 00:43:05 - 00:43:30 -->
-Regarding the first limitation, although restricted Thurstone-based models facilitate trait estimation by imposing simplifying assumptions about traits, judges, and stimuli [@Thurstone_1927b; @Bramley_2008], violations of these assumptions can undermine the reliability and validity of the resulting trait estimates [@Perron_et_al_2015; @Rivera_et_al_2025]. This concern is exemplified by @Wu_2025, who, under the BTL model, implicitly treats second-language English texts as independent stimuli that are equally informative about individuals' writing performance, despite their heterogeneous and complex nature [@Thurstone_1927a; @Andrich_1978; @Bramley_2008; @Kelly_et_al_2022]. Notably, if the texts differ in informativeness due to this heterogeneous nature, the BTL assumption of equal dispersions may be violated, potentially leading to an overestimation of the trait reliability and misleading conclusions about differences between stimuli [@McElreath_2020; @Wu_et_al_2022]. Moreover, if the characteristics of these texts unevenly influence judges' perceptions, systematic biases may arise. Such biases can induce dependencies among stimuli, further contributing to an over- or underestimation of the trait reliability [@vanderLinden_et_al_2017_II; @Ackerman_1989; @Hoyle_et_al_2023]. 
+Regarding the first limitation, although restricted Thurstone-based models facilitate trait estimation by imposing simplifying assumptions about judges, individuals, and stimuli [@Thurstone_1927b; @Bramley_2008], violations of these assumptions can undermine the reliability and validity of the resulting trait estimates [@Perron_et_al_2015; @Rivera_et_al_2025]. This concern is exemplified by @Wu_2025, who, under the BTL model, implicitly treats second-language English texts as independent stimuli that are equally informative about individuals' writing performance, despite their heterogeneous and complex nature [@Thurstone_1927a; @Andrich_1978; @Bramley_2008; @Kelly_et_al_2022]. Notably, if the texts differ in informativeness due to this heterogeneous nature, the BTL assumption of equal dispersions may be violated, potentially leading to an overestimation of the trait reliability and misleading conclusions about differences between stimuli [@McElreath_2020; @Wu_et_al_2022]. Moreover, if the characteristics of these texts unevenly influence judges' perceptions, systematic biases may arise. Such biases can induce dependencies among stimuli, further contributing to an over- or underestimation of the trait reliability [@vanderLinden_et_al_2017_II; @Ackerman_1989; @Hoyle_et_al_2023]. 
 
 <!-- 6. second issue -->
-Concerning the second limitation, while giving limited attention to specific CJ assessment design features may also simplify trait estimation or follow-up analyses, Rivera and colleagues [-@Rivera_et_al_2025] argued that neglecting elements that define the CJ data-generating process can obscure their broader role within the assessment system. The authors illustrated this concern by examining the sampling and comparison mechanisms. They showed that explicit inclusion of these mechanisms in the conceptual CJ model reveal their role as sources of missing data. They further argued that clarifying their function supports a more comprehensive evaluation of their impact on trait estimation, statistical inference, and the design of more complex assessment setups.
+Concerning the second limitation, while downplaying specific CJ assessment design features may also simplify trait estimation or follow-up analyses, Rivera and colleagues [-@Rivera_et_al_2025] argued that this comes at a cost. In particular, ignoring elements that shape the CJ data-generating process can omit important latent dimensions, such as judge bias, or obscure the role of core design components like the sampling and comparison mechanisms. Crucially, neglecting judge bias can produce biased trait estimates and residuals [@Reckase_et_al_1986; @Ackerman_1989; @Kahraman_2013; @Hoyle_et_al_2023], while ignoring sampling and comparison mechanisms can distort both estimation and statistical inference [@Kohler_et_al_2019; @McElreath_2020, chap. 15; @Schuessler_et_al_2023].
 
 <!-- 7. third issue -->
-Lastly, concerning the third limitation, although separating trait estimation from follow-up analysis can simplify the latter, focusing solely on mean trait estimates or residuals obtained from the estimation stage inadvertently treats these outputs as fixed values rather than as uncertain parameter estimates [@McElreath_2020; @Rivera_et_al_2025]. This separation prevents the propagation of uncertainty from the estimation to the analysis phase [@Pritikin_2020], which can bias parameter estimates and reduce their precision. The direction and magnitude of these biases are often difficult to predict. Effects may be attenuated, inflated, or remain unchanged depending on the level of uncertainty in the scores and the true effects under investigation [@McElreath_2020; @Kline_et_al_2023; @Hoyle_et_al_2023]. In addition, reduced precision lowers statistical power and increases the risk of Type I and Type II errors [@McElreath_2020].
+Lastly, concerning the third limitation, although separating trait estimation from follow-up analysis can simplify the latter, focusing solely on mean trait estimates or residuals obtained from the estimation stage inadvertently treats these outputs as fixed values rather than as uncertain parameter estimates [@McElreath_2020; @Rivera_et_al_2025]. This separation prevents the propagation of uncertainty from the estimation to the analysis phase [@Pritikin_2020], which can bias parameter estimates and reduce their precision. The direction and magnitude of these biases are often difficult to predict. Effects may be attenuated, inflated, or remain unchanged depending on the level of uncertainty in the scores and the true effects under investigation [@McElreath_2020; @Kline_et_al_2023; @Hoyle_et_al_2023]. In addition, reduced precision lowers statistical power and increases the risk of Type I and Type II errors when conducting statistical inference [@McElreath_2020].
 
 <!-- "Factor models can be fit to correlation data. However, in such a two-stage analysis, uncertainty is not accurately propagated from response data to correlation data, and then to factor scores and loadings." [@Pritikin_2020] -->
 
@@ -186,13 +191,10 @@ Several studies have made valuable attempts to incorporate specific features tha
 
 <!-- @Seymour_et_al_2025 adds on @Seymour_et_al_2022. It models outcomes with ties together with spatially correlated stimuli. The example it uses is a convenient sample data about honour-based abuse. No mention about the bias resulting from the sampling mechanism of their data, such as socioeconomic factors, the possibility of judges biases, the influence of covariates from those judges on their judgment, and no control for the hierarchy of the wards whiting higher clusters as counties. -->
 
-<!-- Third, the approach often overlooks key CJ assessment design features, including the sampling and comparison mechanisms that shape the data-generating process. For instance, @Seymour_et_al_2022 overlooked the potential impact of their convenience sample or unobserved confounding factors on parameter estimates and their corresponding interpretation. -->
-
-
 <!-- MAIN EXAMPLES -->
-<!-- For instance, @Pritikin_2020 extended the BTL model to accommodate ordinal outcomes and correlated stimuli. The author applied the model to measure the psychological state of flow. However, the author acknowledged the need to incorporate stimulus covariates, judges' biases, and judge-specific effects to improve model flexibility and inference. -->
+<!-- For instance, @Pritikin_2020 extended the BTL model to accommodate ordinal outcomes and correlated stimuli. The author applied the model to measure the psychological state of flow. However, the author acknowledged the need to incorporate stimulus covariates, judges' biases, and judge-specific effects to improve model flexibility and inference. 
 
-<!-- @Pritikin_2020 measures the psychological state of flow using an extension of the BTL for ordinal outcome, even considering correlations between the latent scores. Nevertheless, the authors indicate that:
+the authors indicate that:
 "The models described here are vanilla, bare-bones versions that would benefit from more modeling options."
 "In addition, it may be useful to allow structural equation modeling, object covariates, and judge-specific eﬀects (and judges biases), to investigate measurement invariance" [@Pritikin_2020, pp. 9]
 -->
@@ -206,7 +208,7 @@ Cheerfulness of paintings, doesn't this depend on the emotional and psychologica
 
 <!-- Moreover, @Seymour_et_al_2022 extended the BTL model to incorporate spatially correlated stimuli and selected judge-level covariates. They applied the model to measure area-level deprivation. Notably, although the outcome mechanism allowed ties by design, the authors randomly reassigned those ties to wins or losses (about $14\%$ of the data) to accommodate the model specification. Additionally, they did not examine how the convenience sample or potential unobserved confounding factors affected the parameter estimates. -->
 
-<!-- @Seymour_et_al_2022 ran a spatially correlated stimuli model with covariates at the level of the judges to model binary outcomes. But, by design the outcome considers ties (approx. 1/7 or 14% of the data), where these ties are imputed randomly to either win or loose. Moreover, the sampling, and ultimately, the comparison mechanisms depends on individuals covariates, observed and non-observed. Observed covariates, like gender, are considered in the model, but other observed variables, like type of university the individual comes or its occupation, were not considered. They acknowledge this. They do not acknowledge the convenience of the sample affecting the parameter estimates, and thus, no sensitivity analysis is run to see the extend to which unobserved confounders affect the results. As mentioned, they consider covariates for judges, but there is no consideration of residual variably for these judges. -->
+<!-- @Seymour_et_al_2022 ran a spatially correlated stimuli model with covariates at the level of the judges to model binary outcomes. But, by design the outcome considers ties (approx. 1/7 or 14% of the data), where these ties are imputed randomly to either win or loose. Moreover, the sampling, and ultimately, the comparison mechanisms depends on individuals covariates, observed and non-observed. Observed covariates, like gender, are considered in the model, but other observed variables, like type of university the individual comes or its occupation, were not considered. They acknowledge this. However, they do not acknowledge the convenience of the sample affecting the parameter estimates, and thus, no sensitivity analysis is run to see the extend to which unobserved confounders affect the results. As mentioned, they consider covariates for judges, but there is no consideration of residual variably for these judges. -->
 
 <!-- @Gray_et_al_2024, in contrast, implemented the BTL model within the Bayesian inference framework and combined it with active learning, random pairing, and non-repeating pairing comparison mechanisms. They aimed to demonstrate the performance of active learning in estimating average item rankings, benchmarked against the other mechanisms. However, the model does not incorporate covariates or other sources of heterogeneity. -->
 
@@ -225,62 +227,61 @@ Cheerfulness of paintings, doesn't this depend on the emotional and psychologica
 <!-- Segway to next section -->
 <!-- Sven and Tine 2026.03.09, time: 00:51:25 - 00:52:55 
 Say that the approach is fully explained in @Rivera_et_al_2025. Here we just provide the reader with a short overview. -->
-Notably, the *ITCJ analysis* proposed by Rivera and colleagues [-@Rivera_et_al_2025] provides an alternative approach that addresses the limitations outlined above. In the following section, we summarize this approach, with particular emphasis on its differences from the CCJ analysis.
-
+Notably, the *ITCJ analysis* proposed by Rivera and colleagues [-@Rivera_et_al_2025] offers a systematic and integrated approach that addresses all the limitations outlined above. 
 
 ## The ITCJ analysis {#sec-theory_ITCJ}
 
 <!-- Sven and Tine 2025.09.04, time: 00:07:00 - 00:09:40 -->
 <!-- Sven and Tine p2 2026.02.02, time: 00:00:00 - 00:01:48 -->
 <!-- Sven and Tine 2026.03.09, time: 00:52:55 - 00:54:40, about coherent theoretical foundation: "I developed this theoretical foundation to be able to have a solution to the three main problems we discussed before" --> 
+<!-- Sven and Tine 2026.06.22, time: 00:00:00 - 00:06:40 -->
 
 In contrast to the CCJ approach, the ITCJ analysis does not begin by applying a predefined statistical model to CJ data and then extracting outputs for subsequent analysis. Instead, it begins by explicitly representing the relationships among observed and latent variables that are thought to characterize the data-generating process of the CJ system under study. The analysis formalizes these relationships through a *Directed Acyclic Graph (DAG)* and an associated *Structural Causal Model (SCM)* [@Morgan_et_al_2014; @Gross_et_al_2018; @Neal_2020]. It then derives a *probabilistic model* from this causal representation and formulates one or more *statistical models* tailored to the system under study. Finally, the approach uses these models to estimate, summarize, and draw statistical inferences about the traits of interest.
 
 <!-- Importantly, evaluating these assumptions requires models with more flexible assumptions than what the BTL model can provide [@Wu_et_al_2022; @Rivera_et_al_2025]. -->
 
-<!-- commands for d-separation -->
-\newcommand{\dsep}{\:\bot\:}
-\newcommand{\ndsep}{\:\not\bot\:}
+::: {#fig-ITCJ layout-nrow=2}
 
-::: {#fig-ITCJ layout="[25,10]"}
-
-![DAG](3_results/theory/figures/png/CJ_TM_15.png){#fig-ITCJ_dag fig-align="center" fig-pos="H" width=100%}
-
-::: {#fig-ITCJ_scm fig-align="center" fig-pos="H"}
+::: {#fig-ITCJ_scm fig-align="center"}
 $$
 \begin{aligned}
-  O_{R} & := f_{O}(D_{R}, S, C) \\ 
+  O_{R} & := f_{O}(D_{R}, S, C) \\
   D_{R} & := f_{D}(T_{IA}, B_{JK}) \\
   T_{IA} & := f_{T}(T_{I}, X_{IA}, e_{IA}) \\
   T_{I} & := f_{T}(X_{I}, e_{I}) \\
   B_{JK} & := f_{B}(B_{J}, Z_{JK}, e_{JK}) \\
-  B_{J} & := f_{B}(Z_{J}, e_{J}) \\ \\
+  B_{J} & := f_{B}(Z_{J}, e_{J}) \\
   e_{I} & \dsep \{ e_{J}, e_{IA}, e_{JK} \} \\
   e_{J} & \dsep \{ e_{IA}, e_{JK} \} \\
-  e_{IA} & \dsep e_{JK}
+  e_{IA} & \dsep e_{JK} 
 \end{aligned}
 $$
 
 SCM
 :::
 
-ITCJ analysis, plausible data-generating process for a CJ-based speech quality study
+![DAG](/3_results/theory/figures/png/CJ_TM_15.png){#fig-ITCJ_dag fig-align="center" width=72%}
+
+ITCJ analysis, plausible data-generating process for a CJ-based speech quality study.
 :::
 
 <!-- Sven and Tine 2026.03.09, time: 00:54:40 - 00:57:45, join the two following paragraphs -->
 <!-- Sven and Tine 2026.03.09, time: 00:51:25 - 00:52:55 
 Explain with one or two sentences what is discriminal differences, traits, biases, etc. -->
+As an illustration, @fig-ITCJ presents a plausible data-generating process underlying a CJ-based speech-quality assessment. The SCM in @fig-ITCJ_scm formally describes the non-parametric relationships among observed and latent variables through structural equations, denoted by $f_{(\cdot)}$. The SCM uses the symbol '$:=$' to denote the asymmetric direction of causal influence and the symbol '$\dsep$' to represent d-separation, a concept akin to conditional independence [@Pearl_2009; @Cinelli_et_al_2020]. In contrast, the DAG in @fig-ITCJ_dag represents the same structure in graphical form, where observed variables appear as solid circles and latent (unobserved) variables as open circles. Arrows indicate the direction of the assumed causal influences, and dashed boxes represent the hierarchical structure of the data, such as stimuli nested within individuals. @Rivera_et_al_2025 provides a more detailed discussion of these concepts in the context of CJ assessments.
 
-As an example, @fig-ITCJ presents a DAG and SCM representing a plausible data-generating process for a CJ-based speech quality assessment study. In DAG [-@fig-ITCJ_dag], closed circles represent observed variables, whereas open circles represent latent (unobserved) variables. Arrows indicate the direction of the assumed influences between variables. Dashed boxes denote the assumed hierarchical structure of the data, such as stimuli nested within individuals. In contrast, SCM [-@fig-ITCJ_scm] represents the same structure using a more formal mathematical notation, in which functions $f_{(\cdot)}$, known as *structural equations*, represent variables as non-parametric functions of other observed or latent variables. These equations use the symbol '$:=$' to denote the asymmetric direction of the assumed influences, and the symbol '$\dsep$' to represent *d-separation*, a concept closely related to statistical (conditional) independence. @Rivera_et_al_2025 provides a more detailed explanation of these concepts. 
+Building on this speech-quality example, @fig-ITCJ uses $X_{I}$ to denote the set of variables assumed to influence individual traits $T_{I}$, i.e., the individuals' ability to produce high-quality speech. Examples of such individual-level variables include hearing status and age, with the latter serving as a proxy for language development [@Boonen_et_al_2020]. Similarly, $X_{IA}$ denotes the set of variables assumed to influence stimulus traits $T_{IA}$, which represent the latent quality of the stimulus under comparison. Examples of such stimulus-level variables include the length of the speech sample and whether the sample originates from spontaneous speech or imitation. 
 
-@fig-ITCJ uses $X_{I}$ to denote the set of variables believed to influence the individual traits $T_{I}$, i.e., the individuals' ability to produce high-quality speech. Examples of such individual-level variables include hearing status and age--the latter serving as a proxy for language development [@Boonen_et_al_2020]. Similarly, $X_{IA}$ denotes the set of variables assumed to influence the stimulus traits $T_{IA}$, which represent the latent quality of the stimulus under comparison. Examples of such stimulus-level variables include the length of the speech sample and whether the sample originates from spontaneous speech or imitation. Notably, the stimulus traits $T_{IA}$ correspond to what the CJ literature refers to as *discriminal processes*, which are though to capture the psychological effect a stimulus exerts on the judge, or more simply, the judge's perception of the stimulus quality [@Thurstone_1927a; @Thurstone_1927b].
+Notably, according to Thurstone's theory [-@Thurstone_1927a; -@Thurstone_1927b], the stimulus trait $T_{IA}$ corresponds to the stimulus' discriminal processes, which are thought to capture the psychological effect a stimulus exerts on the judge, or more simply, the judge's perception of stimulus quality. This interpretation implies that discriminal processes are only indirectly accessible through judges' perceptions, which may systematically deviate from judge-specific expectations or consensus [see @Pollitt_et_al_2003; @vanDaal_et_al_2016]. Consequently, judgment-level biases must be treated as an integral component of the CJ system from the outset [@Rivera_et_al_2025].
 
-In a similar fashion, $Z_{J}$ denotes the set of variables believed to influence the judges' bias $B_{J}$, that is, the systematic deviation of a judge's perception of a stimulus from the consensus. Examples of such judges-level variables include speech-judgment expertise and prior training in the CJ task. Similarly, $Z_{JK}$ denotes the set of variables assumed to influence the judgment-level biases $B_{JK}$, which represent systematic deviations of an individual judgment from the judge-specific bias. Examples of such judgment-level variables include the time of day or day of the week at which the comparison was made, as well as the number of comparisons completed by a judge, used as a proxy for learning or fatigue effects during the CJ task. The error terms $e_{I}$, $e_{IA}$, $e_{J}$, and $e_{JK}$ capture residual variation at each level.
+Accordingly, @fig-ITCJ uses $Z_{J}$ to denote the set of variables assumed to influence the judges' bias $B_{J}$, that is, the systematic deviation of a judge's perception of a stimulus from the consensus. Examples of such judges-level variables include speech-judgment expertise and prior training in the CJ task. Similarly, $Z_{JK}$ denotes the set of variables assumed to influence the judgment-level biases $B_{JK}$, which represent systematic deviations of an individual judgment from the judge-specific bias. Examples of such judgment-level variables include the time of day or day of the week at which the comparison was made, as well as the number of comparisons completed by a judge, used as a proxy for learning or fatigue effects during the CJ task. The error terms $e_{I}$, $e_{IA}$, $e_{J}$, and $e_{JK}$ capture residual variation at each level.
 
-Notably, because individual and stimulus traits are, in essence, not directly observable, Thurstone [-@Thurstone_1927a; -@Thurstone_1927b] introduced the *Law of Comparative Judgment*. This law posits that, in pairwise comparisons, a judge perceives the stimulus with a *discriminal process* positioned further along the trait continuum as possessing more of the trait [@Bramley_2008]. This suggests that pairwise comparison outcomes depend on relative, rather than absolute, positions on the continuum, implying that the observed CJ outcome is determined by the difference between the underlying discriminal processes (traits) of the stimuli [@Rivera_et_al_2025]. Moreover, because discriminal processes become observable only through judges’ perceptions--and these perceptions may involve bias or systematic deviations from consensus [see @Pollitt_et_al_2003; @vanDaal_et_al_2016]--judge- and judgment-level biases are appropriately treated as integral components of the CJ system from the outset [@Rivera_et_al_2025]. In this representation, these relationships are captured by the arrows from the $T_{IA}$ and $B_{JK}$ vectors to the *discriminal difference* $D_{R}$ vector, and the corresponding structural equation $D_{R} := f_{D}(T_{IA}, B_{JK})$.
+Furthermore, because individual and stimulus traits are not directly observable, Thurstone [-@Thurstone_1927a; -@Thurstone_1927b] introduced the *Law of Comparative Judgment*. This law posits that, in pairwise comparisons, judges perceive the stimulus whose discriminal process lies further along the trait continuum as expressing more of the trait [@Bramley_2008]. Consequently, @Rivera_et_al_2025 formalized that comparison outcomes depend not only on the relative distance between the stimuli's discriminal processes--known as the *discriminal difference* $D_{R}$--but also on judgment-level biases. @fig-ITCJ_dag represents these relationships with arrows from variables $T_{IA}$ and $B_{JK}$ to $D_{R}$, and from $D_{R}$ to $O_{R}$; while @fig-ITCJ_scm encodes the same structure through the structural equations $D_{R} := f_{D}(T_{IA}, B_{JK})$ and $O_{R} := f_{O}(D_{R}, S, C)$.
 
-Furthermore, @fig-ITCJ_dag represents the sampling and comparison mechanisms as two conditioned variables that determine how population outcomes become the “observed” sample outcomes ($S$ and $C$, respectively shown with surrounding squares to denote conditioning). In this particular representation, these variables are depicted without incoming arrows, indicating that they are assumed to be independent of all other variables in the DAG. This, in turn, implies that $S$ corresponds to a *simple random sampling (SRSg)* design, in which each repeated judgment, judge, stimulus, and individual has an equal probability of inclusion within their respective groups [@Lawson_2015], while $C$ corresponds to a *random allocation comparative design* [@Bramley_2015], also known as an *incomplete block design* [@Lawson_2015], in which each judgment has an equal probability of being included in the sample.
+<!-- Sven and Tine 2026.06.22, time: 00:06:40 - 00:11:30 -->
+Furthermore, @fig-ITCJ_dag represents the sampling and comparison mechanisms ($S$ and $C$, respectively) as conditioned variables--shown with surrounding squares--that govern how population outcomes become sample outcomes. Both variables appear without incoming arrows, reflecting two design assumptions. First, the sampling mechanism $S$ corresponds to a *simple random sampling (SRSg)* design, in which each judgment, judge, stimulus, and individual has an equal probability of selection within their respective groups [@Lawson_2015]. Second, the comparison mechanism $C$ corresponds to a *random allocation comparative design* [@Bramley_2015], also known as an *incomplete block design* [@Lawson_2015], in which each pairwise comparison has an equal probability of being assigned to any judge.
 
+<!-- Sven and Tine 2026.06.22, time: 00:11:30 - 00:13:15 -->
 Finally, @fig-ITCJ_dag shows that the observed outcome $O_{R}$ is jointly influenced by the discriminal difference $D_{R}$ and the sampling and comparison mechanisms ($S$ and $C$, respectively). In typical CJ applications, $O_{R}$ is often modeled as following a Bernoulli distribution [see @Pollitt_2012b; @Bramley_2008; @Boonen_et_al_2020; @Seymour_et_al_2025]. However, the current DAG is intentionally agnostic to this specific distributional choice, thereby accommodating alternative outcome distributions as special cases within the ITCJ approach. This flexibility is particularly relevant in settings where the comparison task yields non-binary outcomes, for which extensions beyond the Bernoulli model may be more appropriate [@Rivera_et_al_2025]. Examples of such outcomes can be found in @Agresti_1992, and more recently in @Pritikin_2020 and @Burkner_et_al_2024b.
 
 ::: {#fig-ITCJ_prob}
@@ -332,13 +333,18 @@ Notably, as shown in the figure, the workflow components form an interconnected 
 
 Because the study aims to conduct empirical validation, it employs a synthetic dataset. Synthetic data enables rigorous evaluation of model performance under controlled conditions, where both the underlying data-generating mechanisms and the target parameters are known by design. 
 
-In this study, the data-generating assumptions draw on key features and findings reported in @Boonen_et_al_2020. Specifically, it maintains the author's original goal--namely, to examine whether children's age and hearing status influence overall speech quality--while implementing this within a CJ task that preserves the core design features and empirical findings of the original study.
+<!-- Sven and Tine 2026.06.22, time: 00:13:15 - 00:15:45, explain a bit more Boonen -->
+In this study, the data-generating assumptions draw on key features and findings reported in @Boonen_et_al_2020. Specifically, it maintains the author's original goal--namely, to examine whether children's age and hearing status influence overall speech quality--while implementing this within a CJ task that preserves the core design features and empirical findings of the original study. 
+
+2 sentences to explain the task in Boonen, what the judges did and what are the stimuli 
 
 <!-- Sven and Tine 2025.06.12, time: 00:32:10 - 00:34:00 -->
-<!-- use gray lines to show the differences between the previous graph -->
+<!-- use gray lines to show the differences between the previous graph,
+NOT ANYMORE -->
 
 ![DAG of the assumed data-generating process underlying the synthetic conceptual population](3_results/theory/figures/png/CJ_population_DAG.png){#fig-CP_dag fig-align="center" fig-pos="H" width=70%}
 
+<!-- Sven and Tine 2026.06.22, time: 00:15:45 - 00:16:50 -->
 @fig-CP_dag presents the DAG incorporating the design features of @Boonen_et_al_2020. It depicts stimuli nested within individuals who vary in characteristics $X_{I}$, such as age and hearing status. However, in contrast to @fig-ITCJ_dag, the model assumes no additional stimulus-level attributes, as reflected by the absence of the variable $X_{IA}$. Moreover, the DAG includes judges who differ in speech-judgment expertise $Z_{J}$ and who provide a single judgment per stimulus pair, as indicated by the absence of variables $Z_{JK}$ and $e_{JK}$ previously shown in @fig-ITCJ_dag.
 
 Lastly, similar to @fig-ITCJ_dag, the DAG represents the sampling and comparison mechanisms ($S$ and $C$, respectively) without incoming arrows, indicating their independence from all other variables in the model. This structure implies that the model draws stimuli, individuals, and judges from a conceptual population using SRSg algorithms [@Lawson_2015] and assigns judges to comparisons using random allocation comparative designs [@Bramley_2015], respectively.
@@ -398,6 +404,8 @@ SCM, Probabilistic and Statistical model of the "True" Data-Generating Process U
 
 Next, the study incorporates Boonen and colleagues' [-@Boonen_et_al_2020] empirical findings by specifying a statistical model derived from the probabilistic model implied by the system's SCM. This procedure is depicted in @fig-CP. For this purpose, the model first organizes individual-level predictors into the vector $X_{I} = \{ XIc, XId[1], XId[2], XId[3] \}$ with corresponding effect vector $\beta_{XI} = \{ \beta_{XIc}, \beta_{XId[1]}, \beta_{XId[2]}, \beta_{XId[3]} \}$, and judge-level variables into the vector $Z_{J} = \{ ZJd[1], ZJd[2], ZJd[3] \}$ with corresponding effect vector $\beta_{ZJ} = \{ \beta_{ZJd[1]}, \beta_{ZJd[2]}, \beta_{ZJd[3]} \}$.
 
+<!-- Sven and Tine 2026.06.22, time: 00:19:15 - 00:24:00, 
+one sentence explicit about number of Boonen: in this section all of the assumed effects values try to closely reflects the results reported in Boonen -->
 The model then assumes that each one-unit increase in age $(XIc)$ leads to a $0.1$-logit increase in speech quality for children aged five to nine, as captured by $\beta_{XIc} = 0.1$. It further encodes a strict ordering of effects across three hearing-status groups, such that normal-hearing children $(NH; XId[1])$ exhibit higher speech quality than hearing-impaired children with hearing aids $(HI-HA; XId[2])$, who in turn outperform hearing-impaired children with cochlear implants $(HI-CI; XId[3])$. This ordering is represented by $\beta_{XId[1]} > \beta_{XId[2]} > \beta_{XId[3]}$, where $\beta_{XId[1]} = 1$, $\beta_{XId[2]} = 0$, and $\beta_{XId[3]} = -1$, corresponding to a one-logit difference between adjacent groups.
 
 Moreover, the model assumes that expertise with the judgment task does not systematically influence average judgment bias. Consequently, audiologists ($AU; ZJd[1]$), primary teachers ($PT; ZJd[2]$), and inexperienced listeners ($IL; ZJd[3]$) all have zero mean effects, such that $\beta_{ZJd[1]} = \beta_{ZJd[2]} = \beta_{ZJd[3]} = 0$.
@@ -434,8 +442,19 @@ Finally, although the original study found no evidence that judges' expertise in
 
 <!-- Sven 2025.10.31, time: 00:00:00 - 00:06:15, decision on why one data set -->
 <!-- Express the whole simulation procedure with an algorithm snippet -->
+<!-- Sven and Tine 2026.06.22, time: 00:16:50 - 00:19:00, should this go to the annex? NO, don't re-arrange the sections now -->
 
-<!-- First, the study simulates a synthetic conceptual population that reflects the specified theoretical assumptions. From this population, it draws a synthetic sample and corresponding comparison datasets (the latter constituting the *analysis dataset*). -->
+In order to capture the reality of conducting a CJ assessment, the data simulation process proceed in three steps. First, the study simulates a synthetic conceptual population that reflects the theoretical assumptions specified in @sec-methods_step1. Second, the study draws a sample of individuals, stimuli, judges, and judgments from this conceptual population using a *simple random sampling (SRSg)* design. In SRSg design, each judgment, judge, stimulus, and individual has an equal probability of inclusion in the sample within their respective groups [@Lawson_2015].  Third, the study assigns judges to comparisons using random allocation comparative designs [@Bramley_2015]
+
+To reflect more closely the realities of conducting a CJ assessment, the study implements the data simulation process in three steps. First, it simulates a synthetic conceptual population consistent with the theoretical assumptions specified in @sec-methods_step1. Second, it draws a sample of individuals, stimuli, judges, and judgments from this population using a *simple random sampling (SRSg)* design. Under an SRSg design, each judgment, judge, stimulus, and individual has an equal probability of selection within their respective groups [@Lawson_2015].
+
+To more closely reflect the realities of conducting a CJ assessment, the study implements the data simulation process in three steps. First, it simulates a synthetic conceptual population consistent with the theoretical assumptions specified in @sec-methods_step1. Second, it draws a sample of individuals, stimuli, judges, and judgments from this population using a *simple random sampling (SRSg)* design. Under an SRSg design, each judgment, judge, stimulus, and individual has an equal probability of selection within its respective group [@Lawson_2015].
+
+
+
+in which , while $C$ corresponds to a *random allocation comparative design* [@Bramley_2015], also known as an *incomplete block design* [@Lawson_2015], in which each judgment has an equal probability of being included in the sample.
+
+and corresponding comparison datasets (the latter constituting the *analysis dataset*).
 
 
 ## From Theory to Estimands: Target parameters {#sec-methods_step3}
@@ -702,6 +721,9 @@ Notably, this assumption entails that the distribution of judges biases is symme
 
 <!-- Sven and Tine 2025.06.12, time: 00:30:20 - 00:30:00 -->
 <!-- This paper is still a tutorial by being so open about sharing code, explanation of step process -->
+
+
+<!-- However, in many CJ assessment scenarios samples are selected using different designs, such as  convenience designs does not reflect the population  -->
 
 
 ## Future research directions {#sec-discussion_RD}
