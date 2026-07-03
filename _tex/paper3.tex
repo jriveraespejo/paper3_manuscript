@@ -486,9 +486,9 @@ applying a predefined statistical model to CJ data and then extracting
 outputs for subsequent analysis. Instead, it begins by explicitly
 representing the relationships among observed and latent variables that
 are thought to characterize the data-generating process of the CJ system
-under study. The analysis formalizes these relationships through a
-\emph{Directed Acyclic Graph (DAG)} and an associated \emph{Structural
-Causal Model (SCM)}
+under study. The analysis formalizes these relationships through
+\emph{Directed Acyclic Graphs (DAGs)} and an associated \emph{Structural
+Causal Models (SCMs)}
 \citep{Morgan_et_al_2014, Gross_et_al_2018, Neal_2020}. It then derives
 a \emph{probabilistic model} from this causal representation and
 formulates one or more \emph{statistical models} tailored to the system
@@ -539,102 +539,107 @@ process for a CJ-based speech quality study.}
 \end{figure}%
 
 As an illustration, Figure~\ref{fig-ITCJ} presents a plausible
-data-generating process underlying a CJ-based speech-quality assessment.
-The SCM in Figure~\ref{fig-ITCJ_scm} formally describes the
-non-parametric relationships among observed and latent variables through
-structural equations, denoted by \(f_{(\cdot)}\). The SCM uses the
-symbol `\(:=\)' to denote the asymmetric direction of causal influence
-and the symbol `\(\:\bot\:\)' to represent d-separation, a concept akin
-to conditional independence \citep{Pearl_2009, Cinelli_et_al_2020}. In
-contrast, the DAG in Figure~\ref{fig-ITCJ_dag} represents the same
-structure in graphical form, where observed variables appear as solid
-circles and latent (unobserved) variables as open circles. Arrows
-indicate the direction of the assumed causal influences, and dashed
-boxes represent the hierarchical structure of the data, such as stimuli
-nested within individuals. \citet{Rivera_et_al_2025} provides a more
-detailed discussion of these concepts in the context of CJ assessments.
+data-generating process for a CJ-based speech-quality assessment. The
+SCM in Figure~\ref{fig-ITCJ_scm} formally describes the non-parametric
+relationships among observed and latent variables through structural
+equations, denoted by \(f_{(\cdot)}\). The SCM uses the symbol `\(:=\)'
+to denote the asymmetric direction of causal influence and the symbol
+`\(\:\bot\:\)' to represent d-separation, a concept akin to conditional
+independence \citep{Pearl_2009, Cinelli_et_al_2020}. In contrast, the
+DAG in Figure~\ref{fig-ITCJ_dag} represents the same structure in
+graphical form, where observed variables appear as solid circles and
+latent (unobserved) variables as open circles. Arrows indicate the
+direction of the assumed causal influences, and dashed boxes represent
+the hierarchical structure of the data, such as stimuli nested within
+individuals. \citet{Rivera_et_al_2025} provides a more detailed
+discussion of these concepts in the context of CJ assessments.
 
-Building on this speech-quality example, Figure~\ref{fig-ITCJ} uses
-\(X_{I}\) to denote the set of variables assumed to influence individual
+Specifically, Figure~\ref{fig-ITCJ_dag} depicts the assumption that
+individual-level variables \(X_{I}\) directly influence individual
 traits \(T_{I}\), i.e., the individuals' ability to produce high-quality
-speech. Examples of such individual-level variables include hearing
-status and age, with the latter serving as a proxy for language
-development \citep{Boonen_et_al_2020}. Similarly, \(X_{IA}\) denotes the
-set of variables assumed to influence stimulus traits \(T_{IA}\), which
+speech. Examples of such variables include hearing status and age.
+Likewise, the DAG assumes that stimulus-level variables \(X_{IA}\),
+together with \(T_{I}\), influence stimulus traits \(T_{IA}\), which
 represent the latent quality of the stimulus under comparison. Examples
-of such stimulus-level variables include the length of the speech sample
-and whether the sample originates from spontaneous speech or imitation.
+of such variables include speech-sample length and whether the sample
+originates from spontaneous speech or imitation. The SCM in
+Figure~\ref{fig-ITCJ_scm} formalizes these relationships through the
+structural equations \(T_{I} := f_{T}(X_{I}, e_{I})\) and
+\(T_{IA} := f_{T}(T_{I}, X_{IA}, e_{IA})\), where the error terms
+\(e_{I}\) and \(e_{IA}\) capture residual variation at the individual
+and stimuli levels, respectively.
 
-Notably, according to Thurstone's theory
-\citetext{\citeyear{Thurstone_1927a}; \citeyear{Thurstone_1927b}}, the
-stimulus trait \(T_{IA}\) corresponds to the stimulus' discriminal
-processes, which are thought to capture the psychological effect a
-stimulus exerts on the judge, or more simply, the judge's perception of
-stimulus quality. This interpretation implies that discriminal processes
-are only indirectly accessible through judges' perceptions, which may
-systematically deviate from judge-specific expectations or consensus
-\citep[see][]{Pollitt_et_al_2003, vanDaal_et_al_2016}. Consequently,
-judgment-level biases must be treated as an integral component of the CJ
-system from the outset \citep{Rivera_et_al_2025}.
-
-Accordingly, Figure~\ref{fig-ITCJ} uses \(Z_{J}\) to denote the set of
-variables assumed to influence the judges' bias \(B_{J}\), that is, the
-systematic deviation of a judge's perception of a stimulus from the
-consensus. Examples of such judges-level variables include
-speech-judgment expertise and prior training in the CJ task. Similarly,
-\(Z_{JK}\) denotes the set of variables assumed to influence the
+Furthermore, because the stimulus traits \(T_{IA}\) are only indirectly
+accessible through judges' perceptions, and these perceptions may
+systematically deviate from consensus
+\citep[see,][]{Pollitt_et_al_2003, vanDaal_et_al_2016}, the ITCJ
+analysis treats judgment-level biases as an integral component of the CJ
+system from the outset \citep{Rivera_et_al_2025}. Accordingly,
+Figure~\ref{fig-ITCJ_dag} depicts the assumption that judge-level
+variables \(Z_{J}\) directly influence judges' bias \(B_{J}\), that is,
+the systematic deviation of a judge's perception of a stimulus from the
+consensus. Examples of such variables include speech-judgment expertise
+and prior training in the CJ task. Moreover, the DAG assumes that
+judgment-level variables \(Z_{JK}\), together with \(B_{J}\), influence
 judgment-level biases \(B_{JK}\), which represent systematic deviations
 of an individual judgment from the judge-specific bias. Examples of such
-judgment-level variables include the time of day or day of the week at
-which the comparison was made, as well as the number of comparisons
-completed by a judge, used as a proxy for learning or fatigue effects
-during the CJ task. The error terms \(e_{I}\), \(e_{IA}\), \(e_{J}\),
-and \(e_{JK}\) capture residual variation at each level.
+variables include the time of day or day of the week at which the
+comparison was made, as well as the number of comparisons completed by a
+judge, used as a proxy for learning or fatigue effects during the CJ
+task. As before, the SCM in Figure~\ref{fig-ITCJ_scm} formalizes these
+relationships through the structural equations
+\(B_{J} := f_{B}(Z_{J}, e_{J})\) and
+\(B_{JK} := f_{B}(B_{J}, Z_{JK}, e_{JK})\), where the error terms
+\(e_{J}\) and \(e_{JK}\) capture residual variation at the judge and
+judgment levels, respectively.
 
-Furthermore, because individual and stimulus traits are not directly
-observable, Thurstone
-\citetext{\citeyear{Thurstone_1927a}; \citeyear{Thurstone_1927b}}
-introduced the \emph{Law of Comparative Judgment}. This law posits that,
-in pairwise comparisons, judges perceive the stimulus whose discriminal
-process lies further along the trait continuum as expressing more of the
-trait \citep{Bramley_2008}. Consequently, \citet{Rivera_et_al_2025}
-formalized that comparison outcomes depend not only on the relative
-distance between the stimuli's discriminal processes--known as the
-\emph{discriminal difference} \(D_{R}\)--but also on judgment-level
-biases. Figure~\ref{fig-ITCJ_dag} represents these relationships with
-arrows from variables \(T_{IA}\) and \(B_{JK}\) to \(D_{R}\), and from
-\(D_{R}\) to \(O_{R}\); while Figure~\ref{fig-ITCJ_scm} encodes the same
-structure through the structural equations
+Figure~\ref{fig-ITCJ} also encodes two additional assumptions. First, it
+specifies that the \emph{discriminal difference} \(D_{R}\) depends on
+both the relative distance between stimulus traits and judgment-level
+biases \citep{Rivera_et_al_2025}. Second, it specifies that the observed
+outcome \(O_{R}\) depends on the discriminal difference
+\citep{Thurstone_1927a, Thurstone_1927b}. The DAG represents these
+dependencies with arrows from \(T_{IA}\) and \(B_{JK}\) to \(D_{R}\),
+and from \(D_{R}\) to \(O_{R}\), while the SCM formalizes the same
+relationships through the structural equations
 \(D_{R} := f_{D}(T_{IA}, B_{JK})\) and \(O_{R} := f_{O}(D_{R}, S, C)\).
 
-Furthermore, Figure~\ref{fig-ITCJ_dag} represents the sampling and
-comparison mechanisms (\(S\) and \(C\), respectively) as conditioned
-variables--shown with surrounding squares--that govern how population
-outcomes become sample outcomes. Both variables appear without incoming
-arrows, reflecting two design assumptions. First, the sampling mechanism
-\(S\) corresponds to a \emph{simple random sampling (SRSg)} design, in
-which each judgment, judge, stimulus, and individual has an equal
-probability of selection within their respective groups
-\citep{Lawson_2015}. Second, the comparison mechanism \(C\) corresponds
-to a \emph{random allocation comparative design} \citep{Bramley_2015},
-also known as an \emph{incomplete block design} \citep{Lawson_2015}, in
-which each pairwise comparison has an equal probability of being
-assigned to any judge.
+Finally, Figure~\ref{fig-ITCJ} explicitly represents the sampling and
+comparison mechanisms, denoted by \(S\) and \(C\), respectively.
+Following \citet{Rivera_et_al_2025}, the ITCJ analysis defines both
+mechanisms as binary vectors: \(S=1\) when the corresponding individual,
+stimulus, and judge from the conceptual population are included in the
+sample, and \(C=1\) when the corresponding pairwise comparison from the
+conceptual population is included in the observed data. Together, these
+mechanisms determine how conceptual-population outcomes become observed
+comparison outcomes.
 
-Finally, Figure~\ref{fig-ITCJ_dag} shows that the observed outcome
-\(O_{R}\) is jointly influenced by the discriminal difference \(D_{R}\)
-and the sampling and comparison mechanisms (\(S\) and \(C\),
-respectively). In typical CJ applications, \(O_{R}\) is often modeled as
-following a Bernoulli distribution
-\citep[see][]{Pollitt_2012b, Bramley_2008, Boonen_et_al_2020, Seymour_et_al_2025}.
-However, the current DAG is intentionally agnostic to this specific
-distributional choice, thereby accommodating alternative outcome
-distributions as special cases within the ITCJ approach. This
-flexibility is particularly relevant in settings where the comparison
-task yields non-binary outcomes, for which extensions beyond the
-Bernoulli model may be more appropriate \citep{Rivera_et_al_2025}.
-Examples of such outcomes can be found in \citet{Agresti_1992}, and more
-recently in \citet{Pritikin_2020} and \citet{Burkner_et_al_2024b}.
+In the context of the speech-quality assessment, the DAG in
+Figure~\ref{fig-ITCJ_dag} depicts \(S\) and \(C\) without incoming
+arrows and enclosed by squares, reflecting two design assumptions.
+First, the absence of incoming arrows indicates that both variables
+follow random design mechanisms. Specifically, \(S\) follows a
+\emph{simple random sampling (SRSg)} design, in which each judgment,
+judge, stimulus, and individual has an equal probability of selection
+within its respective group \citep{Lawson_2015}. Likewise, \(C\) follows
+a \emph{random allocation comparative design}, also known as an
+\emph{incomplete block design} \citep{Bramley_2015, Lawson_2015}, in
+which each pairwise comparison has an equal probability of assignment to
+any judge. Second, the squares surrounding \(S\) and \(C\) denote
+\emph{conditioning}
+\citep{Bareinboim_et_al_2014, Schuessler_et_al_2023}. This conditioning
+means that the current CJ structure applies only to observations
+satisfying \(S=1\) and \(C=1\) \citep{Neal_2020, McElreath_2020}, that
+is, the observed sample comparison data. Crucially, because the random
+mechanisms governing \(S\) and \(C\) satisfy key
+identification\footnote{Identification determines whether an estimator
+  can accurately compute a target estimand based solely on causal
+  assumptions, independent of random variation
+  \citep{Schuessler_et_al_2023}. Refer to \citet{Rivera_et_al_2025} for
+  a discussion of identification in the context of CJ assessments.}
+properties, the validity of the inferences drawn from this conditioned
+CJ structure still extends to the conceptual population
+\citep{Morgan_et_al_2014, Neal_2020}.
 
 \begin{figure}
 
@@ -661,35 +666,34 @@ P(O_{R}, D_{R} &, S, C, T_{IA}, X_{IA}, e_{IA}, T_{I}, X_{I}, e_{I}, B_{JK}, Z_{
 
 \end{figure}%
 
-Once researchers specify the SCM characterizing the assumed CJ
-data-generating process, as in Figure~\ref{fig-ITCJ_scm}, they can
-translate it into a probabilistic model that factorizes the joint
-distribution of the variables into a product of simpler
-\emph{conditional probability distributions (CPDs)}
-\citep{Pearl_et_al_2016, Neal_2020}, as illustrated in
-Figure~\ref{fig-ITCJ_prob}. From this formulation, they can then derive
-one or more statistical models tailored to the CJ system under study
-(see, for example, Section~\ref{sec-methods_step1} and
-Section~\ref{sec-methods_step5_2}), enabling coherent trait estimation
-and inference within a unified framework.
+Once researchers specify the assumptions characterizing the CJ
+data-generating process in the form of an SCM, as in
+Figure~\ref{fig-ITCJ_scm}, they can translate it into a probabilistic
+model. This model factorizes the joint distribution of the complex CJ
+system into a product of simpler \emph{conditional probability
+distributions (CPDs)} \citep{Pearl_et_al_2016, Neal_2020}, as
+illustrated in Figure~\ref{fig-ITCJ_prob}. From this formulation,
+researchers can then derive one or more statistical models tailored to
+the CJ system under study \citep[see][]{Rivera_et_al_2025}. This
+derivation enables coherent trait estimation and inference within a
+unified framework.
 
 At this point, it becomes clear that the ITCJ approach differs
-fundamentally from the CCJ approach in its treatment of trait
-estimation, summarization, and inference. This difference enables it to
-address the three main limitations of the latter. First, although the
-ITCJ analysis still relies on Thurstone-based models for trait
-estimation, these models are no longer treated as pre-specified
-simplifying abstractions; instead, they are adapted to the specific
-data-generating process of the CJ system under study, allowing
-researchers to explicitly model the processes of substantive interest.
-Second, the approach explicitly incorporates relevant CJ assessment
-design features, including the sampling and comparison mechanisms as
-well as judge and judgment biases. Third, the ITCJ analysis no longer
-separates trait estimation from follow-up analyses, but rather
-integrates both within a unified and systematic approach
-\citep{Rivera_et_al_2025}. This integration enables the propagation of
-uncertainty across all levels of the assumed hierarchical structure of
-the data.
+fundamentally from the CCJ approach in how it conducts trait estimation
+and inference. First, although the ITCJ analysis still relies on
+Thurstone-based models for trait estimation, these models are no longer
+treated as pre-specified simplifying abstractions; instead, they are
+adapted to the specific data-generating process of the CJ system under
+study, enabling researchers to explicitly model the processes of
+substantive interest. Second, the approach explicitly incorporates
+relevant CJ assessment design features, including the sampling and
+comparison mechanisms as well as judge- and judgment-level biases.
+Third, rather than separating trait estimation from follow-up analyses,
+the ITCJ analysis integrates both within a unified and systematic
+framework, enabling the propagation of uncertainty across all levels of
+the assumed hierarchical data structure \citep{Rivera_et_al_2025}.
+Ultimately, these innovations allow the ITCJ analysis to address the
+three main limitations of the CCJ approach.
 
 Building on this framework, the following section details the methods
 used to implement and evaluate the ITCJ analysis against the CCJ
@@ -734,13 +738,14 @@ design.
 
 In this study, the data-generating assumptions draw on key features and
 findings reported in \citet{Boonen_et_al_2020}. Specifically, it
-maintains the author's original goal--namely, to examine whether
-children's age and hearing status influence overall speech
-quality--while implementing this within a CJ task that preserves the
-core design features and empirical findings of the original study.
+maintains the author's original goal, namely, to examine whether
+children's age and hearing status influence overall speech quality.
+Moreover, it examines this research question within a CJ task that
+preserves the core design features and empirical findings of the
+original study.
 
-2 sentences to explain the task in Boonen, what the judges did and what
-are the stimuli
+{2 sentences to explain the task in Boonen, what the judges did and what
+are the stimuli}
 
 \begin{figure}[H]
 
